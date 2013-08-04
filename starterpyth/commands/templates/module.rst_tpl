@@ -1,0 +1,7 @@
+:mod:`{{ module_name }}`
+*******{% for k in module_name %}*{% endfor %}
+
+.. automodule:: {{ module_name }}
+    :members:
+    :undoc-members:
+

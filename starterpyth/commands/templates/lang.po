@@ -1,0 +1,18 @@
+# {{ description }}
+# Copyright (C) {{ copyright }}
+# This file is distributed under the same license as the {package} package.
+# {{ author }} <{{ email }}>, {{ year }}.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: {{ package }} {{ version }}\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: {{ date }}\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: {{ author }} <{{ email }}>\n"
+"Language-Team: {{ author }} <{{ email }}>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"

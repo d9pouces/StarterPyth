@@ -1,0 +1,60 @@
+{% include 'header.py_inc' %}
+import codecs
+import logging
+import logging.config
+import os.path
+import sys
+from setuptools import setup, find_packages
+
+from {{ module_name }}.log import CONSOLE
+
+
+commands = filter(lambda x: x[0:1] != '-', sys.argv)
+logging.config.dictConfig(CONSOLE)
+
+# noinspection PyUnresolvedReferences
+if os.path.isdir(os.path.join(os.path.dirname(__file__), '.git')):
+    try:
+        import setuptools_git
+    except ImportError:
+        setuptools_git = None
+        logging.warning('You should install setuptools-git to track data files.')
+
+readme = os.path.join(os.path.dirname(__file__), 'README.md')
+if os.path.isfile(readme):
+    with codecs.open(readme, 'r', encoding='utf-8') as fd:
+        long_description = fd.read()
+else:
+    long_description = ''
+
+ext_modules = [{% for ext in ext_modules %}{{ ext }}, {% endfor %}]
+cmdclass = {}
+entry_points = {{ entry_points }}
+
+{% for txt in extra_setup %}{{ txt|safe }}
+{% endfor %}
+setup(
+    name='module_name',
+    version={{ module_version|unicode }},
+    description='No description yet.',
+    long_description=long_description,
+    author={{ author|unicode }},
+    author_email={{ email|unicode }},
+    license={{ license|unicode }},
+    url={{ 'http://{{ company }}/{{ project_name }}.html'|unicode }},
+    entry_points=entry_points,
+    packages=find_packages(),
+    include_package_data=True,
+    zip_safe=True,
+    test_suite='{{ module_name }}.tests',
+    ext_modules=ext_modules,
+    cmdclass=cmdclass,
+{% if use_2to3 %}    use_2to3=True,
+    convert_2to3_doctests=['src/your/module/README.txt'],
+    use_2to3_fixers=[],
+    use_2to3_exclude_fixers = [],
+{% endif %}    install_requires=[{% for m in install_requires %}'{{ m }}', {% endfor %}],
+    setup_requires=[{% for m in install_requires %}'{{ m }}', {% endfor %}],
+    classifiers=[{% for m in classifiers %}'{{ m }}',
+                 {% endfor %}]
+)

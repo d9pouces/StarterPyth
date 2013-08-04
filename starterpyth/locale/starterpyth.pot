@@ -1,0 +1,176 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-08-04 23:24+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: starterpyth/core.py:56 starterpyth/core.py:77
+#, python-format
+msgid "Directory %(f)s created."
+msgstr ""
+
+#: starterpyth/core.py:87
+#, python-format
+msgid "Template %(f)s written."
+msgstr ""
+
+#: starterpyth/core.py:95
+#, python-format
+msgid "File %(f)s written."
+msgstr ""
+
+#: starterpyth/core.py:110
+#, python-format
+msgid "%(bin)s [-extension my.extension.module:class]"
+msgstr ""
+
+#: starterpyth/core.py:112
+msgid "extra extension module"
+msgstr ""
+
+#: starterpyth/core.py:115
+msgid "no interactive mode"
+msgstr ""
+
+#: starterpyth/core.py:117
+msgid "base folder for the new project"
+msgstr ""
+
+#: starterpyth/fields.py:29
+#, python-format
+msgid "%(label)s:"
+msgstr ""
+
+#: starterpyth/fields.py:31
+#, python-format
+msgid "%(label)s [default=%(default)s]: "
+msgstr ""
+
+#: starterpyth/fields.py:62
+#, python-format
+msgid "Error: Maximum length for value is %(max_length)d"
+msgstr ""
+
+#: starterpyth/fields.py:65
+msgid "Error: Empty values are not allowed"
+msgstr ""
+
+#: starterpyth/fields.py:75
+#, python-format
+msgid "Error: Value must match the regexp %(regexp)s"
+msgstr ""
+
+#: starterpyth/fields.py:86
+#, python-format
+msgid "Error: Value must be one of %(choices)s"
+msgstr ""
+
+#: starterpyth/fields.py:87
+msgid ", "
+msgstr ""
+
+#: starterpyth/fields.py:95
+msgid "yes"
+msgstr ""
+
+#: starterpyth/fields.py:96
+msgid "no"
+msgstr ""
+
+#: starterpyth/fields.py:102
+#, python-format
+msgid "Error: Value must be %(yes)s of %(no)s"
+msgstr ""
+
+#: starterpyth/commands/compilemessages.py:47
+#, python-format
+msgid "Processing file %(filename)s."
+msgstr ""
+
+#: starterpyth/commands/makemessages.py:83
+#, python-format
+msgid "%(filename)s added."
+msgstr ""
+
+#: starterpyth/commands/makemessages.py:85
+#, python-format
+msgid "Encoding of %(filename)s is not UTF-8."
+msgstr ""
+
+#: starterpyth/commands/makemessages.py:95
+#, python-format
+msgid "Please translate strings in %(filename)s"
+msgstr ""
+
+#: starterpyth/commands/pseudo_l10n.py:64
+#, python-format
+msgid ""
+"Missing file: %(filename)s. Please run the makemessages -l xx_XX command "
+"first."
+msgstr ""
+
+#: starterpyth/plugins/base/__init__.py:25
+msgid "Project name"
+msgstr ""
+
+#: starterpyth/plugins/base/__init__.py:26
+msgid "Python module name"
+msgstr ""
+
+#: starterpyth/plugins/base/__init__.py:27
+msgid "Company name"
+msgstr ""
+
+#: starterpyth/plugins/base/__init__.py:28
+msgid "Author name"
+msgstr ""
+
+#: starterpyth/plugins/base/__init__.py:29
+msgid "Author e-mail"
+msgstr ""
+
+#: starterpyth/plugins/base/__init__.py:31
+msgid "License"
+msgstr ""
+
+#: starterpyth/plugins/base/__init__.py:32
+msgid "Minimum Python version"
+msgstr ""
+
+#: starterpyth/plugins/base/__init__.py:37
+msgid "Use six tool for Python 3 compatibility"
+msgstr ""
+
+#: starterpyth/plugins/base/__init__.py:39
+msgid "Use 2to3 tool for Python 3 compatibility"
+msgstr ""
+
+#: starterpyth/plugins/base/__init__.py:44
+msgid "Initial version"
+msgstr ""
+
+#: starterpyth/plugins/base/__init__.py:90
+#, python-format
+msgid "The folder %(f)s already exists. Remove it?"
+msgstr ""
+
+#: starterpyth/plugins/cli/__init__.py:19
+msgid "Create a shell application"
+msgstr ""
+
+#: starterpyth/plugins/starter_cython/__init__.py:19
+msgid "Create a Cython application"
+msgstr ""

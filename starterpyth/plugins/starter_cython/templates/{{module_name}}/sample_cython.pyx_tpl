@@ -1,0 +1,42 @@
+"""This module defines three versions of the same functions, with increasing
+speedups.
+
+More documentation can be found at {{ doc_urls.cython.0 }}.
+
+"""
+{% include 'header.py_inc' %}
+
+def f_0(x):
+    return x ** 2 - x
+
+def integrate_f_0(a, b, N):
+    s = 0
+    dx = (b - a) / N
+    for i in range(N):
+        s += f_0(a + i * dx)
+    return s * dx
+
+def f_1(double x):
+    return x ** 2 - x
+
+def integrate_f_1(a, b, N):
+    cdef int i
+    cdef double s, dx
+    s = 0
+    dx = (b - a) / N
+    for i in range(N):
+        s += f_1(a + i * dx)
+    return s * dx
+
+cpdef double f_2(double x) except? -2:
+    return x ** 2 - x
+
+cpdef integrate_f_2(double a, double b, long N):
+    cdef int i
+    cdef double s, dx
+    s = 0
+    dx = (b - a) / N
+    for i in range(N):
+        s += f_2(a + i * dx)
+    return s * dx
+
