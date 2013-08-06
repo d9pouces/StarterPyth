@@ -1,0 +1,33 @@
+#coding=utf-8
+"""Define your models in this module.
+
+Models are standard Python classes which inherits from
+:class:`django.db.models.Model`. A model represents a SQL table.
+
+Documentation can be found at {{ doc_urls.django_fields }}.
+
+"""
+{% include 'header.py_inc' %}
+
+from django.db import models
+from django.utils.translation import ugettext, ugettext_lazy as _
+
+
+#class SampleModel(models.Model):
+    #"""Sample model with three field.
+    #There is a hidden field, id, corresponding to the primary key.
+    #"""
+    #first_name = models.CharField(_('Sample first name'), db_index=True, blank=True, max_length=100,
+    #   help_text=_('sample help text'))
+    #family_name = models.CharField(_('Sample family name'), db_index=True, blank=True, null=True, max_length=100,
+    #   help_text=_('sample help text'))
+    #birthday = models.DateTimeField(_('Sample birthday'), db_index=True, blank=True, null=True,
+    #   help_text=_('sample help text'))
+
+    #class Meta:
+        #"""Meta informations on this model"""
+        #verbose_name = _('sample person')
+        #verbose_name_plural = _('sample persons')
+
+    #def __unicode__(self):
+        #return ugettext('%s %s') % (self.first_name, self.family_name)

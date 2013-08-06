@@ -1,0 +1,148 @@
+html, body, header, div, h3, p {
+    margin: 0;
+    padding: 0;
+}
+body {
+background: rgb(197,222,234); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(197,222,234,1) 0%, rgba(138,187,215,1) 31%, rgba(6,109,171,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(197,222,234,1)), color-stop(31%,rgba(138,187,215,1)), color-stop(100%,rgba(6,109,171,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(197,222,234,1) 0%,rgba(138,187,215,1) 31%,rgba(6,109,171,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(197,222,234,1) 0%,rgba(138,187,215,1) 31%,rgba(6,109,171,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(197,222,234,1) 0%,rgba(138,187,215,1) 31%,rgba(6,109,171,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(197,222,234,1) 0%,rgba(138,187,215,1) 31%,rgba(6,109,171,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c5deea', endColorstr='#066dab',GradientType=0 ); /* IE6-9 */
+}
+header {
+    background: url('../images/bandeau_entete.jpg') 0 0 no-repeat;
+    width: 1000px;
+    margin: auto;
+    height: 120px;
+    border-bottom: solid #999 1px;
+}
+header h1 {
+    text-align: center;
+    height: 120px;
+    padding-top: 15px;
+    text-shadow: #333 2px 2px 2px;
+    font-size: 3em;
+}
+header h1 a, header h1 a:link, header h1 a:visited {
+    color: #fff;
+    text-decoration: none;
+}
+
+article {
+    width: 1000px;
+    background-color: #F0F0F0;
+    margin: auto;
+    min-height: 600px;
+    box-shadow: #333 2px 2px 2px;
+}
+#content {
+    padding: 10px 20px;
+    margin: 0;
+}
+
+form {
+    padding: 10px;
+    background-color: #eee;
+    border: solid 1px #ccc;
+}
+
+ul.form li {
+    list-style-type: none;
+}
+tr td {
+    border: solid #999 1px;
+}
+tr:nth-child(odd) {
+    background-color: #E0E0E0;
+    border-collapse: collapse;
+}
+tr:hover {
+    background-color: #FFFFCC;
+}
+th {
+    background-color: #2d5367;
+    color: white;
+    border-collapse: collapse;
+    border-left: solid #FFF 1px;
+    border-right: solid #FFF 1px;
+}
+th:first-child {
+    border-left: solid #999 1px;
+}
+th:last-child {
+    border-right: solid #999 1px;
+}
+#swagger-ui-container ul li {
+    list-style-type: none;
+}
+
+#swagger-ui-container ul#resources li.resource div.heading h2 a, #swagger-ui-container ul#resources li.resource div.heading ul.options li a {
+    color: #5B80B2;
+}
+
+#swagger-ui-container ul#resources li.resource.active div.heading h2 a, #swagger-ui-container ul#resources li.resource.active div.heading ul.options li a {
+    color: #999;
+}
+
+ul.messagelist li.bookmark {
+    background-image: url('../images/icon_bookmark.png');
+}
+
+
+#content #content-related {
+    width: 216px;
+    margin-right: 0;
+}
+
+#content #content-main  {
+    /*width: 730px;*/
+    float: left;
+}
+
+#content #content-main th, #content #content-main td {
+    border: solid #eee 1px;
+}
+
+#content #content-main tr th {
+    background-color: transparent;
+    color: #333;
+}
+
+#content #content-main table {
+    width: 100%;
+}
+
+.dashboard #content {
+    width: 950px;
+}
+
+.dashboard #content #content-main {
+    width: 730px;
+}
+
+#changelist .paginator {
+    background: transparent !important;
+    border: none;
+}
+.object-tools {
+    float: none;
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+    margin-top: 0;
+}
+
+#content-main form .selector {
+    width: 780px;
+}
+
+#content-main form .selector-available, #content-main form .selector-chosen {
+    width: 370px;
+}
+
+#content-main form .selector select, #content-main form .selector select {
+    width: 370px;
+}
+

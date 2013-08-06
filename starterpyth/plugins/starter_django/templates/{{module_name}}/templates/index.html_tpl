@@ -1,0 +1,12 @@
+{% raw %}{% extends "base.html" %}{% load staticfiles  %}{% load url from future %}{% load i18n %}
+{% block body %}
+<form method="POST" action="?">
+    {{ form.media }}
+    {% csrf_token %}
+    <ul class="form">
+{{ form.as_ul }}
+<li><input value="{% trans 'Send form' %}" type="submit" /></li>
+</ul>
+</form>
+{% endblock %}
+{% endraw %}

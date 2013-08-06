@@ -27,6 +27,7 @@ if os.path.isfile(readme):
 else:
     long_description = ''
 
+
 setup(
     name='starterpyth',
     version = '1.0',

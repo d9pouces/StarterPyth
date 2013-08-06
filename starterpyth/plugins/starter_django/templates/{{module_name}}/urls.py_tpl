@@ -1,0 +1,12 @@
+{% include 'header.py_inc' %}
+
+"""Define mappings from the URL requested by a user to a proper Python view."""
+{% include 'header.py_inc' %}
+from django.conf.urls import patterns, include, url
+
+
+urlpatterns = patterns(
+    '',
+    url(r'^index/$', '{{ module_name }}.views.index'),
+)
+

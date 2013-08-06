@@ -1,0 +1,5 @@
+{{ licence_preamble }}
+{% if use_six %}import six
+{% endif %}
+
+__author__ = {{ author|unicode }}

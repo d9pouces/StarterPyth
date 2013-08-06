@@ -1,0 +1,4 @@
+{% include 'header.py_inc' %}
+from {{ module_name }}.project.manage import main
+
+main()

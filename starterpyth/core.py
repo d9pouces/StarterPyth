@@ -17,8 +17,9 @@ __author__ = 'flanker'
 
 
 INTERACTIVE = True
-DEFAULT_EXTENSIONS = ['starterpyth.plugins.base:BasePlugin', 'starterpyth.plugins.cli:CliPlugin',
-                      'starterpyth.plugins.starter_cython:CythonPlugin']
+DEFAULT_EXTENSIONS = ['starterpyth.plugins.base:BasePlugin', 'starterpyth.plugins.starter_django:DjangoPlugin',
+                      'starterpyth.plugins.cli:CliPlugin', 'starterpyth.plugins.starter_cython:CythonPlugin',
+                      ]
 
 
 def load_module(modulename):
