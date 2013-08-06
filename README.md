@@ -13,6 +13,7 @@ You can decide to create different kinds of Python applications:
   * plain-Python package
   * command-line application
   * Cython-based extension
+  * Django-based website
 
 The goal is also to provide many useful extra commands for distribute. Here is a list of commands I want to write:
 
@@ -28,7 +29,6 @@ The goal is also to provide many useful extra commands for distribute. Here is a
 
 I also want to provide templates for other classical Python programs:
 
-  * Django-based website
   * Django application
   * Curse application
   * PyQt applications
