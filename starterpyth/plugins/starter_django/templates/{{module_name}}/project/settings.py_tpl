@@ -132,9 +132,7 @@ ROOT_URLCONF = '{{ module_name }}.project.root_urls'
 WSGI_APPLICATION = '{{ module_name }}.project.wsgi.application'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    abspath(join(dirname(__file__), 'templates')),
 )
 
 INSTALLED_APPS = (
@@ -148,9 +146,12 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-    '{{ module_name }}',
+    '{{ module_name }}',{% if use_tastypie_swagger %}
+    'tastypie_swagger',{% endif %}
 )
 
+{% if use_tastypie_swagger %}TASTYPIE_SWAGGER_API_MODULE = '{{ module_name }}.project.root_urls.V1_API'
+{% endif %}
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.

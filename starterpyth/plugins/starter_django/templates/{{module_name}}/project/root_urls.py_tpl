@@ -14,7 +14,7 @@ urlpatterns = patterns(
     '',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)), {% if use_tastypie_swagger %}
-    (r'^api/doc/', include('{{ module_name }}.tastypie_swagger.urls', namespace='tastypie_swagger')),{% endif %}{% if use_tastypie %}
+    (r'^api/doc/', include('tastypie_swagger.urls', namespace='tastypie_swagger')),{% endif %}{% if use_tastypie %}
     (r'^api/', include(V1_API.urls)), {% endif %}
     (r'^jsi18n/$', 'django.views.i18n.javascript_catalog',
      {'packages': ('{{ module_name }}', 'django.contrib.admin', ), }),

@@ -66,7 +66,7 @@ class Plugin(object):
             if os.sep != '/':
                 dst_path = dst_path.replace('/', os.sep)
             if dst_path.find('{') > -1:
-                dst_path = Template(dst_path).render(**context)
+                dst_path = Template(dst_path).render(**local_context)
             if dst_path[-4:] == '_tpl':
                 dst_path = dst_path[:-4]
             return src_path, os.path.join(project_root, dst_path)
@@ -84,7 +84,7 @@ class Plugin(object):
                 if filename[-4:] == '_tpl':
                     template = env.get_template(src_path)
                     with open(dst_path, 'ab') as f_out:
-                        f_out.write(template.render(**context).encode('utf-8'))
+                        f_out.write(template.render(**local_context).encode('utf-8'))
                     logging.info(_('Template %(f)s written.') % {'f': dst_path})
                 else:
                     with open(dst_path, 'wb') as f_out:

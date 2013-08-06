@@ -15,7 +15,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c5deea', end
 header {
     background: url('../images/bandeau_entete.jpg') 0 0 no-repeat;
     width: 1000px;
-    margin: auto;
+    margin: auto !important;
     height: 120px;
     border-bottom: solid #999 1px;
 }
@@ -34,7 +34,7 @@ header h1 a, header h1 a:link, header h1 a:visited {
 article {
     width: 1000px;
     background-color: #F0F0F0;
-    margin: auto;
+    margin: auto !important;
     min-height: 600px;
     box-shadow: #333 2px 2px 2px;
 }
