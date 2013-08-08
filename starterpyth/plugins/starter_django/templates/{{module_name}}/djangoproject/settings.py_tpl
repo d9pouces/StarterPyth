@@ -122,14 +122,14 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
-    '{{ module_name }}.project.context_processors.context_user',
+    '{{ module_name }}.djangoproject.context_processors.context_user',
 )
 
 
-ROOT_URLCONF = '{{ module_name }}.project.root_urls'
+ROOT_URLCONF = '{{ module_name }}.djangoproject.root_urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = '{{ module_name }}.project.wsgi.application'
+WSGI_APPLICATION = '{{ module_name }}.djangoproject.wsgi.application'
 
 TEMPLATE_DIRS = (
     abspath(join(dirname(__file__), 'templates')),
@@ -150,7 +150,7 @@ INSTALLED_APPS = (
     'tastypie_swagger',{% endif %}
 )
 
-{% if use_tastypie_swagger %}TASTYPIE_SWAGGER_API_MODULE = '{{ module_name }}.project.root_urls.V1_API'
+{% if use_tastypie_swagger %}TASTYPIE_SWAGGER_API_MODULE = '{{ module_name }}.djangoproject.root_urls.V1_API'
 {% endif %}
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

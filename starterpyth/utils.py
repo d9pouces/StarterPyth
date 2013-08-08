@@ -4,7 +4,6 @@ import pkg_resources
 __author__ = 'flanker'
 
 
-
 if sys.version_info[0] == 3:
     my_unicode = str
 else:
