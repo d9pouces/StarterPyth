@@ -1,16 +1,16 @@
 Introduction
 ============
 
-After years of Python programming, it seems hard to create from scratch a
-well-written project. :mod:`starterpyth` provides help to create such a
+Even after several years of Python programming, it seems hard to create *from scratch* a
+well-structured project. :mod:`starterpyth` provides some help to create such a
 project.
 
 If everyone has different criterion to qualify a project as 'well-written'.
-However, we can isolate some objectives.
+However, we can isolate some obvious ones.
 
     * follow Python guidelines,
     * follow common guidelines of the current OS,
-    * respect a given coding style,
+    * respect a given coding style (e.g., PEP008),
     * provide a documentation (often in HTML) with examples,
     * pass unitary tests,
     * easy translation in different languages,
@@ -24,7 +24,7 @@ These different steps can be achieved using :mod:`starterpyth`::
     $ python setup.py lint
         > Generate a report about the code quality
     $ python setup.py test
-        > Run tests
+        > Run unitary tests
     $ python setup.py test_doc
         > Test examples provided in doc strings
     $ python setup.py gen_doc_api
@@ -37,4 +37,6 @@ These different steps can be achieved using :mod:`starterpyth`::
     $ python setup.py compilemessages
         > Compile translated files
     $ python setup.py bdist
-        > Package your project into a .tar.gz file
+        > Package your project into a .tar.gz file with binaries
+    $ python setup.py sdist
+        > Create a source package

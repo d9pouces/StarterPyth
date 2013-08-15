@@ -1,3 +1,4 @@
+#coding=utf-8
 from starterpyth.utils import my_unicode
 
 __author__ = 'flanker'
@@ -11,7 +12,7 @@ class TranslationTest(unittest.TestCase):
 
     def test_1(self):
         """Test the sample_function with two arguments."""
-        self.assertEqual(translate_string(my_unicode('ab')), my_unicode('[!!! \xe6\xdf !!!]'))
+        self.assertEqual(translate_string(my_unicode('ab')), my_unicode('[ƒ——!ab!—–]'))
 
 if __name__ == '__main__':
     unittest.main()

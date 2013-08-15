@@ -13,7 +13,12 @@ You can decide to create different kinds of Python applications:
   * plain-Python package
   * command-line application
   * Cython-based extension
-  * Django-based website
+  * Django-based website with custom commands and optional modules
+    * create basic configurations for nginx and Apache
+    * examples of tastypie REST APIs
+    * use global configuration file (/etc/myproject/project.conf)
+    * example of basic views and forms
+    * basic use of dajax and dajaxice
 
 The goal is also to provide many useful extra commands for distribute. Here is a list of commands I want to write:
 

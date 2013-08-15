@@ -7,17 +7,18 @@ from starterpyth.utils import my_unicode
 __author__ = 'flanker'
 
 from distutils.core import Command
+# noinspection PyPackageRequirements
 import polib
 import os
-import subprocess
 
 from starterpyth.translation import gettext as _
+
 
 def translate_string(src_str):
     """
     Transform a ASCII string into a larger string with non-ASCII characters.
 
-    >>> translate_string(my_unicode('ab')) == my_unicode('[!!!—æß—!!!]')
+    >>> translate_string(my_unicode('ab')) == my_unicode('[ƒ——!ab!—–]')
     True
 
     """

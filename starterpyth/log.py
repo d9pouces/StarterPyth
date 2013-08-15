@@ -20,10 +20,11 @@ class ColorizedHandler(logging.StreamHandler):
         :param record: record to emit
         :func:`traceback.print_exception()` and appended to the stream.
         The message is colorized according to the level of the record:
-          * :attr:`logging.debug` => pink
-          * :attr:`logging.info` => green
-          * :attr:`logging.warning` => yellow
-          * :attr:`logging.error` => red
+
+        * :attr:`logging.debug` => pink
+        * :attr:`logging.info` => green
+        * :attr:`logging.warning` => yellow
+        * :attr:`logging.error` => red
         """
         myrecord = copy.copy(record)
         levelno = myrecord.levelno
