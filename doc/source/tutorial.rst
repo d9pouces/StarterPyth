@@ -4,37 +4,20 @@ Quick tutorial and examples
 Here is a simple example to create an empty Python module, named `Project`::
 
    $ starterpyth-bin
-   Please enter a name for your project [Test]: Project
-   Please enter a name for your main Python module [project]: 
-   Author name [d9pouces]:
-   Version [0.1]: 
-   Please enter a short description []: 
-   Licence [Cecill-B]: 
-   Author email [d9pouces@19pouces.net]:
-   [Using plugin BaseApp]:
-   Copying README.txt
-   Copying notes.txt
-   Copying MANIFEST.in
-   Copying stdeb.cfg
-   Copying setup.py
-   Copying setup.cfg
-   Copying test/__init__.py
-   Copying test/utils.py
-   Copying test/data/README
-   Copying doc/make.bat
-   Copying doc/Makefile
-   Copying doc/source/tutorial.rst
-   Copying doc/source/conf.py
-   Copying doc/source/index.rst
-   Copying doc/source/installation.rst
-   [Using plugin ShellApp]:
-   Are you writing a shell script? [yes]: no
-   [Using plugin QtApp]:
-   Are you writing a Qt application? [yes]: no
-   [Using plugin DjangoApp]:
-   Are you writing a Django website? [yes]: no
-   [Using plugin Setup]:
-   Copying setup.py
+    Project name [default=Project]:
+    Python module name [default=project]:
+    Company name [default=19pouces.net]:
+    Author name [default=d9pouces]: d9pouces
+    Author e-mail [default=d9pouces@19pouces.net]:
+    License [default=cecill b]:
+    Minimum Python version [default=2.7]:
+    Use six tool for Python 3 compatibility [default=yes]:
+    Initial version [default=0.1]:
+    Create a Django website [default=yes]:
+    Create sample REST API with Tastypie [default=yes]:
+    Create API doc with Tastypie Swagger [default=yes]:
+    Create a shell application [default=yes]:
+    Create a Cython application [default=yes]:
 
 A new directory is created `Project`, containing all files required to cleanly
 develop, test, distribute and install the project.
@@ -52,15 +35,16 @@ The generated setup.py file provides many interesting commands::
       check             perform some checks on the package
     
     Extra commands:
+      compilemessages   Compile message files for i18n
+      makemessages      Generate message files for i18n
+      pseudo_l10n       Compile message files for i18n
       gen_doc_api       Generate simple API index for Sphinx documentation
       gen_doc           Compile project documentation
       test              run unit tests after in-place build
+      profiling         Provide shortcuts for debugging and profiling functions
       lint              Evaluate code quality through pylint
       dependencies      Display a list of found dependencies
-      bdist_deb         distutils command to create debian binary package
-      test_doc          Run examples provided in docstrings
-      makemessages      Create translation files
-      compilemessages   Compile translation files
+      doctest           Run examples provided in docstrings
 
     usage: setup.py [global_opts] cmd1 [cmd1_opts] [cmd2 [cmd2_opts] ...]
        or: setup.py --help [cmd1 cmd2 ...]
@@ -69,4 +53,4 @@ The generated setup.py file provides many interesting commands::
 
 
 You should take a look to the documentation of plugins you want to use in :mod:`starterpyth.plugins`.
-Provided commands are documentated in :mod:`starterpyth.command`.
+Provided commands are documentated in :mod:`starterpyth.commands`.
