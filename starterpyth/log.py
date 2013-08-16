@@ -4,7 +4,7 @@ from io import BytesIO
 import traceback
 import sys
 
-__author__ = 'flanker'
+__author__ = 'd9pouces'
 __all__ = ['ColorizedHandler', 'traceback', 'CONSOLE']
 
 

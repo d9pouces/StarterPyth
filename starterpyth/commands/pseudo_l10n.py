@@ -4,7 +4,7 @@ from setuptools import find_packages
 from starterpyth.core import load_module
 from starterpyth.utils import my_unicode
 
-__author__ = 'flanker'
+__author__ = 'd9pouces'
 
 from distutils.core import Command
 # noinspection PyPackageRequirements

@@ -5,7 +5,7 @@ import pkg_resources
 from starterpyth import defaults
 from starterpyth.fields import RegexpInput, CharInput, ChoiceInput, BooleanInput
 
-__author__ = 'flanker'
+__author__ = 'd9pouces'
 
 from starterpyth.core import Plugin
 from starterpyth.translation import ugettext as _

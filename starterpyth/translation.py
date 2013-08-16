@@ -4,7 +4,7 @@ import gettext
 import os.path
 import pkg_resources
 
-__author__ = 'flanker'
+__author__ = 'd9pouces'
 __all__ = ['translation', 'gettext', 'lgettext', 'ugettext', 'ngettext', 'lngettext', 'ungettext']
 
 

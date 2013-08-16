@@ -5,7 +5,7 @@ import starterpyth.core
 
 from starterpyth.translation import ugettext as _
 
-__author__ = 'flanker'
+__author__ = 'd9pouces'
 
 
 class ValidationError(ValueError):

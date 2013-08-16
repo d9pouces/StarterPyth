@@ -1,7 +1,7 @@
 import sys
 import pkg_resources
 
-__author__ = 'flanker'
+__author__ = 'd9pouces'
 
 
 if sys.version_info[0] == 3:

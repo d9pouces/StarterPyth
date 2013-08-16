@@ -1,4 +1,4 @@
-__author__ = 'flanker'
+__author__ = 'd9pouces'
 
 from distutils.core import Command
 import pylint.lint

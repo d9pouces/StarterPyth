@@ -13,7 +13,7 @@ import starterpyth.log
 import starterpyth.utils
 from starterpyth.translation import ugettext as _
 
-__author__ = 'flanker'
+__author__ = 'd9pouces'
 
 
 INTERACTIVE = True

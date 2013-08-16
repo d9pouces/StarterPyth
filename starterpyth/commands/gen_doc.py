@@ -1,6 +1,6 @@
 import logging
 
-__author__ = 'flanker'
+__author__ = 'd9pouces'
 import os
 import shlex
 import shutil

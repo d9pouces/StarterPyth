@@ -1,6 +1,6 @@
 from starterpyth.utils import my_unicode
 
-__author__ = 'flanker'
+__author__ = 'd9pouces'
 
 from distutils.core import Command
 import os.path

@@ -1,5 +1,5 @@
 
-__author__ = 'flanker'
+__author__ = 'd9pouces'
 
 import abc
 from distutils.core import Command

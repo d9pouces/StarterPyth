@@ -1,7 +1,7 @@
 #coding=utf-8
 from starterpyth.utils import my_unicode
 
-__author__ = 'flanker'
+__author__ = 'd9pouces'
 
 import unittest
 from starterpyth.commands.pseudo_l10n import translate_string

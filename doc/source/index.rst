@@ -1,10 +1,15 @@
-.. PyShibCurl documentation master file, created by
+.. StarterPyth documentation master file, created by
    sphinx-quickstart on Wed Feb 13 11:51:12 2013.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
 Welcome to StarterPyth's documentation!
 ========================================
+
+StarterPyth provides complete skeletons of different kinds of Python projects, with `setup.py` file, documentation,
+unitary tests, and translation files. It also provides some :mod:`distribute` commands to ease the development
+of well-written applications.
+
 
 Overview:
 

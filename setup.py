@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 
 from starterpyth.log import CONSOLE
 
-__author__ = 'flanker'
+__author__ = 'd9pouces'
 
 logging.config.dictConfig(CONSOLE)
 
@@ -33,8 +33,8 @@ setup(
     version = '1.0',
     description='Generate good skeletons of Python applications.',
     long_description=long_description,
-    author='flanker',
-    author_email='flanker@19pouces.net',
+    author='d9pouces',
+    author_email='d9pouces@19pouces.net',
     license='Cecill-B',
     url='http://www.19pouces.net/projects.html',
     entry_points = {

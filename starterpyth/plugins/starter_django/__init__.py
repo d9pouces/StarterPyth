@@ -1,6 +1,6 @@
 import random
 
-__author__ = 'flanker'
+__author__ = 'd9pouces'
 
 from starterpyth.core import Plugin
 from starterpyth.fields import BooleanInput

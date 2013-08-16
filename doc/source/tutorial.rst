@@ -6,11 +6,11 @@ Here is a simple example to create an empty Python module, named `Project`::
    $ starterpyth-bin
    Please enter a name for your project [Test]: Project
    Please enter a name for your main Python module [project]: 
-   Author name [flanker]:
+   Author name [d9pouces]:
    Version [0.1]: 
    Please enter a short description []: 
    Licence [Cecill-B]: 
-   Author email [flanker@19pouces.net]:
+   Author email [d9pouces@19pouces.net]:
    [Using plugin BaseApp]:
    Copying README.txt
    Copying notes.txt

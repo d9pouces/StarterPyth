@@ -1,4 +1,4 @@
-__author__ = 'flanker'
+__author__ = 'd9pouces'
 
 import getpass
 
@@ -6,4 +6,4 @@ COMPANY = '19pouces.net'
 try:
     AUTHOR = getpass.getuser()
 except ImportError:
-    AUTHOR = 'flanker'
+    AUTHOR = 'd9pouces'
