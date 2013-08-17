@@ -39,4 +39,13 @@ I also want to provide templates for other classical Python programs:
   * PyQt applications
   * daemon
 
-Bento or distribute
+You can install it from the source::
+
+  $ cd StarterPyth
+  $ sudo python setup.py install
+
+
+Then you can call it through `starterpyth-bin`::
+
+  $ starterpyth-bin
+
