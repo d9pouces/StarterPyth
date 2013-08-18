@@ -125,7 +125,7 @@ def main():
         log_config['root']['level'] = 'DEBUG'
     else:
         log_config['root']['level'] = 'WARNING'
-    logging.config.dictConfig(log_config)
+    starterpyth.log.dictConfig(log_config)
     extensions = DEFAULT_EXTENSIONS + options.extensions
     context = {'project_root': options.target, 'entry_points': {}, 'install_requires': [], 'setup_requires': [],
                'tests_requires': [], 'doc_urls': {}, 'ext_modules': [], 'extra_setup': [], 'classifiers': [], }

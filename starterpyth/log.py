@@ -1,8 +1,10 @@
 import copy
 import logging
+import logging.config
 from io import BytesIO
 import traceback
 import sys
+import pkg_resources
 
 __author__ = 'd9pouces'
 __all__ = ['ColorizedHandler', 'traceback', 'CONSOLE']
@@ -71,10 +73,49 @@ CONSOLE = {
     },
     'root': {
         'handlers': ['color'],
-        'level': 'DEBUG',
+        'level': 'WARNING',
         'propagate': True,
     }
 }
+
+
+def dictConfig(config):
+    if not hasattr(logging.config, 'dictConfig'):
+        f_in = BytesIO()
+
+        def write_value(config_key, values, value_key, default):
+            value = values.get(value_key, default)
+            if isinstance(value, list):
+                value = ",".join(value)
+            elif isinstance(value, dict):
+                value = ",".join([x for x in value])
+            f_in.write("{0}={1}\n".format(config_key, value))
+        f_in.write("[loggers]\n")
+        values = ['root'] + list(config.get('loggers', {}).keys())
+        f_in.write("keys={0}\n".format(",".join(values)))
+        for index_name in ('handlers', 'formatters'):
+            f_in.write("[{0}]\n".format(index_name))
+            write_value('keys', config, index_name, [])
+        for h_name in config.get('handlers', []):
+            f_in.write("[handler_{0}]\n".format(h_name))
+            write_value('class', config['handlers'][h_name], 'class', '')
+            write_value('level', config['handlers'][h_name], 'level', 'NOTSET')
+            write_value('args', config['handlers'][h_name], 'args', '()')
+        for l_name in config.get('loggers', []):
+            f_in.write("[logger_{0}]\n".format(l_name))
+            write_value('handlers', config['loggers'][l_name], 'handlers', [])
+            write_value('level', config['loggers'][l_name], 'level', 'NOTSET')
+            write_value('propagate', config['loggers'][l_name], 'propagate', 1)
+        f_in.write("[logger_root]\n")
+        write_value('handlers', config['root'], 'handlers', [])
+        write_value('level', config['root'], 'level', 'NOTSET')
+        write_value('propagate', config['root'], 'propagate', 1)
+        f_in.seek(0)
+        f_in.seek(0)
+        logging.config.fileConfig(f_in)
+    else:
+        logging.config.dictConfig(config)
+
 
 
 if __name__ == '__main__':

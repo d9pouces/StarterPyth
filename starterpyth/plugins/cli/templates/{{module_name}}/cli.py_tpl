@@ -31,7 +31,7 @@ def main():
         log_config['root']['level'] = 'DEBUG'
     elif {% if pyversion <= 2.6 %}options{% else %}args{% endif %}.verbose:
         log_config['root']['level'] = 'INFO'
-    logging.config.dictConfig(log_config)
+    {{ module_name }}.log.dictConfig(log_config)
     logging.debug(_('Enter debug mode.'))
     logging.debug(_('Start of main function.'))
     return_code = 0  # 0 = success, != 0 = error

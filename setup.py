@@ -5,11 +5,11 @@ import os.path
 
 from setuptools import setup, find_packages
 
-from starterpyth.log import CONSOLE
+from starterpyth.log import CONSOLE, dictConfig
 
 __author__ = 'd9pouces'
 
-logging.config.dictConfig(CONSOLE)
+dictConfig(CONSOLE)
 
 # noinspection PyUnresolvedReferences
 if os.path.isdir(os.path.join(os.path.dirname(__file__), '.git')):
