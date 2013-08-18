@@ -14,7 +14,7 @@ try:
     import cProfile as profile
 except ImportError:
     import profile
-if sys.version[0] < 3:
+if sys.version_info[0] == 2:
     try:
         from cStringIO import StringIO as BytesIO
     except ImportError:

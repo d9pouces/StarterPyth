@@ -12,10 +12,6 @@ import {% if pyversion <= 2.6 %}optparse{% else %}argparse{% endif %}
 def main():
     """Main function, intended for use as command line executable.
 
-    >>> main()
-    'Hello world!'
-    0
-
     Args:
         None
     Returns:

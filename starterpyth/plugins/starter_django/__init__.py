@@ -1,5 +1,5 @@
 import random
-
+import logging
 __author__ = 'd9pouces'
 
 from starterpyth.core import Plugin
@@ -21,7 +21,11 @@ class DjangoPlugin(Plugin):
         self.selected = BooleanInput(_('Create a Django website'), default=True).input()
         if not self.selected:
             return
-        self.use_tastypie = BooleanInput(_('Create sample REST API with Tastypie'), default=True).input()
+        if 3.0 <= context['pyversion'] <= 3.2:
+            logging.warning(_('django-tastypie is not compatible with Python 3.0 -> 3.2'))
+            self.use_tastypie = False
+        else:
+            self.use_tastypie = BooleanInput(_('Create sample REST API with Tastypie'), default=True).input()
         self.use_tastypie_swagger = False
         if self.use_tastypie:
             self.use_tastypie_swagger = BooleanInput(_('Create API doc with Tastypie Swagger'), default=True).input()
@@ -30,9 +34,9 @@ class DjangoPlugin(Plugin):
         context['entry_points'].setdefault('console_scripts', []).append(script)
         context['install_requires'].append('django')
         if self.use_tastypie:
-            context['install_requires'].append('tastypie')
+            context['install_requires'].append('django-tastypie')
             context['install_requires'].append('python-mimeparse')
-            context['install_requires'].append('dateutil')
+            context['install_requires'].append('python-dateutil')
         if self.use_tastypie_swagger:
             context['install_requires'].append('django-tastypie-swagger')
 

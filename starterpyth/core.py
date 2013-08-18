@@ -6,7 +6,6 @@ import os.path
 import imp
 import sys
 
-from jinja2 import Environment, PackageLoader, Template
 import pkg_resources
 
 import starterpyth.log
@@ -39,12 +38,14 @@ class Plugin(object):
         pass
 
     def get_template(self, context, modname, filename):
+        from jinja2 import Environment, PackageLoader
         dirname, filename = filename.rsplit('/', 1)
         env = Environment(loader=PackageLoader(modname, dirname))
         template = env.get_template(filename)
         return template.render(**context)
 
     def write_files(self, context, filters):
+        from jinja2 import Environment, PackageLoader, Template
         local_context = copy.copy(context)
         local_context.update(self.get_local_context(local_context))
         modname, dirname = self.get_resources()

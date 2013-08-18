@@ -3,6 +3,7 @@ from errno import ENOENT
 import gettext
 import os.path
 import pkg_resources
+import sys
 
 __author__ = 'd9pouces'
 __all__ = ['translation', 'gettext', 'lgettext', 'ugettext', 'ngettext', 'lngettext', 'ungettext']
@@ -78,10 +79,13 @@ __trans = translation('starterpyth', fallback=True)
 
 gettext = __trans.gettext
 lgettext = __trans.lgettext
-ugettext = __trans.ugettext
 ngettext = __trans.ngettext
 lngettext = __trans.lngettext
-ungettext = __trans.ungettext
+ugettext = __trans.gettext
+ungettext = __trans.ngettext
+if sys.version_info[0] == 2:
+    ugettext = __trans.ugettext
+    ungettext = __trans.ungettext
 
 
 if __name__ == '__main__':

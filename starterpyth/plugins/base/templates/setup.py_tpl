@@ -29,7 +29,9 @@ else:
 
 ext_modules = [{% for ext in ext_modules %}{{ ext }}, {% endfor %}]
 cmdclass = {}
-entry_points = {{ entry_points }}
+entry_points = {% raw %}{{% endraw %}{% for key, values in entry_points.iteritems() %}{{ key|unicode }}: [{% for value in values %}{{ value|unicode }},
+{% endfor %}],
+{% endfor %}{% raw %}}{% endraw %}
 
 {% for txt in extra_setup %}{{ txt|safe }}
 {% endfor %}
@@ -54,7 +56,9 @@ setup(
     use_2to3_fixers=[],
     use_2to3_exclude_fixers = [],
 {% endif %}    install_requires=[{% for m in install_requires %}'{{ m }}', {% endfor %}],
-    setup_requires=[{% for m in install_requires %}'{{ m }}', {% endfor %}],
+    setup_requires=[{% for m in install_requires %}
+                    '{{ m }}', {% endfor %}
+                   ],
     classifiers=[{% for m in classifiers %}'{{ m }}',
                  {% endfor %}]
 )

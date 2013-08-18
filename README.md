@@ -16,21 +16,20 @@ You can decide to create different kinds of Python applications:
   * Django-based website with custom commands and optional modules
     * create basic configurations for nginx and Apache
     * examples of tastypie REST APIs
-    * use global configuration file (/etc/myproject/project.conf)
     * example of basic views and forms
-    * basic use of dajax and dajaxice
+    * use global configuration file (/etc/myproject/project.conf) [TODO]
+    * basic use of dajax and dajaxice [TODO]
 
 The goal is also to provide many useful extra commands for distribute. Here is a list of commands I want to write:
 
-  * generate API index file for Sphinx (done)
-  * generate doc through Sphinx (done)
-  * generate Pylint report (done)
-  * compute dependencies thanks to snake food (done)
-  * make i18n messages (done)
-  * compile i18n messages (done)
-  * generate pseudo-l10n files (done)
-  * create a DMG on Mac OS X
-  * test documentation (done)
+  * generate API index file for Sphinx
+  * generate doc through Sphinx
+  * generate Pylint report
+  * compute dependencies thanks to snake food
+  * make i18n messages
+  * compile i18n messages
+  * generate pseudo-l10n files
+  * test documentation
 
 I also want to provide templates for other classical Python programs:
 
