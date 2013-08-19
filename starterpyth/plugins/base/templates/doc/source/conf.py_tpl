@@ -226,9 +226,9 @@ man_pages = [
 # -- Options for Epub output ---------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = {{ unicode_prefix }}'{{ project_name }}'
-epub_author = {{ unicode_prefix }}'{{ author }}'
-epub_publisher = {{ unicode_prefix }}'{{ company }}'
+epub_title = {{ project_name|unicode }}
+epub_author = {{ author|unicode }}
+epub_publisher = {{ company|unicode }}
 epub_copyright = {{ unicode_prefix }}'{{ year }}, {{ company }}'
 
 # The language of the text. It defaults to the language option
@@ -263,5 +263,5 @@ epub_copyright = {{ unicode_prefix }}'{{ year }}, {{ company }}'
 #epub_tocdup = True
 #
 intersphinx_mapping = {
-    {% for doc_key, doc_url in doc_urls.iteritems() %}'{{ doc_key }}': ('{{ doc_url.0 }}', '{{ doc_url.1 }}'),
+    {% for doc_key, doc_url in doc_urls.items() %}'{{ doc_key }}': ('{{ doc_url.0 }}', '{{ doc_url.1 }}'),
     {% endfor %}}

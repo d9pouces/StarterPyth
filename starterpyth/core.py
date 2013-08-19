@@ -84,16 +84,19 @@ class Plugin(object):
                 src_path, dst_path = get_path(root, filename)
                 if filename[-4:] == '_tpl':
                     template = env.get_template(src_path)
-                    with open(dst_path, 'ab') as f_out:
-                        f_out.write(template.render(**local_context).encode('utf-8'))
+                    f_out = open(dst_path, 'ab')
+                    f_out.write(template.render(**local_context).encode('utf-8'))
+                    f_out.close()
                     logging.info(_('Template %(f)s written.') % {'f': dst_path})
                 else:
-                    with open(dst_path, 'wb') as f_out:
-                        with pkg_resources.resource_stream(modname, root + '/' + filename) as f_in:
-                            data = f_in.read(10240)
-                            while data:
-                                f_out.write(data)
-                                data = f_in.read(10240)
+                    f_out = open(dst_path, 'wb')
+                    f_in = pkg_resources.resource_stream(modname, root + '/' + filename)
+                    data = f_in.read(10240)
+                    while data:
+                        f_out.write(data)
+                        data = f_in.read(10240)
+                    f_in.close()
+                    f_out.close()
                     logging.info(_('File %(f)s written.') % {'f': dst_path})
 
     def get_resources(self):

@@ -60,8 +60,9 @@ def translation(domain, localedir='locale', languages=None,
         key = (class_, mofile)
         t = gettext._translations.get(key)
         if t is None:
-            with pkg_resources.resource_stream('starterpyth', mofile) as fp:
-                t = gettext._translations.setdefault(key, class_(fp))
+            fp = pkg_resources.resource_stream('starterpyth', mofile)
+            t = gettext._translations.setdefault(key, class_(fp))
+            fp.close()
         # Copy the translation object to allow setting fallbacks and
         # output charset. All other instance data is shared with the
         # cached object.

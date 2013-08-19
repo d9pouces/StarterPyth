@@ -58,8 +58,9 @@ class MakeMessages(Command):
             for filename in (pot_file, po_file):
                 if not os.path.isfile(filename):
                     context['package'] = tl_name
-                    with codecs.open(filename, 'w', encoding='utf-8') as fd:
-                        fd.write(template.render(context))
+                    fd =codecs.open(filename, 'w', encoding='utf-8')
+                    fd.write(template.render(context))
+                    fd.close()
         for tl_name, module_names in all_modules.items():
             dst_abs_path = os.path.join(top_levels_modules[tl_name], dst_rel_path)
             root_path = os.path.dirname(top_levels_modules[tl_name])
@@ -77,8 +78,9 @@ class MakeMessages(Command):
                     if ext not in ('py', 'pyx', 'c'):
                         continue
                     try:
-                        with codecs.open(filename, 'r', encoding='utf-8') as fd:
-                            fd.read()
+                        fd = codecs.open(filename, 'r', encoding='utf-8')
+                        fd.read()
+                        fd.close()
                         filenames.append(os.path.relpath(filename, root_path))
                         logging.info(_('%(filename)s added.') % {'filename': filename})
                     except UnicodeDecodeError:

@@ -80,7 +80,7 @@ CONSOLE = {
     }
 }
 
-
+{% if pyversion <= 2.6 %}
 def dictConfig(config):
     if not hasattr(logging.config, 'dictConfig'):
         f_in = BytesIO()
@@ -117,8 +117,9 @@ def dictConfig(config):
         logging.config.fileConfig(f_in)
     else:
         logging.config.dictConfig(config)
-
-
+{% else %}
+dictConfig = logging.config.dictConfig
+{% endif %}
 if __name__ == '__main__':
     import doctest
     doctest.testmod()

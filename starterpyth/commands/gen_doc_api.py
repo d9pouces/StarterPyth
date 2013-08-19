@@ -68,9 +68,10 @@ class GenDocApi(Command):
             if not os.path.isdir(dirname):
                 os.makedirs(dirname)
             if not os.path.isfile(path) or self.overwrite:
-                with codecs.open(path, 'w', encoding='utf-8') as fd:
-                    fd.write(template.render(context))
-                    logging.info('writing %s' % path)
+                fd = codecs.open(path, 'w', encoding='utf-8')
+                fd.write(template.render(context))
+                fd.close()
+                logging.info('writing %s' % path)
         src_module_names = find_packages()
         if self.pre_rm and os.path.isdir(self.api_dir):
             logging.info('removing %s' % self.api_dir)

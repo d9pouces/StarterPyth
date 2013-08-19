@@ -44,16 +44,17 @@ class BasePlugin(Plugin):
         module_version = RegexpInput(_('Initial version'), regexp=r'[\w\.\-]', default='0.1').input()
         context['project_name'] = project_name
         context['module_name'] = module_name
+        context['pyversion'] = pyversion
         context['use_2to3'] = use_2to3
         context['use_six'] = use_six
         context['py3compat'] = py3compat
         context['license'] = license_names[license_]
         if license_ != 'Other':
-            with pkg_resources.resource_stream('starterpyth.plugins.base', 'licenses/%s.txt' % license_) as fd:
-                context['license_content'] = fd.read().decode('utf-8')
+            fd = pkg_resources.resource_stream('starterpyth.plugins.base', 'licenses/%s.txt' % license_)
+            context['license_content'] = fd.read().decode('utf-8')
+            fd.close()
         else:
             context['license_content'] = ''
-        context['pyversion'] = pyversion
         if py3compat == 'six':
             filters['unicode'] = lambda x: 'six.u("{0}")'.format(x.replace("\"", "\\\""))
             filters['binary'] = lambda x: 'six.b("{0}")'.format(x.replace("\"", "\\\""))

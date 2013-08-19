@@ -22,8 +22,9 @@ if os.path.isdir(os.path.join(os.path.dirname(__file__), '.git')):
 
 readme = os.path.join(os.path.dirname(__file__), 'README.md')
 if os.path.isfile(readme):
-    with codecs.open(readme, 'r', encoding='utf-8') as fd:
-        long_description = fd.read()
+    fd = codecs.open(readme, 'r', encoding='utf-8')
+    long_description = fd.read()
+    fd.close()
 else:
     long_description = ''
 
