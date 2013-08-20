@@ -117,7 +117,6 @@ def dictConfig(config):
         logging.config.dictConfig(config)
 
 
-
 if __name__ == '__main__':
     import doctest
     doctest.testmod()

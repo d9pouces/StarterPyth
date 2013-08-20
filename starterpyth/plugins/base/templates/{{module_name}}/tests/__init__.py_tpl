@@ -7,11 +7,10 @@ You should consider to install :mod:`Distribute` to run all tests with::
     $ python setup.py test
 
 """
-{% include 'header.py_inc' %}
-__all__ = ['load_tests']
-
 import os.path
 import unittest
+{% include 'header.py_inc' %}
+__all__ = ['load_tests']
 
 
 def load_tests(loader=None, standard_tests=None, pattern=None):

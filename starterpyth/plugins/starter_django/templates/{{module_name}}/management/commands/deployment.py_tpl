@@ -1,18 +1,13 @@
 """
 Print basic but functionnal configurations for deployment.
 """
-{% include 'header.py_inc' %}
-import os.path
 import logging
-import logging.config
+import os.path
 import sys
-
 from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.template.loader import render_to_string
-
-from {{ module_name }}.log import CONSOLE
-
+{% include 'header.py_inc' %}
 
 if sys.version_info[0] == 3:
     my_input = input
@@ -27,7 +22,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # first: determine the type of server
-        logging.config.dictConfig(CONSOLE)
         server_type = None
         server_name = my_input('domain name of your server [www.example.com] ')
         if not server_name:

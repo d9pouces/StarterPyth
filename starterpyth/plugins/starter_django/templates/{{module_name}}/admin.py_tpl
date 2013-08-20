@@ -3,13 +3,12 @@
 These admin models are associated to a :class:`django.db.models.Model`
 and registered to the :class:`django.contrib.admin.site`.
 """
-{% include 'header.py_inc' %}
-
 from django.contrib import admin
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
-
 #from {{ module_name }}.models import SampleModel
+{% include 'header.py_inc' %}
+
 
 
 #class SampleModelAdmin(admin.ModelAdmin):

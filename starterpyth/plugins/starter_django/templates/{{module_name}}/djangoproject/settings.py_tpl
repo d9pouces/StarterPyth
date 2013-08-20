@@ -1,7 +1,7 @@
-{% include 'header.py_inc' %}
-# Django settings for {{ module_name }} project.
-
+""" Django settings for {{ module_name }} project. """
 from os.path import join, dirname, abspath
+{% include 'header.py_inc' %}
+
 
 # define a root path for misc. Django data (SQLite database, static files, ...)
 LOCAL_PATH = abspath(join(dirname(dirname(dirname(__file__))), 'django_data'))

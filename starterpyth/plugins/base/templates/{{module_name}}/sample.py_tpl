@@ -2,13 +2,11 @@
 Actual code of the {{ project_name }} Python module.
 
 """
-{% include 'header.py_inc' %}
 from {{ module_name }}.translation import ugettext as _
-
+{% include 'header.py_inc' %}
 __all__ = ['sample_function', 'sample_translation']
 
 # TODO write your actual code here.
-
 
 def sample_function(first, second=4):
     """This is a sample function to demonstrate doctests

@@ -1,15 +1,12 @@
-{% include 'header.py_inc' %}
 import codecs
 import logging
 import os.path
 import sys
 from setuptools import setup, find_packages
-
-from {{ module_name }}.log import CONSOLE, dictConfig
+{% include 'header.py_inc' %}
 
 
 commands = filter(lambda x: x[0:1] != '-', sys.argv)
-dictConfig(CONSOLE)
 
 # noinspection PyUnresolvedReferences
 if os.path.isdir(os.path.join(os.path.dirname(__file__), '.git')):

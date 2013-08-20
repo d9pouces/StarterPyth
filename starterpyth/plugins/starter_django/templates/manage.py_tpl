@@ -1,4 +1,4 @@
-{% include 'header.py_inc' %}
 from {{ module_name }}.djangoproject.manage import main
+{% include 'header.py_inc' %}
 
 main()

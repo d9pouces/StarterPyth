@@ -20,6 +20,7 @@ yes
 no
 EOF
 cd Test
+python3.2 setup.py build > /dev/null
 python3.2 setup.py build_ext > /dev/null
 python3.2 setup.py doctest > /dev/null
 python3.2 setup.py test > /dev/null
@@ -44,9 +45,11 @@ no
 no
 EOF
 cd Test
+python2.7 setup.py build > /dev/null
 python2.7 setup.py build_ext > /dev/null
 python2.7 setup.py doctest > /dev/null
 python2.7 setup.py test > /dev/null
+python3.2 setup.py build > /dev/null
 python3.2 setup.py build_ext > /dev/null
 python3.2 setup.py doctest > /dev/null
 python3.2 setup.py test > /dev/null
@@ -71,12 +74,15 @@ no
 no
 EOF
 cd Test
+python2.6 setup.py build > /dev/null
 python2.6 setup.py build_ext > /dev/null
 python2.6 setup.py doctest > /dev/null
 python2.6 setup.py test > /dev/null
+python2.7 setup.py build > /dev/null
 python2.7 setup.py build_ext > /dev/null
 python2.7 setup.py doctest > /dev/null
 python2.7 setup.py test > /dev/null
+python3.2 setup.py build > /dev/null
 python3.2 setup.py build_ext > /dev/null
 python3.2 setup.py doctest > /dev/null
 python3.2 setup.py test > /dev/null
@@ -102,9 +108,11 @@ no
 no
 EOF
 cd Test
+python2.6 setup.py build > /dev/null
 python2.6 setup.py build_ext > /dev/null
 python2.6 setup.py doctest > /dev/null
 python2.6 setup.py test > /dev/null
+python2.7 setup.py build > /dev/null
 python2.7 setup.py build_ext > /dev/null
 python2.7 setup.py doctest > /dev/null
 python2.7 setup.py test > /dev/null
@@ -133,6 +141,7 @@ yes
 yes
 EOF
 cd Test
+python2.7 setup.py build > /dev/null
 python2.7 setup.py build_ext > /dev/null
 python2.7 setup.py doctest > /dev/null
 python2.7 setup.py test > /dev/null
@@ -174,6 +183,7 @@ yes
 no
 EOF
 cd Test
+python3.2 setup.py build > /dev/null
 python3.2 setup.py build_ext > /dev/null
 python3.2 setup.py doctest > /dev/null
 python3.2 setup.py test > /dev/null
@@ -198,6 +208,7 @@ yes
 no
 EOF
 cd Test
+python2.7 setup.py build > /dev/null
 python3.2 setup.py build_ext > /dev/null
 python3.2 setup.py doctest > /dev/null
 python3.2 setup.py test > /dev/null
@@ -223,9 +234,11 @@ no
 no
 EOF
 cd Test
+python2.6 setup.py build > /dev/null
 python2.6 setup.py build_ext > /dev/null
 python2.6 setup.py doctest > /dev/null
 python2.6 setup.py test > /dev/null
+python3.2 setup.py build > /dev/null
 python3.2 setup.py build_ext > /dev/null
 python3.2 setup.py doctest > /dev/null
 python3.2 setup.py test > /dev/null

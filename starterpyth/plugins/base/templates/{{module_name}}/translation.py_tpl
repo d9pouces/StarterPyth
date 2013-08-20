@@ -1,11 +1,13 @@
-{% include 'header.py_inc' %}
+"""
+Define simple translation tools, allowing to easily find locale files in packages without configuration.
+"""
 import copy
 from errno import ENOENT
 import gettext
 import os.path
 import pkg_resources
 import sys
-
+{% include 'header.py_inc' %}
 __all__ = ['translation', 'gettext', 'lgettext', 'ugettext', 'ngettext', 'lngettext', 'ungettext']
 
 

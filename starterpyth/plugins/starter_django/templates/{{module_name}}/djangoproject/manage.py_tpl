@@ -1,6 +1,7 @@
-{% include 'header.py_inc' %}
 import os
 import sys
+{% include 'header.py_inc' %}
+
 
 def main():
     os.environ["DJANGO_SETTINGS_MODULE"] = "{{ module_name }}.djangoproject.settings"

@@ -73,6 +73,8 @@ class BasePlugin(Plugin):
             filters['binary'] = lambda x: '"{0}"'.format(x.replace("\"", "\\\""))
             context['unicode'] = 'unicode'
             context['binary'] = 'str'
+        context['copyright_full'] = _('Copyright %(year)d, %(comp)s') % {'year': datetime.date.today().year,
+                                                                         'comp': company}
         context['company'] = company
         context['email'] = email
         context['author'] = author

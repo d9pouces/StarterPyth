@@ -1,16 +1,14 @@
 """
 Define a Colorized output to console and several dict configurations
 """
-{% include 'header.py_inc' %}
 import copy
+from io import BytesIO
 import logging
 import logging.config
-from io import BytesIO
-import traceback
 import sys
-
-
-__all__ = ['ColorizedHandler', 'traceback', 'CONSOLE']
+import traceback
+{% include 'header.py_inc' %}
+__all__ = ['ColorizedHandler', 'traceback', 'CONSOLE', 'dictConfig']
 
 
 class ColorizedHandler(logging.StreamHandler):

@@ -1,0 +1,10 @@
+{% if use_six %}import six
+{% endif %}
+{% if licence_preamble %}{{ licence_preamble|unicode }}{% endif %}
+
+__author__ = {{ author|unicode }}
+__license__ = {{ license|unicode }}
+__copyright__ = {{ copyright_full|unicode }}
+__credits__ = {{ author|unicode }}
+__maintainer__ = {{ author|unicode }}
+__email__ = {{ email|unicode }}

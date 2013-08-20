@@ -1,12 +1,12 @@
 """Core shell application.
 Parse arguments and logger, use translated strings.
 """
-{% include 'header.py_inc' %}
-from {{ module_name }}.translation import ugettext as _
-import {{ module_name }}.log
 import logging
-import logging.config
 import {% if pyversion <= 2.6 %}optparse{% else %}argparse{% endif %}
+import {{ module_name }}.log
+from {{ module_name }}.translation import ugettext as _
+{% include 'header.py_inc' %}
+__all__ = ['main']
 
 
 def main():

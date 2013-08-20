@@ -1,14 +1,13 @@
 """Define mappings from the URL requested by a user to a proper Python view."""
-{% include 'header.py_inc' %}
 from django.conf import settings
 from django.conf.urls import patterns, include, url
-# Uncomment the next two lines to enable the admin:
 from django.contrib import admin
-admin.autodiscover()
-
 {% if use_tastypie %}from tastypie.api import Api
 from {{ module_name }} import api
-V1_API = Api(api_name='v1')
+{% endif %}{% include 'header.py_inc' %}
+admin.autodiscover()
+
+{% if use_tastypie %}V1_API = Api(api_name='v1')
 #V1_API.register(api.SampleResource()){% endif %}
 urlpatterns = patterns(
     '',

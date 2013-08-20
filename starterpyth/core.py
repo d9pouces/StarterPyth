@@ -1,10 +1,10 @@
 import copy
 import logging
-import logging.config
 from optparse import OptionParser
 import os.path
 import imp
 import sys
+from jinja2.loaders import ChoiceLoader
 
 import pkg_resources
 
@@ -40,7 +40,8 @@ class Plugin(object):
     def get_template(self, context, modname, filename):
         from jinja2 import Environment, PackageLoader
         dirname, filename = filename.rsplit('/', 1)
-        env = Environment(loader=PackageLoader(modname, dirname))
+        loader = ChoiceLoader([PackageLoader('starterpyth', 'templates'), PackageLoader(modname, dirname)])
+        env = Environment(loader=loader)
         template = env.get_template(filename)
         return template.render(**context)
 
@@ -51,7 +52,8 @@ class Plugin(object):
         modname, dirname = self.get_resources()
         if modname is None or dirname is None:
             return
-        env = Environment(loader=PackageLoader(modname, dirname))
+        loader = ChoiceLoader([PackageLoader('starterpyth', 'templates'), PackageLoader(modname, dirname)])
+        env = Environment(loader=loader)
         env.filters.update(filters)
         project_root = os.path.join(context['project_root'], context['project_name'])
         if not os.path.isdir(project_root):

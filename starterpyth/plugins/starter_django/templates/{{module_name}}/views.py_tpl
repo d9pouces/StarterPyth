@@ -2,9 +2,6 @@
 """Here are defined Python functions of views.
 Views are binded to URLs in :mod:`{{ package_name }}.urls`.
 """
-{% include 'header.py_inc' %}
-
-
 from django import forms
 from django.core.context_processors import csrf
 from django.core.urlresolvers import reverse
@@ -14,6 +11,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext_lazy as _
 import django.contrib.admin.widgets
+{% include 'header.py_inc' %}
 
 #from {{ module_name }} import models
 

@@ -3,13 +3,12 @@ Test module corresponding to the :mod:`{{ package_name }}.sample_cython` module.
 
 More documentation about Cython can be found at {{ doc_urls.cython }}.
 """
-{% include 'header.py_inc' %}
-
 import logging
 import time
 import unittest
 from {{ module_name }}.sample_cython import integrate_f_2, integrate_f_1, integrate_f_0
-
+{% include 'header.py_inc' %}
+__all__ = ['SampleTest']
 
 class SampleTest(unittest.TestCase):
     """Base test cases for the sample function provided in

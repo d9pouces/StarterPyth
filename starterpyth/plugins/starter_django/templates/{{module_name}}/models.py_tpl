@@ -7,10 +7,9 @@ Models are standard Python classes which inherits from
 Documentation can be found at {{ doc_urls.django_fields }}.
 
 """
-{% include 'header.py_inc' %}
-
 from django.db import models
 from django.utils.translation import ugettext, ugettext_lazy as _
+{% include 'header.py_inc' %}
 
 
 #class SampleModel(models.Model):

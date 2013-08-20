@@ -4,11 +4,10 @@ Sample test module corresponding to the :mod:`{{ module_name }}.sample` module.
 A complete documentation can be found at :mod:`unittest`.
 
 """
-{% include 'header.py_inc' %}
-__all__ = ['SampleTest']
-
 import unittest
 from {{ module_name }}.sample import sample_function
+{% include 'header.py_inc' %}
+__all__ = ['SampleTest']
 
 
 class SampleTest(unittest.TestCase):
