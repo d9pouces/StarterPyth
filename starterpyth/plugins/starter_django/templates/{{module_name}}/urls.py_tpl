@@ -1,5 +1,5 @@
 """Define mappings from the URL requested by a user to a proper Python view."""
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
 {% include 'header.py_inc' %}
 
 urlpatterns = patterns(

@@ -1,1 +1,10 @@
+"""
+This package contains Django stuff related to the global project (not only to a single application):
+
+  * settings
+  * middlewares
+  * WSGI application
+  * root urls
+
+"""
 {% include 'header.py_inc' %}

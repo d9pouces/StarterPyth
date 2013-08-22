@@ -29,7 +29,7 @@ def index(request):
     if request.method == 'POST':
         form = SampleForm(request.POST)
         if form.is_valid():
-            # TODO please process the form using dict form.cleaned_data
+            # please process the form using dict form.cleaned_data
             messages.info(request, _('Form processed'))
             # if you don't have result to show (expected the info message),
             # you should redirect to another page

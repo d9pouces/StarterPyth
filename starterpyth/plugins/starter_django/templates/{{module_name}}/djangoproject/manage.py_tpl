@@ -1,3 +1,6 @@
+"""
+Define a main() function, allowing you to manage your Django project.
+"""
 import os
 import sys
 {% include 'header.py_inc' %}

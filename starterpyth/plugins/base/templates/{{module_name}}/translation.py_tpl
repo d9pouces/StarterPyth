@@ -13,6 +13,14 @@ __all__ = ['translation', 'gettext', 'lgettext', 'ugettext', 'ngettext', 'lngett
 
 # Locate a .mo file using the gettext strategy
 def __find(domain, localedir='locale', languages=None, all_=False):
+    """
+    Return the name of a .mo file using the gettext strategy.
+
+    :param domain: Gettext domain name (e.g. your module name)
+    :param localedir: directory containing locales (give 'locale' if you have locale/fr_FR/LC_MESSAGES/domain.mo)
+    :param languages: languages to find (if None: calculated with LANGUAGE, LC_ALL, LC_MESSAGES, LANG env. variables)
+    :param all_: if True return a list of filenames corresponding to given languages, else return the first valid file.
+    """
     # Get some reasonable defaults for arguments that were not supplied
     if languages is None:
         languages = []
@@ -30,10 +38,7 @@ def __find(domain, localedir='locale', languages=None, all_=False):
             if nelang not in nelangs:
                 nelangs.append(nelang)
     # select a language
-    if all_:
-        result = []
-    else:
-        result = None
+    result = [] if all_ else None
     for lang in nelangs:
         if lang == 'C':
             break
@@ -48,6 +53,16 @@ def __find(domain, localedir='locale', languages=None, all_=False):
 
 def translation(domain, localedir='locale', languages=None,
                 class_=None, fallback=False, codeset=None):
+    """
+
+    :param domain:
+    :param localedir:
+    :param languages:
+    :param class_:
+    :param fallback:
+    :param codeset:
+    :return: :raise:
+    """
     if class_ is None:
         class_ = gettext.GNUTranslations
     mofiles = __find(domain, localedir, languages, all_=True)
@@ -60,34 +75,34 @@ def translation(domain, localedir='locale', languages=None,
     result = None
     for mofile in mofiles:
         key = (class_, mofile)
-        t = gettext._translations.get(key)
-        if t is None:
-            with pkg_resources.resource_stream('{{ module_name }}', mofile) as fp:
-                t = gettext._translations.setdefault(key, class_(fp))
+        trans_obj = gettext._translations.get(key)
+        if trans_obj is None:
+            with pkg_resources.resource_stream('{{ module_name }}', mofile) as fileobj:
+                trans_obj = gettext._translations.setdefault(key, class_(fileobj))
         # Copy the translation object to allow setting fallbacks and
         # output charset. All other instance data is shared with the
         # cached object.
-        t = copy.copy(t)
+        trans_obj = copy.copy(trans_obj)
         if codeset:
-            t.set_output_charset(codeset)
+            trans_obj.set_output_charset(codeset)
         if result is None:
-            result = t
+            result = trans_obj
         else:
-            result.add_fallback(t)
+            result.add_fallback(trans_obj)
     return result
 
 
-__trans = translation('{{ module_name }}', fallback=True)
+__TRANS = translation('{{ module_name }}', fallback=True)
 
-gettext = __trans.gettext
-lgettext = __trans.lgettext
-ngettext = __trans.ngettext
-lngettext = __trans.lngettext
-ugettext = __trans.gettext
-ungettext = __trans.ngettext
+gettext = __TRANS.gettext
+lgettext = __TRANS.lgettext
+ngettext = __TRANS.ngettext
+lngettext = __TRANS.lngettext
+ugettext = __TRANS.gettext
+ungettext = __TRANS.ngettext
 if sys.version_info[0] == 2:
-    ugettext = __trans.ugettext
-    ungettext = __trans.ungettext
+    ugettext = __TRANS.ugettext
+    ungettext = __TRANS.ungettext
 
 
 if __name__ == '__main__':

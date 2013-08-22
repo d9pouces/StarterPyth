@@ -10,9 +10,9 @@ from django.template.loader import render_to_string
 {% include 'header.py_inc' %}
 
 if sys.version_info[0] == 3:
-    my_input = input
+    MY_INPUT = input
 else:
-    my_input = raw_input
+    MY_INPUT = raw_input
 
 
 class Command(BaseCommand):
@@ -23,12 +23,12 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # first: determine the type of server
         server_type = None
-        server_name = my_input('domain name of your server [www.example.com] ')
+        server_name = MY_INPUT('domain name of your server [www.example.com] ')
         if not server_name:
             server_name = 'www.example.com'
         use_ssl = None
         while use_ssl is None:
-            use_ssl = my_input('Secure connection by SSL y/n [y] ')
+            use_ssl = MY_INPUT('Secure connection by SSL y/n [y] ')
             if not use_ssl:
                 use_ssl = 'y'
             if use_ssl not in ('y', 'n'):
@@ -36,7 +36,7 @@ class Command(BaseCommand):
                 use_ssl = None
         while server_type is None:
             print('Which server do you want to use?')
-            server_type = my_input('1: Apache, 2: Nginx [1] ')
+            server_type = MY_INPUT('1: Apache, 2: Nginx [1] ')
             if not server_type:
                 server_type = '1'
             if server_type not in ('1', '2'):
@@ -58,7 +58,7 @@ class Command(BaseCommand):
         if server_type == '1':
             template = 'deployment/apache.conf'
             while daemon_type is None:
-                daemon_type = my_input('1: mod_wsgi, 2: gunicorn ')
+                daemon_type = MY_INPUT('1: mod_wsgi, 2: gunicorn ')
                 if daemon_type not in ('1', '2'):
                     print('Please enter 1 or 2.')
                     daemon_type = None
@@ -76,13 +76,14 @@ class Command(BaseCommand):
         else:
             template = 'deployment/nginx.conf'
             while daemon_type is None:
-                daemon_type = my_input('1: fast_cgi, 2: gunicorn ')
+                daemon_type = MY_INPUT('1: fast_cgi, 2: gunicorn ')
                 if daemon_type not in ('1', '2'):
                     print('Please enter 1 or 2.')
                     daemon_type = None
             if daemon_type == '1':
                 try:
                     import flup
+                    logging.debug('Found flup at %s' % os.path.dirname(flup.__file__))
                 except ImportError:
                     logging.warning('You must install "flup"')
                 context['fcgi_port'] = 3033
@@ -93,6 +94,7 @@ class Command(BaseCommand):
                 print('Default port for gunicorn is %d' % context['gunicorn_port'])
                 try:
                     import gunicorn
+                    logging.debug('Found gunicorn at %s' % os.path.dirname(gunicorn.__file__))
                 except ImportError:
                     logging.warning('You must install "gunicorn"')
                 if 'gunicorn' not in settings.INSTALLED_APPS:

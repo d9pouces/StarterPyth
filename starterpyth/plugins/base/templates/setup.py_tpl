@@ -32,7 +32,7 @@ entry_points = {% raw %}{{% endraw %}{% for key, values in entry_points.items() 
 {% for txt in extra_setup %}{{ txt|safe }}
 {% endfor %}
 setup(
-    name='module_name',
+    name='{{ module_name }}',
     version={{ module_version|unicode }},
     description='No description yet.',
     long_description=long_description,

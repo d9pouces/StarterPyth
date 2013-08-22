@@ -1,1 +1,4 @@
+"""
+Include all management modules.
+"""
 {% include 'header.py_inc' %}
