@@ -3,12 +3,12 @@ from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 {% if use_tastypie %}from tastypie.api import Api
-from {{ module_name }} import api
+# from {{ module_name }} import api
 {% endif %}{% include 'header.py_inc' %}
 admin.autodiscover()
 
 {% if use_tastypie %}V1_API = Api(api_name='v1')
-#V1_API.register(api.SampleResource()){% endif %}
+# V1_API.register(api.SampleResource()){% endif %}
 
 urlpatterns = patterns(  # pylint: disable=C0103
     '',

@@ -3,7 +3,7 @@ Define simple translation tools, allowing to easily find locale files in package
 """
 import copy
 from errno import ENOENT
-import gettext
+import gettext as gettext_module
 import os.path
 import pkg_resources
 import sys
@@ -34,7 +34,7 @@ def __find(domain, localedir='locale', languages=None, all_=False):
     # now normalize and expand the languages
     nelangs = []
     for lang in languages:
-        for nelang in gettext._expand_lang(lang):  # pylint: disable=W0212
+        for nelang in gettext_module._expand_lang(lang):  # pylint: disable=W0212
             if nelang not in nelangs:
                 nelangs.append(nelang)
     # select a language
@@ -64,21 +64,21 @@ def translation(domain, localedir='locale', languages=None,  # pylint: disable=R
     :return: :raise:
     """
     if class_ is None:
-        class_ = gettext.GNUTranslations
+        class_ = gettext_module.GNUTranslations
     mofiles = __find(domain, localedir, languages, all_=True)
     if not mofiles:
         if fallback:
-            return gettext.NullTranslations()
+            return gettext_module.NullTranslations()
         raise IOError(ENOENT, 'No translation file found for domain', domain)
     # Avoid opening, reading, and parsing the .mo file after it's been done
     # once.
     result = None
     for mofile in mofiles:
         key = (class_, mofile)
-        trans_obj = gettext._translations.get(key)  # pylint: disable=W0212
+        trans_obj = gettext_module._translations.get(key)  # pylint: disable=W0212
         if trans_obj is None:
             with pkg_resources.resource_stream('{{ module_name }}', mofile) as fileobj:
-                trans_obj = gettext._translations.setdefault(key, class_(fileobj))  # pylint: disable=W0212
+                trans_obj = gettext_module._translations.setdefault(key, class_(fileobj))  # pylint: disable=W0212
         # Copy the translation object to allow setting fallbacks and
         # output charset. All other instance data is shared with the
         # cached object.

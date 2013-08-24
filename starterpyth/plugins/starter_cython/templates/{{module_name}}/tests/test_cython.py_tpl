@@ -10,31 +10,36 @@ from {{ module_name }}.sample_cython import integrate_f_2, integrate_f_1, integr
 {% include 'header.py_inc' %}
 __all__ = ['SampleTest']
 
+
 class SampleTest(unittest.TestCase):
     """Base test cases for the sample function provided in
     :func:`{{ package_name }}.fcode.integrate_f_0`, :func:`{{ package_name }}.fcode.integrate_f_1`,
     and :func:`{{ package_name }}.fcode.integrate_f_2`."""
+    #pylint: disable=R0904
 
     def test_0(self):
         """Test the non-optimized function."""
         start = time.time()
         self.assertEqual(integrate_f_0(0., 100., 10000000), 328333.2838333309)
         end = time.time()
-        logging.debug('Execution time : %f' % (end - start))
+        msg = 'Execution time : %f' % (end - start)
+        logging.debug(msg)
 
     def test_1(self):
         """Test the semi-optimized function."""
         start = time.time()
         self.assertEqual(integrate_f_1(0., 100., 10000000), 328333.2838333309)
         end = time.time()
-        logging.debug('Execution time : %f' % (end - start))
+        msg = 'Execution time : %f' % (end - start)
+        logging.debug(msg)
 
     def test_2(self):
         """Test the optimized function."""
         start = time.time()
         self.assertEqual(integrate_f_2(0., 100., 10000000), 328333.2838333309)
         end = time.time()
-        logging.debug('Execution time : %f' % (end - start))
+        msg = 'Execution time : %f' % (end - start)
+        logging.debug(msg)
 
 if __name__ == '__main__':
     unittest.main()

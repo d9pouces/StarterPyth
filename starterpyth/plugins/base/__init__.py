@@ -4,6 +4,7 @@ import shutil
 import pkg_resources
 from starterpyth import defaults
 from starterpyth.fields import RegexpInput, CharInput, ChoiceInput, BooleanInput
+from starterpyth.utils import my_unicode
 
 __author__ = 'd9pouces'
 
@@ -43,9 +44,9 @@ class BasePlugin(Plugin):
         translation = BooleanInput(_('Include translation (i18n) stuff'), default=True).input()
         context['translation'] = translation
         if translation:
-            filters['translate'] = lambda x: '_(\'{0}\')'.format(x)
+            filters['translate'] = lambda x: my_unicode('_(\'{0}\')').format(x)
         else:
-            filters['translate'] = lambda x: '\'{0}\''.format(x)
+            filters['translate'] = lambda x: my_unicode('\'{0}\'').format(x)
         module_version = RegexpInput(_('Initial version'), regexp=r'[\w\.\-]', default='0.1').input()
         context['project_name'] = project_name
         context['module_name'] = module_name
@@ -61,21 +62,21 @@ class BasePlugin(Plugin):
         else:
             context['license_content'] = ''
         if py3compat == 'six':
-            filters['unicode'] = lambda x: 'six.u("{0}")'.format(x.replace("\"", "\\\""))
-            filters['binary'] = lambda x: 'six.b("{0}")'.format(x.replace("\"", "\\\""))
+            filters['unicode'] = lambda x: my_unicode('six.u("{0}")').format(x.replace("\"", "\\\""))
+            filters['binary'] = lambda x: my_unicode('six.b("{0}")').format(x.replace("\"", "\\\""))
             context['unicode'] = 'six.text_type'
             context['binary'] = 'six.binary_type'
             context['install_requires'].append('six')
             context['setup_requires'].append('six')
             context['tests_requires'].append('six')
         elif py3compat == 'source':
-            filters['unicode'] = lambda x: '"{0}"'.format(x.replace("\"", "\\\""))
-            filters['binary'] = lambda x: 'b"{0}"'.format(x.replace("\"", "\\\""))
+            filters['unicode'] = lambda x: my_unicode('"{0}"').format(x.replace("\"", "\\\""))
+            filters['binary'] = lambda x: my_unicode('b"{0}"').format(x.replace("\"", "\\\""))
             context['unicode'] = 'str'
             context['binary'] = 'bytes'
         else:  # no compatibility or compatibility through 2to3
-            filters['unicode'] = lambda x: 'u"{0}"'.format(x.replace("\"", "\\\""))
-            filters['binary'] = lambda x: '"{0}"'.format(x.replace("\"", "\\\""))
+            filters['unicode'] = lambda x: my_unicode('u"{0}"').format(x.replace("\"", "\\\""))
+            filters['binary'] = lambda x: my_unicode('"{0}"').format(x.replace("\"", "\\\""))
             context['unicode'] = 'unicode'
             context['binary'] = 'str'
         context['copyright_full'] = _('Copyright %(year)d, %(comp)s') % {'year': datetime.date.today().year,
@@ -106,5 +107,9 @@ class BasePlugin(Plugin):
     def get_excluded_files(self, context):
         if not context.get('translation'):
             return ['{{module_name}}/translation.py_tpl', '{{module_name}}/locale',
-                    '{{module_name}}/locale/README_tpl']
+                    '{{module_name}}/locale/README_tpl', '{{module_name}}/locale/xx_XX',
+                    '{{module_name}}/tests/test_translation.py_tpl',
+                    '{{module_name}}/locale/xx_XX/LC_MESSAGES',
+                    '{{module_name}}/locale/xx_XX/LC_MESSAGES/{{module_name}}.mo',
+                    '{{module_name}}/locale/xx_XX/LC_MESSAGES/{{module_name}}.po']
         return []

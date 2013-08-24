@@ -1,0 +1,26 @@
+# No description yet.
+# Copyright (C) flanker
+# This file is distributed under the same license as the {package} package.
+# flanker <flanker@19pouces.net>, 2013.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: test 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-08-24 12:31+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: flanker <flanker@19pouces.net>\n"
+"Language-Team: flanker <flanker@19pouces.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+
+#: test/sample.py:41
+msgid "This message should be translated"
+msgstr "[ƒ——!This message should be translated!—–]"
+
+#: test/tests/test_translation.py:28
+msgid "test_string"
+msgstr "[ƒ——!test_string!—–]"
