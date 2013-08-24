@@ -2,8 +2,7 @@
 from django.conf.urls import patterns, url
 {% include 'header.py_inc' %}
 
-urlpatterns = patterns(
+urlpatterns = patterns(  # pylint: disable=C0103
     '',
     url(r'^index/$', '{{ module_name }}.views.index'),
 )
-

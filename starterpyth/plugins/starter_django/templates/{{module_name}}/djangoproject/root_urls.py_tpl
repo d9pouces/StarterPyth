@@ -9,7 +9,8 @@ admin.autodiscover()
 
 {% if use_tastypie %}V1_API = Api(api_name='v1')
 #V1_API.register(api.SampleResource()){% endif %}
-urlpatterns = patterns(
+
+urlpatterns = patterns(  # pylint: disable=C0103
     '',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)), {% if use_tastypie_swagger %}

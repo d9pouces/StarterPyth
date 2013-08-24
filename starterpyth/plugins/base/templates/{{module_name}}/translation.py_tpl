@@ -34,7 +34,7 @@ def __find(domain, localedir='locale', languages=None, all_=False):
     # now normalize and expand the languages
     nelangs = []
     for lang in languages:
-        for nelang in gettext._expand_lang(lang):
+        for nelang in gettext._expand_lang(lang):  # pylint: disable=W0212
             if nelang not in nelangs:
                 nelangs.append(nelang)
     # select a language
@@ -51,7 +51,7 @@ def __find(domain, localedir='locale', languages=None, all_=False):
     return result
 
 
-def translation(domain, localedir='locale', languages=None,
+def translation(domain, localedir='locale', languages=None,  # pylint: disable=R0913
                 class_=None, fallback=False, codeset=None):
     """
 
@@ -75,10 +75,10 @@ def translation(domain, localedir='locale', languages=None,
     result = None
     for mofile in mofiles:
         key = (class_, mofile)
-        trans_obj = gettext._translations.get(key)
+        trans_obj = gettext._translations.get(key)  # pylint: disable=W0212
         if trans_obj is None:
             with pkg_resources.resource_stream('{{ module_name }}', mofile) as fileobj:
-                trans_obj = gettext._translations.setdefault(key, class_(fileobj))
+                trans_obj = gettext._translations.setdefault(key, class_(fileobj))  # pylint: disable=W0212
         # Copy the translation object to allow setting fallbacks and
         # output charset. All other instance data is shared with the
         # cached object.
@@ -93,7 +93,7 @@ def translation(domain, localedir='locale', languages=None,
 
 
 __TRANS = translation('{{ module_name }}', fallback=True)
-
+# pylint: disable=C0103
 gettext = __TRANS.gettext
 lgettext = __TRANS.lgettext
 ngettext = __TRANS.ngettext

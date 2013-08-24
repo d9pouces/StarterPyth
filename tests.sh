@@ -14,6 +14,7 @@ d9pouces
 d9pouces@19pouces.net
 cecill b
 3.2
+yes
 0.1
 yes
 yes
@@ -38,6 +39,7 @@ d9pouces
 d9pouces@19pouces.net
 cecill b
 2.7
+yes
 yes
 0.1
 no
@@ -67,6 +69,7 @@ d9pouces
 d9pouces@19pouces.net
 cecill b
 2.6
+yes
 yes
 0.1
 no
@@ -102,6 +105,7 @@ cecill b
 2.6
 no
 no
+yes
 0.1
 no
 no
@@ -132,6 +136,7 @@ d9pouces@19pouces.net
 cecill b
 2.7
 yes
+yes
 0.1
 yes
 yes
@@ -159,6 +164,7 @@ d9pouces
 d9pouces@19pouces.net
 cecill b
 3.2
+yes
 0.1
 yes
 yes
@@ -177,6 +183,7 @@ d9pouces
 d9pouces@19pouces.net
 cecill b
 3.2
+yes
 0.1
 yes
 yes
@@ -192,6 +199,31 @@ cd ..
 
 echo ""
 echo "==============================================================================="
+echo "Test runtime with python 3.2, no i18n"
+rm -rf Test
+cat << EOF | python3.2 -c 'from starterpyth.core import main; main()'
+Test
+test
+19pouces.net
+d9pouces
+d9pouces@19pouces.net
+cecill b
+3.2
+no
+0.1
+yes
+yes
+no
+EOF
+cd Test
+python3.2 setup.py build > /dev/null
+python3.2 setup.py build_ext > /dev/null
+python3.2 setup.py doctest > /dev/null
+python3.2 setup.py test > /dev/null
+cd ..
+
+echo ""
+echo "==============================================================================="
 echo "Test runtime with python 3.2"
 rm -rf Test
 cat << EOF | python3.2 -c 'from starterpyth.core import main; main()'
@@ -202,13 +234,14 @@ d9pouces
 d9pouces@19pouces.net
 cecill b
 3.2
+yes
 0.1
 yes
 yes
 no
 EOF
 cd Test
-python2.7 setup.py build > /dev/null
+python3.2 setup.py build > /dev/null
 python3.2 setup.py build_ext > /dev/null
 python3.2 setup.py doctest > /dev/null
 python3.2 setup.py test > /dev/null
@@ -226,6 +259,7 @@ d9pouces
 d9pouces@19pouces.net
 cecill b
 2.6
+yes
 yes
 0.1
 yes

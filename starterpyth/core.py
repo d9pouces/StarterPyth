@@ -4,7 +4,6 @@ from optparse import OptionParser
 import os.path
 import imp
 import sys
-from jinja2.loaders import ChoiceLoader
 
 import pkg_resources
 
@@ -38,17 +37,37 @@ class Plugin(object):
         pass
 
     def get_template(self, context, modname, filename):
+        """
+        Render a single template.
+        :param context:
+        :param modname:
+        :param filename:
+        :return:
+        """
         from jinja2 import Environment, PackageLoader
+        from jinja2.loaders import ChoiceLoader
         dirname, filename = filename.rsplit('/', 1)
         loader = ChoiceLoader([PackageLoader('starterpyth', 'templates'), PackageLoader(modname, dirname)])
         env = Environment(loader=loader)
         template = env.get_template(filename)
         return template.render(**context)
 
+    def get_excluded_files(self, context):
+        return []
+
     def write_files(self, context, filters):
+        """
+        Write template or raw files to the new project
+        :param context: context (dict) to be used by jinja2
+        :param filters: extra filters for jinja2
+        :param excludes: files to exclude
+        :return:
+        """
         from jinja2 import Environment, PackageLoader, Template
+        from jinja2.loaders import ChoiceLoader
         local_context = copy.copy(context)
         local_context.update(self.get_local_context(local_context))
+        excludes = self.get_excluded_files(local_context)
         modname, dirname = self.get_resources()
         if modname is None or dirname is None:
             return
@@ -73,10 +92,11 @@ class Plugin(object):
             if dst_path[-4:] == '_tpl':
                 dst_path = dst_path[:-4]
             return src_path, os.path.join(project_root, dst_path)
-
         for root, dirnames, filenames in starterpyth.utils.walk(modname, dirname):
             for dirname in dirnames:
                 src_path, dst_path = get_path(root, dirname)
+                if src_path in excludes:
+                    continue
                 if not os.path.isdir(dst_path):
                     logging.info(_('Directory %(f)s created.') % {'f': dst_path})
                     os.makedirs(dst_path)
@@ -84,6 +104,8 @@ class Plugin(object):
                 if filename[-4:] == '_inc':
                     continue
                 src_path, dst_path = get_path(root, filename)
+                if src_path in excludes:
+                    continue
                 if filename[-4:] == '_tpl':
                     template = env.get_template(src_path)
                     f_out = open(dst_path, 'ab')

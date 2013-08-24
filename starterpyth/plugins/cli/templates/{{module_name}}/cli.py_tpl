@@ -4,8 +4,8 @@ Parse arguments and logger, use translated strings.
 import logging
 import {% if pyversion <= 2.6 %}optparse{% else %}argparse{% endif %}
 import {{ module_name }}.log
-from {{ module_name }}.translation import ugettext as _
-{% include 'header.py_inc' %}
+{% if translation %}from {{ module_name }}.translation import ugettext as _
+{% endif %}{% include 'header.py_inc' %}
 __all__ = ['main']
 
 
@@ -19,12 +19,12 @@ def main():
 
     """
     {% if pyversion <= 2.6 %}parser = optparse.OptionParser()
-    parser.add_option('-v', '--verbose', action='store_true', help='print more messages', default=False)
-    parser.add_option('-d', '--debug', action='store_true', help='print debug messages', default=False)
+    parser.add_option('-v', '--verbose', action='store_true', help={{ 'print more messages'|translate }}, default=False)
+    parser.add_option('-d', '--debug', action='store_true', help={{'print debug messages'|translate }}, default=False)
     options, args = parser.parse_args()
-    {% else %}parser = argparse.ArgumentParser(description=_('Sample command line interface'))
-    parser.add_argument('-v', '--verbose', action='store_true', help='print more messages', default=False)
-    parser.add_argument('-d', '--debug', action='store_true', help='print debug messages', default=False)
+    {% else %}parser = argparse.ArgumentParser(description={{ 'Sample command line interface'|translate }})
+    parser.add_argument('-v', '--verbose', action='store_true', help={{ 'print more messages'|translate }}, default=False)
+    parser.add_argument('-d', '--debug', action='store_true', help={{ 'print debug messages'|translate }}, default=False)
     args = parser.parse_args(){% endif %}
     log_config = {{ module_name }}.log.CONSOLE
     if {% if pyversion <= 2.6 %}options{% else %}args{% endif %}.debug:
@@ -32,16 +32,16 @@ def main():
     elif {% if pyversion <= 2.6 %}options{% else %}args{% endif %}.verbose:
         log_config['root']['level'] = 'INFO'
     {{ module_name }}.log.dictConfig(log_config)
-    logging.debug(_('Enter debug mode.'))
-    logging.debug(_('Start of main function.'))
+    logging.debug({{ 'Enter debug mode.'|translate }})
+    logging.debug({{ 'Start of main function.'|translate }})
     return_code = 0  # 0 = success, != 0 = error
 
-    # TODO complete this function
-    # use _ to translate strings
-    logging.info(_('Here is the code'))
-    print(_('Hello, world!'))
+    # complete this function
+{% if translation %}    # use _ to translate strings
+{% endif %}    logging.info({{ 'Here is the code'|translate }})
+    print({{ 'Hello, world!'|translate }})
 
-    logging.debug(_('Bye.'))
+    logging.debug({{ 'Bye.'|translate }})
     return return_code
 
 if __name__ == '__main__':

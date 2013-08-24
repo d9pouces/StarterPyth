@@ -40,7 +40,12 @@ class BasePlugin(Plugin):
                 py3compat = '2to3' if use_2to3 else None
             else:
                 py3compat = 'six'
-
+        translation = BooleanInput(_('Include translation (i18n) stuff'), default=True).input()
+        context['translation'] = translation
+        if translation:
+            filters['translate'] = lambda x: '_(\'{0}\')'.format(x)
+        else:
+            filters['translate'] = lambda x: '\'{0}\''.format(x)
         module_version = RegexpInput(_('Initial version'), regexp=r'[\w\.\-]', default='0.1').input()
         context['project_name'] = project_name
         context['module_name'] = module_name
@@ -97,3 +102,9 @@ class BasePlugin(Plugin):
 
     def get_resources(self):
         return 'starterpyth.plugins.base', 'templates'
+
+    def get_excluded_files(self, context):
+        if not context.get('translation'):
+            return ['{{module_name}}/translation.py_tpl', '{{module_name}}/locale',
+                    '{{module_name}}/locale/README_tpl']
+        return []

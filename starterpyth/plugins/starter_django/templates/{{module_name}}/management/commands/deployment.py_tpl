@@ -17,6 +17,8 @@ else:
 
 class Command(BaseCommand):
     """Print basic configuration files for different kinds of deployment"""
+    #pylint: disable=R0912
+    #pylint: disable=R0915
     args = ''
     help = 'Print basic configuration files for different kinds of deployment'
 
@@ -52,7 +54,8 @@ class Command(BaseCommand):
                    'alt_port': 80 if use_ssl == 'y' else None,
                    }
         if server_name not in settings.ALLOWED_HOSTS:
-            logging.warning('You must add "%s" to your settings.ALLOWED_HOSTS' % server_name)
+            msg = 'You must add "%s" to your settings.ALLOWED_HOSTS' % server_name
+            logging.warning(msg)
         print('Which method do you want to use?')
         daemon_type = None
         if server_type == '1':
@@ -83,7 +86,8 @@ class Command(BaseCommand):
             if daemon_type == '1':
                 try:
                     import flup
-                    logging.debug('Found flup at %s' % os.path.dirname(flup.__file__))
+                    msg = 'Found flup at %s' % os.path.dirname(flup.__file__)
+                    logging.debug(msg)
                 except ImportError:
                     logging.warning('You must install "flup"')
                 context['fcgi_port'] = 3033
@@ -94,7 +98,8 @@ class Command(BaseCommand):
                 print('Default port for gunicorn is %d' % context['gunicorn_port'])
                 try:
                     import gunicorn
-                    logging.debug('Found gunicorn at %s' % os.path.dirname(gunicorn.__file__))
+                    msg = 'Found gunicorn at %s' % os.path.dirname(gunicorn.__file__)
+                    logging.debug(msg)
                 except ImportError:
                     logging.warning('You must install "gunicorn"')
                 if 'gunicorn' not in settings.INSTALLED_APPS:

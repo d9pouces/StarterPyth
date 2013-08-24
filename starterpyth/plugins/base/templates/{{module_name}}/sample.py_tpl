@@ -2,9 +2,9 @@
 Actual code of the {{ project_name }} Python module.
 
 """
-from {{ module_name }}.translation import ugettext as _
-{% include 'header.py_inc' %}
-__all__ = ['sample_function', 'sample_translation']
+{% if translation %}from {{ module_name }}.translation import ugettext as _
+{% endif %}{% include 'header.py_inc' %}
+__all__ = ['sample_function', {% if translation %}'sample_translation'{% endif %}]
 
 
 # write your actual code here.
@@ -27,7 +27,7 @@ def sample_function(first, second=4):
     10
     """
     return first + second
-
+{% if translation %}
 
 def sample_translation():
     """
@@ -35,8 +35,7 @@ def sample_translation():
     """
     return _('This message should be translated')
 
+{% endif %}
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
-
-

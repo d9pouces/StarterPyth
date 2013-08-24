@@ -5,8 +5,10 @@ import os
 import sys
 {% include 'header.py_inc' %}
 
-
 def main():
+    """
+    Main function, calling Django code for management commands.
+    """
     os.environ["DJANGO_SETTINGS_MODULE"] = "{{ module_name }}.djangoproject.settings"
     from django.core.management import execute_from_command_line
 

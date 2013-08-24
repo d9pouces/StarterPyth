@@ -5,8 +5,8 @@ and registered to the :class:`django.contrib.admin.site`.
 """
 # from django.contrib import admin
 # from django.contrib import messages
-# from django.utils.translation import ugettext_lazy as _
-# from {{ module_name }}.models import SampleModel
+{% if translation %}# from django.utils.translation import ugettext_lazy as _
+{% endif %}# from {{ module_name }}.models import SampleModel
 {% include 'header.py_inc' %}
 
 
@@ -18,8 +18,8 @@ and registered to the :class:`django.contrib.admin.site`.
         #for obj in queryset:
             #obj.first_name = ''
             #obj.save()
-        #messages.info(request, _('First name removed'))
-    #remove_first_name.short_description = _('Remove first name')
+        #messages.info(request, {{ 'First name removed'|translate }})
+    #remove_first_name.short_description = {{ 'Remove first name'|translate }}
 
     #exclude = [] # list of fields to exclude
     # # list of fields to display in the list
@@ -31,4 +31,3 @@ and registered to the :class:`django.contrib.admin.site`.
 
 
 #admin.site.register(SampleModel, SampleModelAdmin)
-

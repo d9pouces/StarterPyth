@@ -9,8 +9,8 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.utils.translation import ugettext_lazy as _
-import django.contrib.admin.widgets
+{% if translation %}from django.utils.translation import ugettext_lazy as _
+{% endif %}import django.contrib.admin.widgets
 {% include 'header.py_inc' %}
 
 #from {{ module_name }} import models
@@ -18,19 +18,21 @@ import django.contrib.admin.widgets
 
 class SampleForm(forms.Form):
     """Sample form, with three fields."""
-    title = forms.CharField(label=_('Title'), max_length=200,
-                            widget=forms.widgets.TextInput(attrs={'placeholder': _('Please enter a title')}))
-    time = forms.DateTimeField(label=_('Time'), widget=django.contrib.admin.widgets.AdminSplitDateTime())
-    integer = forms.IntegerField(label=_('Optional field'), required=False)
+    #pylint: disable=R0903
+    #pylint: disable=W0232
+    title = forms.CharField(label={{ 'Title'|translate }}, max_length=200,
+                            widget=forms.widgets.TextInput(attrs={'placeholder': {{ 'Please enter a title'|translate }}, }))
+    time = forms.DateTimeField(label={{ 'Time'|translate }}, widget=django.contrib.admin.widgets.AdminSplitDateTime())
+    integer = forms.IntegerField(label={{ 'Optional field'|translate }}, required=False)
 
 
 def index(request):
     """Index view, displaying and processing a form."""
     if request.method == 'POST':
         form = SampleForm(request.POST)
-        if form.is_valid():
+        if form.is_valid():  # pylint: disable=E1101
             # please process the form using dict form.cleaned_data
-            messages.info(request, _('Form processed'))
+            messages.info(request, {{ 'Form processed'|translate }})
             # if you don't have result to show (expected the info message),
             # you should redirect to another page
             # (prevents accidental re-submission of the same form)
