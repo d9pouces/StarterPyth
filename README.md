@@ -38,7 +38,11 @@ I also want to provide templates for other classical Python programs:
   * PyQt applications
   * daemon
 
-You can install it from the source::
+You can install it with pip::
+
+  $ pip install starterpyth --user
+
+...or from the source::
 
   $ cd StarterPyth
   $ sudo python setup.py install

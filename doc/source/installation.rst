@@ -9,6 +9,9 @@ If you prefer install directly from the source::
   $ cd StarterPyth
   $ sudo python setup.py install
 
+You can also install _via_ pip::
+
+  $ pip install starterpyth --user
 
 Then you can call it through `starterpyth-bin`::
 
