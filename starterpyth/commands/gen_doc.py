@@ -7,8 +7,9 @@ import shutil
 import subprocess
 
 from distutils.core import Command
-
 import sphinx
+
+from starterpyth.translation import gettext as _
 
 
 class GenDoc(Command):
@@ -54,7 +55,7 @@ class GenDoc(Command):
     }
 
     def __init__(self, *args, **kwargs):
-        Command.__init__(self, *args, **kwargs)
+        super(GenDoc, self).__init__(*args, **kwargs)
         self.doc_dir = 'doc/source'
         self.build_dir = 'doc/build'
         self.clean = 0
@@ -82,7 +83,8 @@ class GenDoc(Command):
 
     def run(self):
         if self.clean and os.path.isdir(self.build_dir):
-            logging.info('removing %s' % self.build_dir)
+            msg = _('removing %(dir)s') % {'dir': self.build_dir}
+            logging.info(msg)
             shutil.rmtree(self.build_dir)
         sphinx_opts = shlex.split(self.ALLSPHINXOPTS % (self.build_dir, os.getenv('SPHINXOPTS') or '', self.doc_dir))
         count = 0
@@ -92,11 +94,13 @@ class GenDoc(Command):
                 continue
             count = 1
             options = ['sphinx-build', '-b', fmt, ] + sphinx_opts + [os.path.join(self.build_dir, fmt), ]
-            r = sphinx.main(options)
-            if r == 0:
-                logging.info(txt % self.build_dir)
+            result = sphinx.main(options)
+            if result == 0:
+                msg = txt % self.build_dir
+                logging.info(msg)
                 if orig_fmt == 'latexpdf':
                     subprocess.check_call('make -C %s/latex all-pdf' % self.build_dir, shell=True)
-                    logging.info("pdflatex finished; the PDF files are in %s/latex." % self.build_dir)
+                    msg = "pdflatex finished; the PDF files are in %s/latex." % self.build_dir
+                    logging.info(msg)
         if not count:
-            logging.warning("please select at least one output format (e.g. gen_doc --html)")
+            logging.warning(_("please select at least one output format (e.g. gen_doc --html)"))

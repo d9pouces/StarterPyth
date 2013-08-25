@@ -1,3 +1,6 @@
+"""
+Define input fields for command-line interface.
+"""
 import logging
 import re
 import sys
@@ -97,8 +100,8 @@ class BooleanInput(BaseInput):
         super(BooleanInput, self).__init__(label, default=self.yes_str if default else self.no_str)
 
     def validator(self, value):
-        v = value.lower()
-        if v not in (self.yes_str, self.no_str):
+        result = value.lower()
+        if result not in (self.yes_str, self.no_str):
             raise ValidationError(_('Error: Value must be %(yes)s of %(no)s') %
                                   {'yes': self.yes_str, 'no': self.no_str})
 

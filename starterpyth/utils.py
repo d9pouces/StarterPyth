@@ -1,3 +1,8 @@
+"""
+several utility functions:
+  * unicode function to be compatible with both Python 2 & 3
+  * copy of the :func:`os.walk` function, adapted to pkg_resources
+"""
 import sys
 import pkg_resources
 
@@ -11,7 +16,21 @@ else:
 
 
 def walk(module_name, dirname, topdown=True):
+    """
+    Copy of :func:`os.walk`. Please refer to this doc.
+    :type module_name: basestring
+    :param module_name: module to search in
+    :type dirname: basestring
+    :param dirname: base directory
+    :type topdown: bool
+    :param topdown: if True, perform a topdown search.
+    """
     def rec_walk(root):
+        """
+        Recursively list subdirectories and filenames from the root.
+        :param root: the root path
+        :type root: basestring
+        """
         dirnames = []
         filenames = []
         for name in pkg_resources.resource_listdir(module_name, root):

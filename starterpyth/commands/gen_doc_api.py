@@ -64,13 +64,23 @@ class GenDocApi(Command):
         env = Environment(loader=PackageLoader('starterpyth.commands', 'templates'))
 
         def write_template(template, path, context):
+            """
+            Write a template file.
+
+            :param template: Jinja2 template
+            :type template: :class:`Template`
+            :param path: destination path
+            :type path: basestring
+            :param context: context
+            :type context: :class:`dict`
+            """
             dirname = os.path.dirname(path)
             if not os.path.isdir(dirname):
                 os.makedirs(dirname)
             if not os.path.isfile(path) or self.overwrite:
-                fd = codecs.open(path, 'w', encoding='utf-8')
-                fd.write(template.render(context))
-                fd.close()
+                tpl_fd = codecs.open(path, 'w', encoding='utf-8')
+                tpl_fd.write(template.render(context))
+                tpl_fd.close()
                 logging.info('writing %s' % path)
         src_module_names = find_packages()
         if self.pre_rm and os.path.isdir(self.api_dir):
@@ -91,15 +101,16 @@ class GenDocApi(Command):
                     load_module(submodule_name)
                     module_names.append(submodule_name)
                 except ImportError:
-                    logging.warning('Unable to import %s.' % submodule_name)
+                    msg = 'Unable to import %s.' % submodule_name
+                    logging.warning(msg)
         template = env.get_template('index.rst_tpl')
         write_template(template, os.path.join(self.api_dir, 'index.rst'),
-                       {'module_paths': [x.replace('.', '/') for x in module_names]})
+                       {'module_paths': [mod_name.replace('.', '/') for mod_name in module_names]})
         template = env.get_template('module.rst_tpl')
-        for x in module_names:
-            path_components = x.split('.')
+        for mod_name in module_names:
+            path_components = mod_name.split('.')
             path_components[-1] += '.rst'
-            write_template(template, os.path.join(self.api_dir, *path_components), {'module_name': x})
+            write_template(template, os.path.join(self.api_dir, *path_components), {'module_name': mod_name})
 
 
 if __name__ == '__main__':

@@ -34,10 +34,10 @@ class MakeMessages(Command):
         all_modules = {}
         top_levels_modules = {}
         for module_name in module_names:
-            tl, sep, bl = module_name.partition('.')
-            all_modules.setdefault(tl, []).append(module_name)
-            if tl not in top_levels_modules:
-                top_levels_modules[tl] = os.path.dirname(load_module(tl).__file__)
+            top_module = module_name.partition('.')[0]
+            all_modules.setdefault(top_module, []).append(module_name)
+            if top_module not in top_levels_modules:
+                top_levels_modules[top_module] = os.path.dirname(load_module(top_module).__file__)
         env = Environment(loader=PackageLoader('starterpyth.commands.makemessages', 'templates'))
         template = env.get_template('lang.po')
         context = {
@@ -51,22 +51,22 @@ class MakeMessages(Command):
         }
         for tl_name in top_levels_modules.keys():
             dst_abs_path = os.path.join(top_levels_modules[tl_name], dst_rel_path)
-            pot_file = os.path.join(dst_abs_path, '%s.pot' % tl_name)
-            po_file = os.path.join(dst_abs_path, self.language, 'LC_MESSAGES', '%s.po' % tl_name)
-            if not os.path.isdir(os.path.dirname(po_file)):
-                os.makedirs(os.path.dirname(po_file))
-            for filename in (pot_file, po_file):
+            pot_filename = os.path.join(dst_abs_path, '%s.pot' % tl_name)
+            po_filename = os.path.join(dst_abs_path, self.language, 'LC_MESSAGES', '%s.po' % tl_name)
+            if not os.path.isdir(os.path.dirname(po_filename)):
+                os.makedirs(os.path.dirname(po_filename))
+            for filename in (pot_filename, po_filename):
                 if not os.path.isfile(filename):
                     context['package'] = tl_name
-                    fd =codecs.open(filename, 'w', encoding='utf-8')
-                    fd.write(template.render(context))
-                    fd.close()
+                    po_fd = codecs.open(filename, 'w', encoding='utf-8')
+                    po_fd.write(template.render(context))
+                    po_fd.close()
         for tl_name, module_names in all_modules.items():
             dst_abs_path = os.path.join(top_levels_modules[tl_name], dst_rel_path)
             root_path = os.path.dirname(top_levels_modules[tl_name])
             print(root_path)
-            pot_file = os.path.join(dst_abs_path, '%s.pot' % tl_name)
-            po_file = os.path.join(dst_abs_path, self.language, 'LC_MESSAGES', '%s.po' % tl_name)
+            pot_filename = os.path.join(dst_abs_path, '%s.pot' % tl_name)
+            po_filename = os.path.join(dst_abs_path, self.language, 'LC_MESSAGES', '%s.po' % tl_name)
             # build the list of files to examine, for each top-level module
             filenames = []
             for module_name in module_names:
@@ -74,24 +74,29 @@ class MakeMessages(Command):
                 local_root = os.path.dirname(init_filename)
                 for filename in os.listdir(local_root):
                     filename = os.path.join(local_root, filename)
-                    basename, sep, ext = filename.rpartition('.')
+                    basename, sepa, ext = filename.rpartition('.')
                     if ext not in ('py', 'pyx', 'c'):
                         continue
                     try:
-                        fd = codecs.open(filename, 'r', encoding='utf-8')
-                        fd.read()
-                        fd.close()
+                        po_fd = codecs.open(filename, 'r', encoding='utf-8')
+                        po_fd.read()
+                        po_fd.close()
                         filenames.append(os.path.relpath(filename, root_path))
-                        logging.info(_('%(filename)s added.') % {'filename': filename})
+                        msg = _('%(filename)s added.') % {'filename': filename}
+                        logging.info(msg)
                     except UnicodeDecodeError:
-                        logging.error(_('Encoding of %(filename)s is not UTF-8.') % {'filename': filename})
-            cmd = ['xgettext', '--language=Python', '--keyword=_', my_unicode('--output=%s') % pot_file,
+                        msg = _('Encoding of %(filename)s is not UTF-8.') % {'filename': filename}
+                        logging.error(msg)
+            cmd = ['xgettext', '--language=Python', '--keyword=_', my_unicode('--output=%s') % pot_filename,
                    '--from-code=UTF-8', '--add-comments=Translators', ] + filenames
             subprocess.check_call(cmd, stdout=subprocess.PIPE)
-            if os.path.isfile(po_file):
-                cmd = ['msgmerge', '--update', '--backup=off', po_file, pot_file, ]
+            if os.path.isfile(po_filename):
+                cmd = ['msgmerge', '--update', '--backup=off', po_filename, pot_filename, ]
             else:
-                cmd = ['msginit', '--no-translator', '-l', self.language, my_unicode('--input=%s') % pot_file,
-                       my_unicode('--output=%s') % po_file, ]
+                cmd = ['msginit', '--no-translator', '-l', self.language, my_unicode('--input=%s') % pot_filename,
+                       my_unicode('--output=%s') % po_filename, ]
             subprocess.check_call(cmd, stderr=subprocess.PIPE)
-            logging.warning(_('Please translate strings in %(filename)s') % {'filename': po_file})
+            msg = _('Please translate strings in %(filename)s') % {'filename': po_filename}
+            logging.warning(msg)
+            msg = _('Then run setup.py compilemessages -l %(lang)s') % {'lang': self.language}
+            logging.warning(msg)

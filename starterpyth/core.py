@@ -76,7 +76,8 @@ class Plugin(object):
         env.filters.update(filters)
         project_root = os.path.join(context['project_root'], context['project_name'])
         if not os.path.isdir(project_root):
-            logging.info(_('Directory %(f)s created.') % {'f': project_root})
+            msg = _('Directory %(f)s created.') % {'f': project_root}
+            logging.info(msg)
             os.makedirs(project_root)
         # noinspection PyTypeChecker
         prefix_len = len(dirname) + 1
@@ -98,7 +99,8 @@ class Plugin(object):
                 if src_path in excludes:
                     continue
                 if not os.path.isdir(dst_path):
-                    logging.info(_('Directory %(f)s created.') % {'f': dst_path})
+                    msg = _('Directory %(f)s created.') % {'f': dst_path}
+                    logging.info(msg)
                     os.makedirs(dst_path)
             for filename in filenames:
                 if filename[-4:] == '_inc':
@@ -111,7 +113,8 @@ class Plugin(object):
                     f_out = open(dst_path, 'ab')
                     f_out.write(template.render(**local_context).encode('utf-8'))
                     f_out.close()
-                    logging.info(_('Template %(f)s written.') % {'f': dst_path})
+                    msg = _('Template %(f)s written.') % {'f': dst_path}
+                    logging.info(msg)
                 else:
                     f_out = open(dst_path, 'wb')
                     f_in = pkg_resources.resource_stream(modname, root + '/' + filename)
@@ -121,7 +124,8 @@ class Plugin(object):
                         data = f_in.read(10240)
                     f_in.close()
                     f_out.close()
-                    logging.info(_('File %(f)s written.') % {'f': dst_path})
+                    msg = _('File %(f)s written.') % {'f': dst_path}
+                    logging.info(msg)
 
     def get_resources(self):
         return None, None
@@ -152,7 +156,7 @@ def main():
         log_config['root']['level'] = 'DEBUG'
     else:
         log_config['root']['level'] = 'WARNING'
-    starterpyth.log.dictConfig(log_config)
+    starterpyth.log.dict_config(log_config)
     extensions = DEFAULT_EXTENSIONS + options.extensions
     context = {'project_root': options.target, 'entry_points': {}, 'install_requires': [], 'setup_requires': [],
                'tests_requires': [], 'doc_urls': {}, 'ext_modules': [], 'extra_setup': [], 'classifiers': [], }

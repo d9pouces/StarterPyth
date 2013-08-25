@@ -18,14 +18,14 @@ def find_dependencies(module_name):
     stdout, stderr = p.communicate()
     found_dependencies = set()
     missing_dependencies = set()
-    warning_re = re.compile('^WARNING\s*:\s*Line [0-9]+:.*')
-    missing_re = re.compile('^WARNING\s*:  \s*(.*)$')
-    for l in my_unicode(stderr).splitlines():
-        if warning_re.match(l):
+    warning_re = re.compile('^WARNING\\s*:\\s*Line [0-9]+:.*')
+    missing_re = re.compile('^WARNING\\s*:  \\s*(.*)$')
+    for line in my_unicode(stderr).splitlines():
+        if warning_re.match(line):
             continue
-        t = missing_re.match(l)
-        if t:
-            missing_dependencies.add(t.group(1))
+        missing_match = missing_re.match(line)
+        if missing_match:
+            missing_dependencies.add(missing_match.group(1))
     python_root = os.path.dirname(abc.__file__)
 
     def get_module_root(base_modulename):
@@ -40,14 +40,14 @@ def find_dependencies(module_name):
         if dirname.find(python_root) == 0 or dirname.find(module_root) == 0:
             return
         name = filename.partition(os.path.sep)[0]
-        a, b = os.path.splitext(name)
-        if b.find('.py') == 0:
-            found_dependencies.add(a)
+        basename, ext = os.path.splitext(name)
+        if ext.find('.py') == 0:
+            found_dependencies.add(basename)
         else:
             found_dependencies.add(name)
 
-    for l in my_unicode(stdout).splitlines():
-        (src, dst) = json.loads(l.replace("(", "[").replace(")", "]").replace("'", '"').replace('None', 'null'))
+    for line in my_unicode(stdout).splitlines():
+        (src, dst) = json.loads(line.replace("(", "[").replace(")", "]").replace("'", '"').replace('None', 'null'))
         add_dependence(python_root, module_root, found_dependencies, *src)
         add_dependence(python_root, module_root, found_dependencies, *dst)
     return found_dependencies, missing_dependencies
@@ -66,7 +66,8 @@ class Dependencies(Command):
     def run(self):
         install_requires = set(self.distribution.install_requires)
         module_name = self.distribution.get_name()
-        logging.info('Looking for dependencies of %(module_name)s...' % {'module_name': module_name})
+        msg = 'Looking for dependencies of %(module_name)s...' % {'module_name': module_name}
+        logging.info(msg)
         found_dependencies, missing_dependencies = find_dependencies(module_name)
         if found_dependencies:
             logging.info('Found dependencies: ' + ', '.join(found_dependencies))

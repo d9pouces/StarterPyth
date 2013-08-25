@@ -15,7 +15,7 @@ __all__ = ['TranslationTest']
 class TranslationTest(unittest.TestCase):
     """Base test cases for the sample function provided in
     :func:`{{ module_name }}.sample.sample_function`."""
-    #pylint: disable=R0904
+    # pylint: disable=R0904
 
     def test_translation(self):
         """Test the sample_function with two arguments."""

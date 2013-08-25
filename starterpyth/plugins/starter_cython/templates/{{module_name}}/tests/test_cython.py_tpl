@@ -15,7 +15,7 @@ class SampleTest(unittest.TestCase):
     """Base test cases for the sample function provided in
     :func:`{{ package_name }}.fcode.integrate_f_0`, :func:`{{ package_name }}.fcode.integrate_f_1`,
     and :func:`{{ package_name }}.fcode.integrate_f_2`."""
-    #pylint: disable=R0904
+    # pylint: disable=R0904
 
     def test_0(self):
         """Test the non-optimized function."""

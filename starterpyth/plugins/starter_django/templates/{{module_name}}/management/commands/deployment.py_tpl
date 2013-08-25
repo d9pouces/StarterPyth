@@ -17,8 +17,8 @@ else:
 
 class Command(BaseCommand):
     """Print basic configuration files for different kinds of deployment"""
-    #pylint: disable=R0912
-    #pylint: disable=R0915
+    # pylint: disable=R0912
+    # pylint: disable=R0915
     args = ''
     help = 'Print basic configuration files for different kinds of deployment'
 

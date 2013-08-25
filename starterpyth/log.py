@@ -4,7 +4,6 @@ import logging.config
 from io import BytesIO
 import traceback
 import sys
-import pkg_resources
 
 __author__ = 'd9pouces'
 __all__ = ['ColorizedHandler', 'traceback', 'CONSOLE']
@@ -54,11 +53,11 @@ def log_traceback(error, msg=None):
     """
     if msg is not None:
         logging.error(msg)
-    o = BytesIO()
-    exc_type, exc_value, exc_traceback = sys.exc_info()
-    traceback.print_tb(exc_traceback, file=o)
+    out_buf = BytesIO()
+    exc_traceback = sys.exc_info()[2]
+    traceback.print_tb(exc_traceback, file=out_buf)
     logging.error('{0}: {1}'.format(error.__class__.__name__, error))
-    logging.error(o.getvalue())
+    logging.error(out_buf.getvalue())
 
 
 CONSOLE = {
@@ -79,7 +78,7 @@ CONSOLE = {
 }
 
 
-def dictConfig(config):
+def dict_config(config):
     if not hasattr(logging.config, 'dictConfig'):
         f_in = BytesIO()
 

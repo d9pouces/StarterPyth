@@ -1,3 +1,7 @@
+"""
+Base plugin, with lot of required stuff and basic optional ones (setup.py, main code, translation, ...)
+Handle project name, author name, license, Python version, ...
+"""
 import datetime
 import os.path
 import shutil
@@ -44,9 +48,9 @@ class BasePlugin(Plugin):
         translation = BooleanInput(_('Include translation (i18n) stuff'), default=True).input()
         context['translation'] = translation
         if translation:
-            filters['translate'] = lambda x: my_unicode('_(\'{0}\')').format(x)
+            filters['translate'] = my_unicode('_(\'{0}\')').format
         else:
-            filters['translate'] = lambda x: my_unicode('\'{0}\'').format(x)
+            filters['translate'] = my_unicode('\'{0}\'').format
         module_version = RegexpInput(_('Initial version'), regexp=r'[\w\.\-]', default='0.1').input()
         context['project_name'] = project_name
         context['module_name'] = module_name
@@ -56,9 +60,9 @@ class BasePlugin(Plugin):
         context['py3compat'] = py3compat
         context['license'] = license_names[license_]
         if license_ != 'Other':
-            fd = pkg_resources.resource_stream('starterpyth.plugins.base', 'licenses/%s.txt' % license_)
-            context['license_content'] = fd.read().decode('utf-8')
-            fd.close()
+            licence_fd = pkg_resources.resource_stream('starterpyth.plugins.base', 'licenses/%s.txt' % license_)
+            context['license_content'] = licence_fd.read().decode('utf-8')
+            licence_fd.close()
         else:
             context['license_content'] = ''
         if py3compat == 'six':
@@ -96,9 +100,9 @@ class BasePlugin(Plugin):
                                          'externals/python_%.1f.inv' % pyversion)
         path = os.path.join(context['project_root'], project_name)
         if os.path.isdir(path):
-            rm = ChoiceInput(_('The folder %(f)s already exists. Remove it?') % {'f': path}, default='yes',
+            rm_choice = ChoiceInput(_('The folder %(f)s already exists. Remove it?') % {'f': path}, default='yes',
                              choices=(('yes', 'yes'), ('no', 'no'))).input()
-            if rm == 'yes':
+            if rm_choice == 'yes':
                 shutil.rmtree(path)
 
     def get_resources(self):
