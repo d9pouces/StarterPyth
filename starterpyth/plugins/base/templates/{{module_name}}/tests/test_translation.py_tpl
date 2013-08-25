@@ -19,7 +19,7 @@ class TranslationTest(unittest.TestCase):
 
     def test_translation(self):
         """Test the sample_function with two arguments."""
-        __trans = translation('{{ module_name }}', languages=['XX_xx'], fallback=True)
+        __trans = translation('{{ module_name }}', languages=['xx_XX'], fallback=True)
         _ = __trans.gettext
         test_str = '[ƒ——!test_string!—–]'
         if sys.version_info[0] == 2:

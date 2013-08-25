@@ -86,6 +86,7 @@ class BasePlugin(Plugin):
         context['copyright_full'] = _('Copyright %(year)d, %(comp)s') % {'year': datetime.date.today().year,
                                                                          'comp': company}
         context['company'] = company
+        context['project_url'] = py3k_unicode('http://{0}/{1}.html').format(company, project_name)
         context['email'] = email
         context['author'] = author
         context['module_version'] = module_version

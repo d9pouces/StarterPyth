@@ -39,7 +39,7 @@ setup(
     author={{ author|unicode }},
     author_email={{ email|unicode }},
     license={{ license|unicode }},
-    url={{ 'http://{{ company }}/{{ project_name }}.html'|unicode }},
+    url={{ project_url|unicode }},
     entry_points=entry_points,
     packages=find_packages(),
     include_package_data=True,
