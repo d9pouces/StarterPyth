@@ -40,7 +40,7 @@ I also want to provide templates for other classical Python programs:
 
 You can install it with pip::
 
-  $ pip install starterpyth --user
+  $ pip install starterpyth
 
 ...or from the source::
 

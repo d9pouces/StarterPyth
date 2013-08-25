@@ -1,5 +1,9 @@
 #!/bin/bash
 
+python2.6 setup.py sdist
+python2.7 setup.py sdist
+python3.2 setup.py sdist
+
 export DJANGO_SETTINGS_MODULE="test.djangoproject.settings"
 
 echo ""

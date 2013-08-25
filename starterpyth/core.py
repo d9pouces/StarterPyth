@@ -108,6 +108,8 @@ class Plugin(object):
                 src_path, dst_path = get_path(root, filename)
                 if src_path in excludes:
                     continue
+                if not os.path.isdir(os.path.dirname(dst_path)):
+                    continue
                 if filename[-4:] == '_tpl':
                     template = env.get_template(src_path)
                     f_out = open(dst_path, 'ab')

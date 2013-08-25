@@ -11,7 +11,7 @@ If you prefer install directly from the source::
 
 You can also install _via_ pip::
 
-  $ pip install starterpyth --user
+  $ pip install starterpyth
 
 Then you can call it through `starterpyth-bin`::
 

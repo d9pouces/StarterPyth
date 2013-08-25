@@ -28,7 +28,7 @@ else:
 
 setup(
     name='starterpyth',
-    version='0.5.1',
+    version='0.5.2',
     description='Generate good skeletons of Python applications.',
     long_description=long_description,
     author='d9pouces',
