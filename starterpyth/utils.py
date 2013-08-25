@@ -10,9 +10,11 @@ __author__ = 'd9pouces'
 
 
 if sys.version_info[0] == 3:
-    my_unicode = str
+    def py3k_unicode(raw_str):
+        return str(raw_str)
 else:
-    my_unicode = lambda x: x.decode('utf-8')
+    def py3k_unicode(raw_str):
+        return raw_str.decode('utf-8')
 
 
 def walk(module_name, dirname, topdown=True):
@@ -47,7 +49,7 @@ def walk(module_name, dirname, topdown=True):
             for name in dirnames:
                 for values in rec_walk(root + '/' + name):
                     yield values
-    return rec_walk(my_unicode(dirname))
+    return rec_walk(py3k_unicode(dirname))
 
 
 if __name__ == '__main__':

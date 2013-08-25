@@ -10,7 +10,7 @@ import os.path
 import re
 import subprocess
 
-from starterpyth.utils import my_unicode
+from starterpyth.utils import py3k_unicode
 
 
 def find_dependencies(module_name):
@@ -20,7 +20,7 @@ def find_dependencies(module_name):
     missing_dependencies = set()
     warning_re = re.compile('^WARNING\\s*:\\s*Line [0-9]+:.*')
     missing_re = re.compile('^WARNING\\s*:  \\s*(.*)$')
-    for line in my_unicode(stderr).splitlines():
+    for line in py3k_unicode(stderr).splitlines():
         if warning_re.match(line):
             continue
         missing_match = missing_re.match(line)
@@ -46,7 +46,7 @@ def find_dependencies(module_name):
         else:
             found_dependencies.add(name)
 
-    for line in my_unicode(stdout).splitlines():
+    for line in py3k_unicode(stdout).splitlines():
         (src, dst) = json.loads(line.replace("(", "[").replace(")", "]").replace("'", '"').replace('None', 'null'))
         add_dependence(python_root, module_root, found_dependencies, *src)
         add_dependence(python_root, module_root, found_dependencies, *dst)

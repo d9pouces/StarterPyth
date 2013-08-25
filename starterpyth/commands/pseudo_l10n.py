@@ -2,7 +2,7 @@
 import logging
 from setuptools import find_packages
 from starterpyth.core import load_module
-from starterpyth.utils import my_unicode
+from starterpyth.utils import py3k_unicode
 
 __author__ = 'd9pouces'
 
@@ -18,12 +18,12 @@ def translate_string(src_str):
     """
     Transform a ASCII string into a larger string with non-ASCII characters.
 
-    >>> translate_string(my_unicode('ab')) == my_unicode('[ƒ——!ab!—–]')
+    >>> translate_string(py3k_unicode('ab')) == py3k_unicode('[ƒ——!ab!—–]')
     True
 
     """
     dst_str = src_str
-    return my_unicode('[ƒ——!{0}!—–]').format(dst_str)
+    return py3k_unicode('[ƒ——!{0}!—–]').format(dst_str)
 
 
 class PseudoL10N(Command):

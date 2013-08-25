@@ -55,7 +55,7 @@ class GenDoc(Command):
     }
 
     def __init__(self, *args, **kwargs):
-        super(GenDoc, self).__init__(*args, **kwargs)
+        Command.__init__(self, *args, **kwargs)
         self.doc_dir = 'doc/source'
         self.build_dir = 'doc/build'
         self.clean = 0

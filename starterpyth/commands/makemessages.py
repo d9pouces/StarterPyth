@@ -9,7 +9,7 @@ from setuptools import find_packages
 from starterpyth.core import load_module
 
 from starterpyth.translation import gettext as _
-from starterpyth.utils import my_unicode
+from starterpyth.utils import py3k_unicode
 
 
 class MakeMessages(Command):
@@ -87,14 +87,14 @@ class MakeMessages(Command):
                     except UnicodeDecodeError:
                         msg = _('Encoding of %(filename)s is not UTF-8.') % {'filename': filename}
                         logging.error(msg)
-            cmd = ['xgettext', '--language=Python', '--keyword=_', my_unicode('--output=%s') % pot_filename,
+            cmd = ['xgettext', '--language=Python', '--keyword=_', py3k_unicode('--output=%s') % pot_filename,
                    '--from-code=UTF-8', '--add-comments=Translators', ] + filenames
             subprocess.check_call(cmd, stdout=subprocess.PIPE)
             if os.path.isfile(po_filename):
                 cmd = ['msgmerge', '--update', '--backup=off', po_filename, pot_filename, ]
             else:
-                cmd = ['msginit', '--no-translator', '-l', self.language, my_unicode('--input=%s') % pot_filename,
-                       my_unicode('--output=%s') % po_filename, ]
+                cmd = ['msginit', '--no-translator', '-l', self.language, py3k_unicode('--input=%s') % pot_filename,
+                       py3k_unicode('--output=%s') % po_filename, ]
             subprocess.check_call(cmd, stderr=subprocess.PIPE)
             msg = _('Please translate strings in %(filename)s') % {'filename': po_filename}
             logging.warning(msg)

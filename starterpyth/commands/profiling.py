@@ -1,4 +1,4 @@
-from starterpyth.utils import my_unicode
+from starterpyth.utils import py3k_unicode
 
 __author__ = 'd9pouces'
 
@@ -51,7 +51,7 @@ class Profiling(Command):
                 logging.error('Module pstats not found.')
                 return
             if not os.path.isfile(self.input):
-                logging.error(my_unicode('File %s not found' % self.input))
+                logging.error(py3k_unicode('File %s not found' % self.input))
                 return
             stats = pstats.Stats(self.input)
             stats.print_stats()

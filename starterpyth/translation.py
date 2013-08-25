@@ -41,7 +41,7 @@ def __find(domain, localedir='locale', languages=None, all_=False):
         if lang == 'C':
             break
         mofile = '%s/%s/%s/%s.mo' % (localedir, lang, 'LC_MESSAGES', domain)
-        if pkg_resources.resource_exists('{{ module_name }}', mofile):
+        if pkg_resources.resource_exists('starterpyth', mofile):
             if all_:
                 result.append(mofile)
             else:
@@ -75,7 +75,7 @@ def translation(domain, localedir='locale', languages=None,  # pylint: disable=R
         key = (class_, mofile)
         trans_obj = gettext_module._translations.get(key)  # pylint: disable=W0212
         if trans_obj is None:
-            with pkg_resources.resource_stream('{{ module_name }}', mofile) as fileobj:
+            with pkg_resources.resource_stream('starterpyth', mofile) as fileobj:
                 trans_obj = gettext_module._translations.setdefault(key, class_(fileobj))  # pylint: disable=W0212
         # Copy the translation object to allow setting fallbacks and
         # output charset. All other instance data is shared with the
