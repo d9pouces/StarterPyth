@@ -22,6 +22,7 @@ licenses = [('cecill a', 'cecill_a'), ('cecill b', 'cecill_b'), ('cecill c', 'ce
 license_names = {
     'cecill_a': 'CeCILL-A', 'cecill_b': 'CeCILL-B', 'cecill_c': 'CeCILL-C', 'lgpl_2': 'LGPL 2',
     'lgpl_3': 'LGPL 3', 'gpl_2': 'GPL 2', 'gpl 3': 'GPL 3', 'Other': 'Other license',
+    'apache_2' : 'Apache 2.0', 'mit' : 'MIT', 'bsd_2_clauses' : 'BSD 2 Clauses',
 }
 pyversions = [('2.6', 2.6), ('2.7', 2.7), ('3.0', 3.0), ('3.1', 3.1), ('3.2', 3.2), ('3.3', 3.3), ('3.4', 3.4)]
 
