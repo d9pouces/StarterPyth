@@ -40,15 +40,15 @@ I also want to provide templates for other classical Python programs:
 
 You can install it with pip::
 
-  $ pip install starterpyth
+    $ pip install starterpyth
 
 ...or from the source::
 
-  $ cd StarterPyth
-  $ sudo python setup.py install
+    $ cd StarterPyth
+    $ sudo python setup.py install
 
 
 Then you can call it through `starterpyth-bin`::
 
-  $ starterpyth-bin
+    $ starterpyth-bin
 
