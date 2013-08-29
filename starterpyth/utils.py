@@ -5,6 +5,7 @@ several utility functions:
 """
 import sys
 import pkg_resources
+import unicodedata
 
 __author__ = 'd9pouces'
 
@@ -15,6 +16,15 @@ if sys.version_info[0] == 3:
 else:
     def py3k_unicode(raw_str):
         return raw_str.decode('utf-8')
+
+
+def normalize_str(orig_str):
+    """
+    Remove all Unicode-only characters and replace them by their ASCII equivalent.
+    :param orig_str:
+    :return:
+    """
+    return unicodedata.normalize('NFKD', orig_str).encode('ASCII', 'ignore')
 
 
 def walk(module_name, dirname, topdown=True):

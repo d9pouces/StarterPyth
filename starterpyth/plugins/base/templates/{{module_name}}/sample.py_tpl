@@ -1,4 +1,4 @@
-"""
+{{ file_encoding }}"""
 Actual code of the {{ project_name }} Python module.
 
 """

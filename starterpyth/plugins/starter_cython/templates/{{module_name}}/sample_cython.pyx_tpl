@@ -1,4 +1,4 @@
-"""This module defines three versions of the same functions, with increasing
+{{ file_encoding }}"""This module defines three versions of the same functions, with increasing
 speedups.
 
 More documentation can be found at {{ doc_urls.cython.0 }}.

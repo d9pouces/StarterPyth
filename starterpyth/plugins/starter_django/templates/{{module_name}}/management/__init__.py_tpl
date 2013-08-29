@@ -1,4 +1,4 @@
-"""
+{{ file_encoding }}"""
 Include all management modules.
 """
 {% include 'header.py_inc' %}

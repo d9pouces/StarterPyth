@@ -1,4 +1,4 @@
-"""
+{{ file_encoding }}"""
 Print basic but functionnal configurations for deployment.
 """
 import logging

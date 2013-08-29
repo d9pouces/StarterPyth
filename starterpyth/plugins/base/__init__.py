@@ -8,7 +8,7 @@ import shutil
 import pkg_resources
 from starterpyth import defaults
 from starterpyth.fields import RegexpInput, CharInput, ChoiceInput, BooleanInput
-from starterpyth.utils import py3k_unicode
+from starterpyth.utils import py3k_unicode, normalize_str
 
 __author__ = 'd9pouces'
 
@@ -33,7 +33,7 @@ class BasePlugin(Plugin):
         module_name = RegexpInput(_('Python module name'), regexp=r'[A-Za-z]\w*', default=project_name.lower()).input()
         company = CharInput(_('Company name'), max_length=255, blank=True, default=defaults.COMPANY).input()
         author = CharInput(_('Author name'), max_length=255, default=defaults.AUTHOR).input()
-        email = RegexpInput(_('Author e-mail'), default='%s@%s' % (author, company),
+        email = RegexpInput(_('Author e-mail'), default='%s@%s' % (normalize_str(author), normalize_str(company)),
                             regexp=r'[\w_\-\.]+@[\w_\-\.]').input()
         license_ = ChoiceInput(_('License'), choices=licenses, blank=True, default='cecill b').input()
         pyversion = ChoiceInput(_('Minimum Python version'), choices=pyversions, default='2.7').input()
@@ -61,6 +61,7 @@ class BasePlugin(Plugin):
         context['use_six'] = use_six
         context['py3compat'] = py3compat
         context['license'] = license_names[license_]
+        context['file_encoding'] = "#coding=utf-8\n"
         if license_ != 'Other':
             licence_fd = pkg_resources.resource_stream('starterpyth.plugins.base', 'licenses/%s.txt' % license_)
             context['license_content'] = licence_fd.read().decode('utf-8')
@@ -104,7 +105,7 @@ class BasePlugin(Plugin):
         path = os.path.join(context['project_root'], project_name)
         if os.path.isdir(path):
             rm_choice = ChoiceInput(_('The folder %(f)s already exists. Remove it?') % {'f': path}, default='yes',
-                             choices=(('yes', 'yes'), ('no', 'no'))).input()
+                                    choices=(('yes', 'yes'), ('no', 'no'))).input()
             if rm_choice == 'yes':
                 shutil.rmtree(path)
 

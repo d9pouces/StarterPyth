@@ -1,4 +1,4 @@
-""" Django settings for {{ module_name }} project. """
+{{ file_encoding }}""" Django settings for {{ module_name }} project. """
 from os.path import join, dirname, abspath
 {% include 'header.py_inc' %}
 

@@ -1,4 +1,4 @@
-"""
+{{ file_encoding }}"""
 This package contains Django stuff related to the global project (not only to a single application):
 
   * settings

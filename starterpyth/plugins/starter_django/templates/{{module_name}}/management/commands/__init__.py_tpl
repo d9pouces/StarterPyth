@@ -1,4 +1,4 @@
-"""
+{{ file_encoding }}"""
 Define each management command as a separate Python module.
 """
 {% include 'header.py_inc' %}

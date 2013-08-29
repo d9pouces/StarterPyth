@@ -1,4 +1,4 @@
-"""
+{{ file_encoding }}"""
 Define simple translation tools, allowing to easily find locale files in packages without configuration.
 """
 import copy

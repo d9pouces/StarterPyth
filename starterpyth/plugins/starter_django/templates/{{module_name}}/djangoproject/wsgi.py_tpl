@@ -1,4 +1,4 @@
-"""
+{{ file_encoding }}"""
 WSGI config for toto project.
 
 This module contains the WSGI application used by Django's development server

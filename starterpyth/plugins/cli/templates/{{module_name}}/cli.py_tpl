@@ -1,4 +1,4 @@
-"""Core shell application.
+{{ file_encoding }}"""Core shell application.
 Parse arguments and logger, use translated strings.
 """
 import logging

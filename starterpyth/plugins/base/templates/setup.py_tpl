@@ -1,4 +1,4 @@
-import codecs
+{{ file_encoding }}import codecs
 import logging
 import os.path
 import sys
@@ -16,7 +16,7 @@ if os.path.isdir(os.path.join(os.path.dirname(__file__), '.git')):
         setuptools_git = None
         logging.warning('You should install setuptools-git to track data files.')
 
-readme = os.path.join(os.path.dirname(__file__), 'README.md')
+readme = os.path.join(os.path.dirname(__file__), 'README.rst')
 if os.path.isfile(readme):
     with codecs.open(readme, 'r', encoding='utf-8') as fd:
         long_description = fd.read()
@@ -43,7 +43,7 @@ setup(
     entry_points=entry_points,
     packages=find_packages(),
     include_package_data=True,
-    zip_safe=True,
+    zip_safe=False,
     test_suite='{{ module_name }}.tests',
     ext_modules=ext_modules,
     cmdclass=cmdclass,

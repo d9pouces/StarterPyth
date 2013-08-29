@@ -1,4 +1,4 @@
-"""
+{{ file_encoding }}"""
 This file describes REST API, built on top of django-tastypie.
 """
 {% include 'header.py_inc' %}

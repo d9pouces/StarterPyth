@@ -1,5 +1,4 @@
-#coding=utf-8
-"""Here are defined Python functions of views.
+{{ file_encoding }}"""Here are defined Python functions of views.
 Views are binded to URLs in :mod:`{{ package_name }}.urls`.
 """
 from django import forms

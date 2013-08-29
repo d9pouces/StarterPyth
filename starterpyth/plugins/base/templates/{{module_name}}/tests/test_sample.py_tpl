@@ -1,4 +1,4 @@
-"""
+{{ file_encoding }}"""
 Sample test module corresponding to the :mod:`{{ module_name }}.sample` module.
 
 A complete documentation can be found at :mod:`unittest`.

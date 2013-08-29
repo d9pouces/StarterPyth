@@ -22,10 +22,8 @@ class DjangoPlugin(Plugin):
         if not self.selected:
             return
         if 3.0 <= context['pyversion'] <= 3.2:
-            logging.warning(_('django-tastypie is not compatible with Python 3.0 -> 3.2'))
-            self.use_tastypie = False
-        else:
-            self.use_tastypie = BooleanInput(_('Create sample REST API with Tastypie'), default=True).input()
+            logging.warning(_('WARNING: django-tastypie is not compatible with Python 3.0 -> 3.2'))
+        self.use_tastypie = BooleanInput(_('Create sample REST API with Tastypie'), default=True).input()
         self.use_tastypie_swagger = False
         if self.use_tastypie:
             self.use_tastypie_swagger = BooleanInput(_('Create API doc with Tastypie Swagger'), default=True).input()

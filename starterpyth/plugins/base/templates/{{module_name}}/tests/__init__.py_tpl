@@ -1,4 +1,4 @@
-"""
+{{ file_encoding }}"""
 Package gathering all unitary tests for {{ module_name }}.
 Module names must start with `test_` to be taken into account.
 

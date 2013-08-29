@@ -1,4 +1,4 @@
-"""
+{{ file_encoding }}"""
 Define a Colorized output to console and several dict configurations
 """
 import copy

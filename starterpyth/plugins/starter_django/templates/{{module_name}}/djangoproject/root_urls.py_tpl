@@ -1,4 +1,4 @@
-"""Define mappings from the URL requested by a user to a proper Python view."""
+{{ file_encoding }}"""Define mappings from the URL requested by a user to a proper Python view."""
 from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin

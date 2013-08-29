@@ -52,3 +52,5 @@ Then you can call it through `starterpyth-bin`::
 
     $ starterpyth-bin
 
+
+More complete documentation can be found at https://starterpyth.readthedocs.org/en/latest/

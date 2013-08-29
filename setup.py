@@ -18,7 +18,7 @@ if os.path.isdir(os.path.join(os.path.dirname(__file__), '.git')):
         setuptools_git = None
         logging.warning('You should install setuptools-git to track data files.')
 
-readme = os.path.join(os.path.dirname(__file__), 'README.md')
+readme = os.path.join(os.path.dirname(__file__), 'README.rst')
 if os.path.isfile(readme):
     fd = codecs.open(readme, 'r', encoding='utf-8')
     long_description = fd.read()
@@ -28,7 +28,7 @@ else:
 
 setup(
     name='starterpyth',
-    version='0.5.2',
+    version='0.5.3',
     description='Generate good skeletons of Python applications.',
     long_description=long_description,
     author='d9pouces',
@@ -53,9 +53,9 @@ setup(
     },
     packages=find_packages(),
     include_package_data=True,
-    zip_safe=True,
+    zip_safe=False,
     test_suite='starterpyth.tests',
-    use_2to3=True,
+    use_2to3=False,
     convert_2to3_doctests=['src/your/module/README.txt'],
     use_2to3_fixers=[],
     use_2to3_exclude_fixers=[],

@@ -1,4 +1,4 @@
-"""
+{{ file_encoding }}"""
 Define a main() function, allowing you to manage your Django project.
 """
 import os

@@ -1,4 +1,4 @@
-"""
+{{ file_encoding }}"""
 Define your custom middlewares in this file.
 """
 {% include 'header.py_inc' %}
