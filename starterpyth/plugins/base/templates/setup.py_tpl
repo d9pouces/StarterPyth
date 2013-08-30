@@ -1,5 +1,4 @@
 {{ file_encoding }}import codecs
-import logging
 import os.path
 import sys
 from setuptools import setup, find_packages
@@ -7,14 +6,6 @@ from setuptools import setup, find_packages
 
 
 commands = filter(lambda x: x[0:1] != '-', sys.argv)
-
-# noinspection PyUnresolvedReferences
-if os.path.isdir(os.path.join(os.path.dirname(__file__), '.git')):
-    try:
-        import setuptools_git
-    except ImportError:
-        setuptools_git = None
-        logging.warning('You should install setuptools-git to track data files.')
 
 readme = os.path.join(os.path.dirname(__file__), 'README.rst')
 if os.path.isfile(readme):
@@ -31,9 +22,14 @@ entry_points = {% raw %}{{% endraw %}{% for key, values in entry_points.items() 
 
 {% for txt in extra_setup %}{{ txt|safe }}
 {% endfor %}
+version_filename = os.path.join(os.path.dirname(__file__), 'VERSION')
+fd = open(version_filename, 'r')
+version = fd.read()
+fd.close()
+
 setup(
     name='{{ module_name }}',
-    version={{ module_version|unicode }},
+    version=version,
     description='No description yet.',
     long_description=long_description,
     author={{ author|unicode }},

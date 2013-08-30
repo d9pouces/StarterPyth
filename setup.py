@@ -1,5 +1,4 @@
 import codecs
-import logging
 import os.path
 
 from setuptools import setup, find_packages
@@ -10,14 +9,6 @@ __author__ = 'd9pouces'
 
 dict_config(CONSOLE)
 
-# noinspection PyUnresolvedReferences
-if os.path.isdir(os.path.join(os.path.dirname(__file__), '.git')):
-    try:
-        import setuptools_git
-    except ImportError:
-        setuptools_git = None
-        logging.warning('You should install setuptools-git to track data files.')
-
 readme = os.path.join(os.path.dirname(__file__), 'README.rst')
 if os.path.isfile(readme):
     fd = codecs.open(readme, 'r', encoding='utf-8')
@@ -26,9 +17,14 @@ if os.path.isfile(readme):
 else:
     long_description = ''
 
+version_filename = os.path.join(os.path.dirname(__file__), 'VERSION')
+fd = open(version_filename, 'r')
+version = fd.read()
+fd.close()
+
 setup(
     name='starterpyth',
-    version='0.5.3',
+    version=version,
     description='Generate good skeletons of Python applications.',
     long_description=long_description,
     author='d9pouces',

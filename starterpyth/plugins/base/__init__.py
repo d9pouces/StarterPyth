@@ -61,7 +61,9 @@ class BasePlugin(Plugin):
         context['use_six'] = use_six
         context['py3compat'] = py3compat
         context['license'] = license_names[license_]
-        context['file_encoding'] = "#coding=utf-8\n"
+        context['file_encoding'] = ''
+        if normalize_str(author) != author or normalize_str(company) != company:
+            context['file_encoding'] = "# -*- coding: utf-8 -*-\n"
         if license_ != 'Other':
             licence_fd = pkg_resources.resource_stream('starterpyth.plugins.base', 'licenses/%s.txt' % license_)
             context['license_content'] = licence_fd.read().decode('utf-8')

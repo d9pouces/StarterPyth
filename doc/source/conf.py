@@ -16,6 +16,11 @@ import os.path
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
+version_filename = os.path.join(os.path.dirname(__file__), '..', '..', 'VERSION')
+fd = open(version_filename, 'r')
+version_orig = fd.read()
+fd.close()
+
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -52,7 +57,7 @@ copyright = '2013, d9pouces@19pouces.net'
 # built documents.
 #
 # The short X.Y version.
-version = '1.0'
+version = version_orig
 # The full version, including alpha/beta/rc tags.
 release = '1.0'
 

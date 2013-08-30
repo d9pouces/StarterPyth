@@ -14,6 +14,7 @@ You can decide to create different kinds of Python applications:
   * command-line application
   * Cython-based extension
   * Django-based website with custom commands and optional modules
+
     * create basic configurations for nginx and Apache
     * examples of tastypie REST APIs
     * example of basic views and forms
