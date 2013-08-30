@@ -15,7 +15,9 @@ if sys.version_info[0] == 3:
         return str(raw_str)
 else:
     def py3k_unicode(raw_str):
-        return raw_str.decode('utf-8')
+        if isinstance(raw_str, str):
+            return raw_str.decode('utf-8')
+        return raw_str
 
 
 def normalize_str(orig_str):

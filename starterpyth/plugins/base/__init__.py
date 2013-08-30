@@ -33,7 +33,9 @@ class BasePlugin(Plugin):
         module_name = RegexpInput(_('Python module name'), regexp=r'[A-Za-z]\w*', default=project_name.lower()).input()
         company = CharInput(_('Company name'), max_length=255, blank=True, default=defaults.COMPANY).input()
         author = CharInput(_('Author name'), max_length=255, default=defaults.AUTHOR).input()
-        email = RegexpInput(_('Author e-mail'), default='%s@%s' % (normalize_str(author), normalize_str(company)),
+        author_normalized = normalize_str(py3k_unicode(author))
+        company_normalized = normalize_str(py3k_unicode(company))
+        email = RegexpInput(_('Author e-mail'), default='%s@%s' % (author_normalized, company_normalized),
                             regexp=r'[\w_\-\.]+@[\w_\-\.]').input()
         license_ = ChoiceInput(_('License'), choices=licenses, blank=True, default='cecill b').input()
         pyversion = ChoiceInput(_('Minimum Python version'), choices=pyversions, default='2.7').input()
@@ -62,7 +64,7 @@ class BasePlugin(Plugin):
         context['py3compat'] = py3compat
         context['license'] = license_names[license_]
         context['file_encoding'] = ''
-        if normalize_str(author) != author or normalize_str(company) != company:
+        if author_normalized != author or company_normalized != company:
             context['file_encoding'] = "# -*- coding: utf-8 -*-\n"
         if license_ != 'Other':
             licence_fd = pkg_resources.resource_stream('starterpyth.plugins.base', 'licenses/%s.txt' % license_)
