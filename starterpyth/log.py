@@ -1,9 +1,10 @@
 import copy
 import logging
 import logging.config
-from io import BytesIO
 import traceback
 import sys
+
+from starterpyth.utils import StringIO
 
 __author__ = 'd9pouces'
 __all__ = ['ColorizedHandler', 'traceback', 'CONSOLE']
@@ -53,7 +54,7 @@ def log_traceback(error, msg=None):
     """
     if msg is not None:
         logging.error(msg)
-    out_buf = BytesIO()
+    out_buf = StringIO()
     exc_traceback = sys.exc_info()[2]
     traceback.print_tb(exc_traceback, file=out_buf)
     logging.error('{0}: {1}'.format(error.__class__.__name__, error))
@@ -80,7 +81,7 @@ CONSOLE = {
 
 def dict_config(config):
     if not hasattr(logging.config, 'dictConfig'):
-        f_in = BytesIO()
+        f_in = StringIO()
 
         def write_value(config_key, values, value_key, default):
             value = values.get(value_key, default)

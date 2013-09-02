@@ -101,7 +101,7 @@ class BasePlugin(Plugin):
         context['setup_requires'].append('distribute')
         context['tests_requires'].append('distribute')
         context['classifiers'].append('Programming Language :: Python')
-        if py3compat in ('source', 'six'):
+        if py3compat in ('source', 'six', '2to3'):
             context['classifiers'].append('Programming Language :: Python :: 3')
         context['year'] = datetime.date.today().year
         context['doc_urls']['python'] = ('http://docs.python.org/%.1f/' % pyversion,

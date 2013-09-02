@@ -9,15 +9,20 @@ import unicodedata
 
 __author__ = 'd9pouces'
 
+__all__ = ['StringIO', 'py3k_unicode', 'normalize_str', 'walk']
+
 
 if sys.version_info[0] == 3:
     def py3k_unicode(raw_str):
         return str(raw_str)
+
+    from io import StringIO
 else:
     def py3k_unicode(raw_str):
         if isinstance(raw_str, str):
             return raw_str.decode('utf-8')
         return raw_str
+    from StringIO import StringIO
 
 
 def normalize_str(orig_str):
