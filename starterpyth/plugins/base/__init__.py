@@ -97,9 +97,9 @@ class BasePlugin(Plugin):
         context['email'] = email
         context['author'] = author
         context['module_version'] = module_version
-        context['install_requires'].append('distribute')
-        context['setup_requires'].append('distribute')
-        context['tests_requires'].append('distribute')
+        context['install_requires'].append('setuptools>=0.7')
+        context['setup_requires'].append('setuptools>=0.7')
+        context['tests_requires'].append('setuptools>=0.7')
         context['classifiers'].append('Programming Language :: Python')
         if py3compat in ('source', 'six', '2to3'):
             context['classifiers'].append('Programming Language :: Python :: 3')

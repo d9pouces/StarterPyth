@@ -7,7 +7,7 @@ Welcome to StarterPyth's documentation!
 ========================================
 
 StarterPyth provides complete skeletons of different kinds of Python projects, with `setup.py` file, documentation,
-unitary tests, and translation files. It also provides some :mod:`distribute` commands to ease the development
+unitary tests, and translation files. It also provides some :mod:`setuptools` commands to ease the development
 of well-written applications.
 
 
@@ -30,11 +30,12 @@ Full table of contents
 ======================
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 1
 
    introduction
    installation
    tutorial
+   best_practices
    api/index
 
 Indices and tables

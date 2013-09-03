@@ -78,7 +78,7 @@ CONSOLE = {
     }
 }
 
-{% if pyversion <= 2.6 %}
+{% if pyversion <= 2.6 or (py3compat != None and pyversion <= 3.2) %}
 def dictConfig(config):
     if not hasattr(logging.config, 'dictConfig'):
         f_in = BytesIO()

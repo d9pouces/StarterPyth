@@ -1,5 +1,7 @@
 import codecs
 import os.path
+import ez_setup
+ez_setup.use_setuptools()
 
 from setuptools import setup, find_packages
 
@@ -49,10 +51,10 @@ setup(
     },
     packages=find_packages(),
     include_package_data=True,
-    zip_safe=False,
+    zip_safe=True,
     test_suite='starterpyth.tests',
     use_2to3=False,
     # extra_requires=['pylint', 'sphinx'],
-    install_requires=['distribute', 'jinja2', 'markupsafe', ],
-    setup_requires=['distribute'],
+    install_requires=['setuptools>=0.7', 'jinja2', 'markupsafe', ],
+    setup_requires=['setuptools>=0.7'],
 )
