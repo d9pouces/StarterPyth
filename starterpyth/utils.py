@@ -16,12 +16,19 @@ if sys.version_info[0] == 3:
     def py3k_unicode(raw_str):
         return str(raw_str)
 
+    def py3k_bytes(raw_str):
+        return raw_str.encode('utf-8')
+
     from io import StringIO
 else:
     def py3k_unicode(raw_str):
         if isinstance(raw_str, str):
             return raw_str.decode('utf-8')
         return raw_str
+
+    def py3k_bytes(raw_str):
+        return raw_str
+
     from StringIO import StringIO
 
 

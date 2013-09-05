@@ -7,7 +7,7 @@ import os
 import shutil
 import subprocess
 import sys
-from starterpyth.utils import py3k_unicode
+from starterpyth.utils import py3k_unicode, py3k_bytes
 from starterpyth.log import CONSOLE, dict_config
 
 __author__ = 'd9pouces'
@@ -18,10 +18,10 @@ TEST_DIRECTORY = 'Test'
 
 STDIN_PREFIXES = ['''{0}
 test
-\xe2\x88\x829pouces.net
-\xe2\x88\x829pouces
+{1}9pouces.net
+{1}9pouces
 d9pouces@19pouces.net
-cecill b'''.format(TEST_DIRECTORY)]
+cecill b'''.format(TEST_DIRECTORY, '∂' if sys.version_info[0] == 3 else '\xe2\x88\x82')]
 
 PY_VERSIONS = {
     '''3.4''': ('3.4', ),
@@ -77,7 +77,7 @@ if __name__ == '__main__':
             for plugins in PLUGIN_VERSIONS:
                 for trans in ('yes', 'no'):
                     data = prefix + "\n" + min_version + "\n" + trans + "\n0.1\n" + plugins + "\n"
-                    print(data.decode('utf-8'))
+                    print(data)
                     for run_version in AVAILABLE_PYTHONS:
                         print('Running StarterPyth with ' + run_version)
                         if os.path.isdir(TEST_DIRECTORY):
@@ -85,7 +85,7 @@ if __name__ == '__main__':
                         cmd = "python{0} -c 'from starterpyth.core import main; main()'".format(run_version)
                         popen = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                                  stdin=subprocess.PIPE)
-                        stdout, stderr = popen.communicate(data)
+                        stdout, stderr = popen.communicate(py3k_bytes(data))
                         if popen.returncode:
                             logging.error(cmd)
                             print(stdout)
