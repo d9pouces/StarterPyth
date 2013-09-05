@@ -1,2 +1,3 @@
+include ez_setup.py VERSION tests.py stdeb.cfg LICENSE
 recursive-include starterpyth *
 exclude .git .svn
