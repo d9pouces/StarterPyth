@@ -1,4 +1,4 @@
-import logging
+from starterpyth.log import green, yellow, red
 
 __author__ = 'd9pouces'
 import os
@@ -7,7 +7,12 @@ import shutil
 import subprocess
 
 from distutils.core import Command
-import sphinx
+
+try:
+    #noinspection PyPackageRequirements
+    import sphinx
+except ImportError:
+    sphinx = None
 
 from starterpyth.translation import gettext as _
 
@@ -51,8 +56,7 @@ class GenDoc(Command):
                'changes': "The overview file is in %s/changes.",
                'linkcheck': "Link check complete; look for any errors in the above output \n "
                             "or in %s/linkcheck/output.txt.",
-               'doctest': "results in %s/doctest/output.txt.",
-    }
+               'doctest': "results in %s/doctest/output.txt.", }
 
     def __init__(self, *args, **kwargs):
         Command.__init__(self, *args, **kwargs)
@@ -82,9 +86,12 @@ class GenDoc(Command):
         self.doc_dir = os.path.abspath(self.doc_dir)
 
     def run(self):
+        if sphinx is None:
+            print(red(_('package sphinx is required.')))
+            return 1
         if self.clean and os.path.isdir(self.build_dir):
             msg = _('removing %(dir)s') % {'dir': self.build_dir}
-            logging.info(msg)
+            print(green(msg))
             shutil.rmtree(self.build_dir)
         sphinx_opts = shlex.split(self.ALLSPHINXOPTS % (self.build_dir, os.getenv('SPHINXOPTS') or '', self.doc_dir))
         count = 0
@@ -97,10 +104,10 @@ class GenDoc(Command):
             result = sphinx.main(options)
             if result == 0:
                 msg = txt % self.build_dir
-                logging.info(msg)
+                print(green(msg))
                 if orig_fmt == 'latexpdf':
                     subprocess.check_call('make -C %s/latex all-pdf' % self.build_dir, shell=True)
                     msg = "pdflatex finished; the PDF files are in %s/latex." % self.build_dir
-                    logging.info(msg)
+                    print(green(msg))
         if not count:
-            logging.warning(_("please select at least one output format (e.g. gen_doc --html)"))
+            print(yellow(_("please select at least one output format (e.g. gen_doc --html)")))

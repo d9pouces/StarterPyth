@@ -1,15 +1,18 @@
 #coding=utf-8
-import logging
 from setuptools import find_packages
+from six import u
 from starterpyth.core import load_module
-from starterpyth.utils import py3k_unicode
+from starterpyth.log import yellow, red, green
 
 __author__ = 'd9pouces'
 
 from distutils.core import Command
-# noinspection PyPackageRequirements
-import polib
 import os
+try:
+    #noinspection PyPackageRequirements
+    import polib
+except ImportError:
+    polib = None
 
 from starterpyth.translation import gettext as _
 
@@ -17,13 +20,12 @@ from starterpyth.translation import gettext as _
 def translate_string(src_str):
     """
     Transform a ASCII string into a larger string with non-ASCII characters.
-
-    >>> translate_string(py3k_unicode('ab')) == py3k_unicode('[ƒ——!ab!—–]')
+    >>> translate_string(u('ab')) == u('[ƒ——!ab!—–]')
     True
 
     """
     dst_str = src_str
-    return py3k_unicode('[ƒ——!{0}!—–]').format(dst_str)
+    return u('[ƒ——!{0}!—–]').format(dst_str)
 
 
 class PseudoL10N(Command):
@@ -34,6 +36,11 @@ class PseudoL10N(Command):
         ('dest=', 'd', "output dir"),
     ]
 
+    def __init__(self, dist=None):
+        super(PseudoL10N, self).__init__(dist=dist)
+        self.language = 'xx_XX'
+        self.dest = None
+
     def initialize_options(self):
         self.language = 'xx_XX'
         self.dest = None
@@ -42,6 +49,9 @@ class PseudoL10N(Command):
         pass
 
     def run(self):
+        if polib is None:
+            print(red(_('package polib is required.')))
+            return 1
         module_names = find_packages()
         dst_rel_path = 'locale' if self.dest is None else self.dest
         # group by top-level packages and compute their directories:
@@ -55,11 +65,11 @@ class PseudoL10N(Command):
         for module_name, locale_dir in top_levels_modules.items():
             po_filename = os.path.join(locale_dir, self.language, 'LC_MESSAGES', '%s.po' % module_name)
             if not os.path.isfile(po_filename):
-                logging.warning(_('Missing file: %(filename)s. Please run the makemessages -l xx_XX command first.')
-                                % {'filename': po_filename})
+                print(yellow(_('Missing file: %(filename)s. Please run the makemessages -l xx_XX command first.')
+                             % {'filename': po_filename}))
                 continue
             po_content = polib.pofile(po_filename)
             for entry in po_content:
                 entry.msgstr = translate_string(entry.msgid)
-            logging.info(_('Processed file: %(filename)s.') % {'filename': po_filename})
+            print(green(_('Processed file: %(filename)s.') % {'filename': po_filename}))
             po_content.save(po_filename)

@@ -41,7 +41,11 @@ from distutils.core import Command
 import os
 import shutil
 
-from jinja2 import Environment, PackageLoader
+try:
+    from jinja2 import Environment, PackageLoader
+except ImportError:
+    Environment, PackageLoader = None, None
+from starterpyth.translation import gettext as _
 
 
 class GenDocApi(Command):
@@ -52,6 +56,12 @@ class GenDocApi(Command):
                     ('overwrite', 'o', "overwrite existing files"),
                     ('pre-rm', 'p', "remove existing files"), ]
 
+    def __init__(self, *args, **kwargs):
+        Command.__init__(self, *args, **kwargs)
+        self.api_dir = os.path.join('doc', 'source', 'api')
+        self.overwrite = 0
+        self.pre_rm = 0
+
     def initialize_options(self):
         self.api_dir = os.path.join('doc', 'source', 'api')
         self.overwrite = 0
@@ -61,14 +71,17 @@ class GenDocApi(Command):
         pass
 
     def run(self):
+        if Environment is None:
+            logging.critical(_('package jinja2 is required.'))
+            return 1
         env = Environment(loader=PackageLoader('starterpyth.commands', 'templates'))
 
-        def write_template(template, path, context):
+        def write_template(template_, path, context):
             """
             Write a template file.
 
-            :param template: Jinja2 template
-            :type template: :class:`Template`
+            :param template_: Jinja2 template
+            :type template_: :class:`Template`
             :param path: destination path
             :type path: basestring
             :param context: context
@@ -79,7 +92,7 @@ class GenDocApi(Command):
                 os.makedirs(dirname)
             if not os.path.isfile(path) or self.overwrite:
                 tpl_fd = codecs.open(path, 'w', encoding='utf-8')
-                tpl_fd.write(template.render(context))
+                tpl_fd.write(template_.render(context))
                 tpl_fd.close()
                 logging.info('writing %s' % path)
         src_module_names = find_packages()

@@ -1,120 +1,40 @@
-import copy
-import logging
-import logging.config
 import traceback
 import sys
-
-from starterpyth.utils import StringIO
+from six import u, StringIO
 
 __author__ = 'd9pouces'
-__all__ = ['ColorizedHandler', 'traceback', 'CONSOLE']
+__all__ = ['red', 'print_tb', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
 
 
-class ColorizedHandler(logging.StreamHandler):
-    """Basic :class:`logging.StreamHandler` modified to colorize its output
-    according to the record level.
-    """
+def __add_color(code):
+    def __wrapped(text, bold=False):
+        if bold:
+            return u("\033[1;{0}m{1}\033[0m").format(code, text)
+        return u("\033[{0}m{1}\033[0m").format(code, text)
+    return __wrapped
 
-    def emit(self, record):
-        """If a formatter is specified, it is used to format the record. The
-        record is the written to the stream with a new line terminator.
-        If exception information is present, it is formatted using
-        :param record: record to emit
-        :func:`traceback.print_exception()` and appended to the stream.
-        The message is colorized according to the level of the record:
-
-        * :attr:`logging.debug` => pink
-        * :attr:`logging.info` => green
-        * :attr:`logging.warning` => yellow
-        * :attr:`logging.error` => red
-        """
-        myrecord = copy.copy(record)
-        levelno = myrecord.levelno
-        if levelno >= 50:
-            color = '\x1b[31m'  # red
-        elif levelno >= 40:
-            color = '\x1b[31m'  # red
-        elif levelno >= 30:
-            color = '\x1b[33m'  # yellow
-        elif levelno >= 20:
-            color = '\x1b[32m'  # green
-        elif levelno >= 10:
-            color = '\x1b[35m'  # pink
-        else:
-            color = '\x1b[0m'  # normal
-        myrecord.msg = color + myrecord.msg + '\x1b[0m'  # normal
-        return logging.StreamHandler.emit(self, myrecord)
+red = __add_color(u('31'))
+green = __add_color(u('32'))
+yellow = __add_color(u('33'))
+blue = __add_color(u('34'))
+magenta = __add_color(u('35'))
+cyan = __add_color(u('36'))
+white = __add_color(u('37'))
 
 
-def log_traceback(error, msg=None):
+def print_tb(error, msg=None):
     """
     Log a traceback
     :param error: error
     :param msg: message to prefix tracebacks with
     """
     if msg is not None:
-        logging.error(msg)
+        print(red(msg))
     out_buf = StringIO()
     exc_traceback = sys.exc_info()[2]
     traceback.print_tb(exc_traceback, file=out_buf)
-    logging.error('{0}: {1}'.format(error.__class__.__name__, error))
-    logging.error(out_buf.getvalue())
-
-
-CONSOLE = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'color': {
-            'level': 'DEBUG',
-            'filters': [],
-            'class': 'starterpyth.log.ColorizedHandler'
-        }
-    },
-    'root': {
-        'handlers': ['color'],
-        'level': 'WARNING',
-        'propagate': True,
-    }
-}
-
-
-def dict_config(config):
-    if not hasattr(logging.config, 'dictConfig'):
-        f_in = StringIO()
-
-        def write_value(config_key, values, value_key, default):
-            value = values.get(value_key, default)
-            if isinstance(value, list):
-                value = ",".join(value)
-            elif isinstance(value, dict):
-                value = ",".join([x for x in value])
-            f_in.write("{0}={1}\n".format(config_key, value))
-        f_in.write("[loggers]\n")
-        values = ['root'] + list(config.get('loggers', {}).keys())
-        f_in.write("keys={0}\n".format(",".join(values)))
-        for index_name in ('handlers', 'formatters'):
-            f_in.write("[{0}]\n".format(index_name))
-            write_value('keys', config, index_name, [])
-        for h_name in config.get('handlers', []):
-            f_in.write("[handler_{0}]\n".format(h_name))
-            write_value('class', config['handlers'][h_name], 'class', '')
-            write_value('level', config['handlers'][h_name], 'level', 'NOTSET')
-            write_value('args', config['handlers'][h_name], 'args', '()')
-        for l_name in config.get('loggers', []):
-            f_in.write("[logger_{0}]\n".format(l_name))
-            write_value('handlers', config['loggers'][l_name], 'handlers', [])
-            write_value('level', config['loggers'][l_name], 'level', 'NOTSET')
-            write_value('propagate', config['loggers'][l_name], 'propagate', 1)
-        f_in.write("[logger_root]\n")
-        write_value('handlers', config['root'], 'handlers', [])
-        write_value('level', config['root'], 'level', 'NOTSET')
-        write_value('propagate', config['root'], 'propagate', 1)
-        f_in.seek(0)
-        f_in.seek(0)
-        logging.config.fileConfig(f_in)
-    else:
-        logging.config.dictConfig(config)
+    print(red('{0}: {1}'.format(error.__class__.__name__, error)))
+    print(yellow(out_buf.getvalue()))
 
 
 if __name__ == '__main__':

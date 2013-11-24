@@ -1,6 +1,6 @@
-import logging
 from setuptools import find_packages
 from starterpyth.core import load_module
+from starterpyth.log import green
 
 __author__ = 'd9pouces'
 
@@ -18,6 +18,11 @@ class CompileMessages(Command):
         ('language=', 'l', "target language (default: fr_FR)"),
         ('dest=', 'd', "output dir"),
     ]
+
+    def __init__(self, dist=None):
+        super(CompileMessages, self).__init__(dist=dist)
+        self.language = 'fr_FR'
+        self.dest = None
 
     def initialize_options(self):
         self.language = 'fr_FR'
@@ -44,5 +49,5 @@ class CompileMessages(Command):
                 os.makedirs(os.path.dirname(mo_file))
             if os.path.isfile(po_file):
                 cmd = 'msgfmt --output-file %s %s' % (mo_file, po_file)
-                logging.info(_('Processing file %(filename)s.') % {'filename': po_file})
+                print(green(_('Processing file %(filename)s.') % {'filename': po_file}))
                 subprocess.check_call(cmd, shell=True, stderr=subprocess.PIPE)

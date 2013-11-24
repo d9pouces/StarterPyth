@@ -5,11 +5,7 @@ ez_setup.use_setuptools()
 
 from setuptools import setup, find_packages
 
-from starterpyth.log import CONSOLE, dict_config
-
 __author__ = 'd9pouces'
-
-dict_config(CONSOLE)
 
 readme = os.path.join(os.path.dirname(__file__), 'README.rst')
 if os.path.isfile(readme):
@@ -51,10 +47,10 @@ setup(
     },
     packages=find_packages(),
     include_package_data=True,
-    zip_safe=True,
+    zip_safe=False,
     test_suite='starterpyth.tests',
     use_2to3=False,
-    # extra_requires=['pylint', 'sphinx'],
-    install_requires=['setuptools>=0.7', 'jinja2', 'markupsafe', ],
+    extra_requires=['polib', 'pylint', 'sphinx'],
+    install_requires=['setuptools>=0.7', 'jinja2', 'markupsafe', 'six', ],
     setup_requires=['setuptools>=0.7'],
 )

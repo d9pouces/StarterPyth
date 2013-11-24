@@ -3,7 +3,6 @@ from errno import ENOENT
 import gettext as gettext_module
 import os.path
 import pkg_resources
-import sys
 
 __author__ = 'd9pouces'
 __all__ = ['translation', 'gettext', 'lgettext', 'ugettext', 'ngettext', 'lngettext', 'ungettext']
@@ -71,22 +70,23 @@ def translation(domain, localedir='locale', languages=None,  # pylint: disable=R
     # Avoid opening, reading, and parsing the .mo file after it's been done
     # once.
     result = None
-    for mofile in mofiles:
-        key = (class_, mofile)
-        trans_obj = gettext_module._translations.get(key)  # pylint: disable=W0212
-        if trans_obj is None:
-            with pkg_resources.resource_stream('starterpyth', mofile) as fileobj:
-                trans_obj = gettext_module._translations.setdefault(key, class_(fileobj))  # pylint: disable=W0212
-        # Copy the translation object to allow setting fallbacks and
-        # output charset. All other instance data is shared with the
-        # cached object.
-        trans_obj = copy.copy(trans_obj)
-        if codeset:
-            trans_obj.set_output_charset(codeset)
-        if result is None:
-            result = trans_obj
-        else:
-            result.add_fallback(trans_obj)
+    if mofiles is not None:
+        for mofile in mofiles:
+            key = (class_, mofile)
+            trans_obj = gettext_module._translations.get(key)  # pylint: disable=W0212
+            if trans_obj is None:
+                with pkg_resources.resource_stream('starterpyth', mofile) as fileobj:
+                    trans_obj = gettext_module._translations.setdefault(key, class_(fileobj))  # pylint: disable=W0212
+            # Copy the translation object to allow setting fallbacks and
+            # output charset. All other instance data is shared with the
+            # cached object.
+            trans_obj = copy.copy(trans_obj)
+            if codeset:
+                trans_obj.set_output_charset(codeset)
+            if result is None:
+                result = trans_obj
+            else:
+                result.add_fallback(trans_obj)
     return result
 
 
@@ -98,9 +98,10 @@ ngettext = __TRANS.ngettext
 lngettext = __TRANS.lngettext
 ugettext = __TRANS.gettext
 ungettext = __TRANS.ngettext
-if sys.version_info[0] == 2:
-    ugettext = __TRANS.ugettext
-    ungettext = __TRANS.ungettext
+if hasattr(__TRANS, 'ugettext'):
+    ugettext = getattr(__TRANS, 'ugettext')
+if hasattr(__TRANS, 'ungettext'):
+    ungettext = getattr(__TRANS, 'ungettext')
 
 
 if __name__ == '__main__':

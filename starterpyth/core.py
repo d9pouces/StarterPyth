@@ -6,6 +6,7 @@ import imp
 import sys
 
 import pkg_resources
+from six import u
 
 import starterpyth.log
 import starterpyth.utils
@@ -21,7 +22,7 @@ DEFAULT_EXTENSIONS = ['starterpyth.plugins.base:BasePlugin', 'starterpyth.plugin
 
 
 def load_module(modulename):
-    parents = modulename.split('.')
+    parents = modulename.split(u('.'))
     path = sys.path
     module = None
     for module_name in parents:
@@ -36,18 +37,19 @@ class Plugin(object):
     def update_global_context(self, context, filters):
         pass
 
-    def get_template(self, context, modname, filename):
+    @staticmethod
+    def get_template(context, modname, filename):
         """
         Render a single template.
-        :param context:
-        :param modname:
-        :param filename:
+        :param context: dict
+        :param modname: str
+        :param filename: str
         :return:
         """
         from jinja2 import Environment, PackageLoader
         from jinja2.loaders import ChoiceLoader
-        dirname, filename = filename.rsplit('/', 1)
-        loader = ChoiceLoader([PackageLoader('starterpyth', 'templates'), PackageLoader(modname, dirname)])
+        dirname, filename = filename.rsplit(u('/'), 1)
+        loader = ChoiceLoader([PackageLoader(u('starterpyth'), u('templates')), PackageLoader(modname, dirname)])
         env = Environment(loader=loader)
         template = env.get_template(filename)
         return template.render(**context)
@@ -58,9 +60,8 @@ class Plugin(object):
     def write_files(self, context, filters):
         """
         Write template or raw files to the new project
-        :param context: context (dict) to be used by jinja2
-        :param filters: extra filters for jinja2
-        :param excludes: files to exclude
+        :param context: dict context (dict) to be used by jinja2
+        :param filters: list extra filters for jinja2
         :return:
         """
         from jinja2 import Environment, PackageLoader, Template
@@ -82,17 +83,17 @@ class Plugin(object):
         # noinspection PyTypeChecker
         prefix_len = len(dirname) + 1
 
-        def get_path(root, name):
+        def get_path(root_, name):
             """return relative source path (to template dir) and destination path"""
-            src_path = (root + '/' + name)[prefix_len:]
-            dst_path = src_path
+            src_path_ = (root_ + '/' + name)[prefix_len:]
+            dst_path_ = src_path_
             if os.sep != '/':
-                dst_path = dst_path.replace('/', os.sep)
-            if dst_path.find('{') > -1:
-                dst_path = Template(dst_path).render(**local_context)
-            if dst_path[-4:] == '_tpl':
-                dst_path = dst_path[:-4]
-            return src_path, os.path.join(project_root, dst_path)
+                dst_path_ = dst_path_.replace('/', os.sep)
+            if dst_path_.find('{') > -1:
+                dst_path_ = Template(dst_path_).render(**local_context)
+            if dst_path_[-4:] == '_tpl':
+                dst_path_ = dst_path_[:-4]
+            return src_path_, os.path.join(project_root, dst_path_)
         for root, dirnames, filenames in starterpyth.utils.walk(modname, dirname):
             for dirname in dirnames:
                 src_path, dst_path = get_path(root, dirname)
@@ -153,12 +154,6 @@ def main():
     options, args = parser.parse_args(sys.argv[1:])
     if options.nointeractive:
         INTERACTIVE = False
-    log_config = starterpyth.log.CONSOLE
-    if options.verbose:
-        log_config['root']['level'] = 'DEBUG'
-    else:
-        log_config['root']['level'] = 'WARNING'
-    starterpyth.log.dict_config(log_config)
     extensions = DEFAULT_EXTENSIONS + options.extensions
     context = {'project_root': options.target, 'entry_points': {}, 'install_requires': [], 'setup_requires': [],
                'tests_requires': [], 'doc_urls': {}, 'ext_modules': [], 'extra_setup': [], 'classifiers': [], }

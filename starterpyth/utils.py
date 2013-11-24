@@ -3,42 +3,23 @@ several utility functions:
   * unicode function to be compatible with both Python 2 & 3
   * copy of the :func:`os.walk` function, adapted to pkg_resources
 """
-import sys
-import pkg_resources
 import unicodedata
+
+import pkg_resources
+
 
 __author__ = 'd9pouces'
 
-__all__ = ['StringIO', 'py3k_unicode', 'normalize_str', 'walk']
-
-
-if sys.version_info[0] == 3:
-    def py3k_unicode(raw_str):
-        return str(raw_str)
-
-    def py3k_bytes(raw_str):
-        return raw_str.encode('utf-8')
-
-    from io import StringIO
-else:
-    def py3k_unicode(raw_str):
-        if isinstance(raw_str, str):
-            return raw_str.decode('utf-8')
-        return raw_str
-
-    def py3k_bytes(raw_str):
-        return raw_str
-
-    from StringIO import StringIO
+__all__ = ['normalize_str', 'walk']
 
 
 def normalize_str(orig_str):
     """
     Remove all Unicode-only characters and replace them by their ASCII equivalent.
-    :param orig_str:
-    :return:
+    :param orig_str: str
+    :return: str
     """
-    return unicodedata.normalize('NFKD', orig_str).encode('ASCII', 'ignore')
+    return unicodedata.normalize('NFKD', orig_str).encode('ASCII', 'ignore').decode('utf-8')
 
 
 def walk(module_name, dirname, topdown=True):
@@ -73,7 +54,7 @@ def walk(module_name, dirname, topdown=True):
             for name in dirnames:
                 for values in rec_walk(root + '/' + name):
                     yield values
-    return rec_walk(py3k_unicode(dirname))
+    return rec_walk(dirname)
 
 
 if __name__ == '__main__':

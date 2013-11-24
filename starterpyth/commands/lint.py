@@ -1,10 +1,16 @@
 """
 Define a basic pylint call.
 """
+from starterpyth.log import red
+
 __author__ = 'd9pouces'
 
 from distutils.core import Command
-import pylint.lint
+try:
+    import pylint.lint
+except ImportError:
+    pylint = None
+from starterpyth.translation import gettext as _
 
 
 class Lint(Command):
@@ -20,5 +26,7 @@ class Lint(Command):
         pass
 
     def run(self):
+        if pylint is None:
+            print(red(_('package pylint is required.')))
+            return 1
         pylint.lint.Run((self.distribution.get_name(), ), exit=False)
-

@@ -1,10 +1,10 @@
 """
 Define input fields for command-line interface.
 """
-import logging
 import re
-import sys
+import six
 import starterpyth.core
+from starterpyth.log import yellow, red
 
 from starterpyth.translation import ugettext as _
 
@@ -36,20 +36,19 @@ class BaseInput(object):
         value = ''
         while not valid:
             if starterpyth.core.INTERACTIVE:
-                if sys.version_info[0] == 3:
-                    value = input(prompt)
-                else:
-                    value = raw_input(prompt).decode('utf-8')
+                value = six.moves.input(prompt)
+                if isinstance(value, six.binary_type):
+                    value = value.decode('utf-8')
             else:
                 value = self.default
-                logging.warning(prompt + value)
+                print(yellow(prompt + value))
             if not value and self.default is not None:
                 value = self.default
             try:
                 self.validator(value)
                 valid = True
             except ValidationError as exception:
-                logging.error(exception.msg)
+                print(red(exception.msg))
         value = self.convert_value(value=value)
         return value
 

@@ -1,26 +1,19 @@
-from starterpyth.utils import py3k_unicode
+from six import u, BytesIO
+from starterpyth.log import red, green
 
 __author__ = 'd9pouces'
 
 from distutils.core import Command
 import os.path
-import logging
 import pdb
-import sys
 import token
 import tokenize
 
 try:
+    #noinspection PyPep8Naming
     import cProfile as profile
 except ImportError:
     import profile
-if sys.version_info[0] == 2:
-    try:
-        from cStringIO import StringIO as BytesIO
-    except ImportError:
-        from StringIO import StringIO as BytesIO
-else:
-    from io import BytesIO
 
 
 class Profiling(Command):
@@ -32,6 +25,13 @@ class Profiling(Command):
         ('call=', 'c', "function to profile"),
         ('debug', 'd', "debug function instead of profiling it"),
     ]
+
+    def __init__(self, dist=None):
+        super(Profiling, self).__init__(dist=dist)
+        self.output = None
+        self.input = None
+        self.call = None
+        self.debug = 0
 
     def initialize_options(self):
         self.output = None
@@ -48,15 +48,15 @@ class Profiling(Command):
                 # noinspection PyUnresolvedReferences
                 import pstats
             except ImportError:
-                logging.error('Module pstats not found.')
+                print(red('Module pstats not found.'))
                 return
             if not os.path.isfile(self.input):
-                logging.error(py3k_unicode('File %s not found' % self.input))
+                print(red(u('File %s not found' % self.input)))
                 return
             stats = pstats.Stats(self.input)
             stats.print_stats()
         elif not self.call:
-            logging.error('Please provide a function to profile with --call \'module.function\'')
+            print(red('Please provide a function to profile with --call \'module.function\''))
             return
         else:
             if '(' not in self.call:
@@ -79,9 +79,9 @@ class Profiling(Command):
             if simple_function_call:
                 module_name = self.call.partition('(')[0].rpartition('.')[0]
                 if module_name:
-                    logging.info('Load module %s' % module_name)
+                    print(green('Load module %s' % module_name))
                     self.call = 'import %s ; %s' % (module_name, self.call)
-            logging.info("running profiling on %(call)s" % {'call': self.call})
+            print(green("running profiling on %(call)s" % {'call': self.call}))
             if self.debug:
                 pdb.run(self.call)
             else:

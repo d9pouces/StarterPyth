@@ -1,3 +1,5 @@
+from six import u
+from starterpyth.log import green, yellow
 
 __author__ = 'd9pouces'
 
@@ -5,12 +7,9 @@ import abc
 from distutils.core import Command
 import imp
 import json
-import logging
 import os.path
 import re
 import subprocess
-
-from starterpyth.utils import py3k_unicode
 
 
 def find_dependencies(module_name):
@@ -20,7 +19,7 @@ def find_dependencies(module_name):
     missing_dependencies = set()
     warning_re = re.compile('^WARNING\\s*:\\s*Line [0-9]+:.*')
     missing_re = re.compile('^WARNING\\s*:  \\s*(.*)$')
-    for line in py3k_unicode(stderr).splitlines():
+    for line in u(stderr).splitlines():
         if warning_re.match(line):
             continue
         missing_match = missing_re.match(line)
@@ -34,19 +33,19 @@ def find_dependencies(module_name):
         return os.path.abspath(os.path.dirname(os.path.dirname(base_module.__file__)))
     module_root = get_module_root(module_name)
 
-    def add_dependence(python_root, module_root, found_dependencies, dirname, filename):
+    def add_dependence(python_root_, module_root_, found_dependencies_, dirname, filename):
         if dirname is None or filename is None:
             return
-        if dirname.find(python_root) == 0 or dirname.find(module_root) == 0:
+        if dirname.find(python_root_) == 0 or dirname.find(module_root_) == 0:
             return
         name = filename.partition(os.path.sep)[0]
         basename, ext = os.path.splitext(name)
         if ext.find('.py') == 0:
-            found_dependencies.add(basename)
+            found_dependencies_.add(basename)
         else:
-            found_dependencies.add(name)
+            found_dependencies_.add(name)
 
-    for line in py3k_unicode(stdout).splitlines():
+    for line in u(stdout).splitlines():
         (src, dst) = json.loads(line.replace("(", "[").replace(")", "]").replace("'", '"').replace('None', 'null'))
         add_dependence(python_root, module_root, found_dependencies, *src)
         add_dependence(python_root, module_root, found_dependencies, *dst)
@@ -67,18 +66,18 @@ class Dependencies(Command):
         install_requires = set(self.distribution.install_requires)
         module_name = self.distribution.get_name()
         msg = 'Looking for dependencies of %(module_name)s...' % {'module_name': module_name}
-        logging.info(msg)
+        print(green(msg))
         found_dependencies, missing_dependencies = find_dependencies(module_name)
         if found_dependencies:
-            logging.info('Found dependencies: ' + ', '.join(found_dependencies))
+            print(green('Found dependencies: ' + ', '.join(found_dependencies)))
             marked_dependencies = filter(lambda x: x not in install_requires, found_dependencies)
             if marked_dependencies:
-                logging.warning('You should add the following dependencies to your stdeb.cfg and setup.py.:')
-                logging.warning(', '.join(marked_dependencies))
+                print(yellow('You should add the following dependencies to your stdeb.cfg and setup.py.:'))
+                print(yellow(', '.join(marked_dependencies)))
             else:
-                logging.info('All of them are correctly set in your setup.py.')
+                print(green('All of them are correctly set in your setup.py.'))
         else:
-            logging.info('No dependencies')
+            print(green('No dependencies'))
         if len(missing_dependencies) > 0:
-            logging.warning('Missing dependencies: ' + ', '.join(missing_dependencies))
-            logging.info('They may be false positive dependencies.')
+            print(yellow('Missing dependencies: ' + ', '.join(missing_dependencies)))
+            print(green('They may be false positive dependencies.'))

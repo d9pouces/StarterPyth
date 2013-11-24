@@ -1,15 +1,19 @@
 import codecs
 import datetime
 from distutils.core import Command
-import logging
 import os
 import subprocess
-from jinja2 import Environment, PackageLoader
+from six import u
+from starterpyth.log import red, green, yellow
+
+try:
+    from jinja2 import Environment, PackageLoader
+except ImportError:
+    Environment, PackageLoader = None, None
 from setuptools import find_packages
 from starterpyth.core import load_module
 
 from starterpyth.translation import gettext as _
-from starterpyth.utils import py3k_unicode
 
 
 class MakeMessages(Command):
@@ -20,6 +24,11 @@ class MakeMessages(Command):
         ('dest=', 'd', "output dir, relative to the top-level package folder (default: locale)"),
     ]
 
+    def __init__(self, dist=None):
+        super(MakeMessages, self).__init__(dist=dist)
+        self.language = 'fr_FR'
+        self.dest = None
+
     def initialize_options(self):
         self.language = 'fr_FR'
         self.dest = None
@@ -28,6 +37,9 @@ class MakeMessages(Command):
         pass
 
     def run(self):
+        if Environment is None:
+            print(red(_('package jinja2 is required.')))
+            return 1
         module_names = find_packages()
         dst_rel_path = 'locale' if self.dest is None else self.dest
         # group by top-level packages and compute their directories:
@@ -83,20 +95,20 @@ class MakeMessages(Command):
                         po_fd.close()
                         filenames.append(os.path.relpath(filename, root_path))
                         msg = _('%(filename)s added.') % {'filename': filename}
-                        logging.info(msg)
+                        print(green(msg))
                     except UnicodeDecodeError:
                         msg = _('Encoding of %(filename)s is not UTF-8.') % {'filename': filename}
-                        logging.error(msg)
-            cmd = ['xgettext', '--language=Python', '--keyword=_', py3k_unicode('--output=%s') % pot_filename,
+                        print(green(msg))
+            cmd = ['xgettext', '--language=Python', '--keyword=_', u('--output=%s') % pot_filename,
                    '--from-code=UTF-8', '--add-comments=Translators', ] + filenames
             subprocess.check_call(cmd, stdout=subprocess.PIPE)
             if os.path.isfile(po_filename):
                 cmd = ['msgmerge', '--update', '--backup=off', po_filename, pot_filename, ]
             else:
-                cmd = ['msginit', '--no-translator', '-l', self.language, py3k_unicode('--input=%s') % pot_filename,
-                       py3k_unicode('--output=%s') % po_filename, ]
+                cmd = ['msginit', '--no-translator', '-l', self.language, u('--input=%s') % pot_filename,
+                       u('--output=%s') % po_filename, ]
             subprocess.check_call(cmd, stderr=subprocess.PIPE)
             msg = _('Please translate strings in %(filename)s') % {'filename': po_filename}
-            logging.warning(msg)
+            print(yellow(msg))
             msg = _('Then run setup.py compilemessages -l %(lang)s') % {'lang': self.language}
-            logging.warning(msg)
+            print(yellow(msg))
