@@ -17,7 +17,7 @@ else:
 
 version_filename = os.path.join(os.path.dirname(__file__), 'VERSION')
 fd = open(version_filename, 'r')
-version = fd.read()
+version = fd.read().strip()
 fd.close()
 
 setup(
