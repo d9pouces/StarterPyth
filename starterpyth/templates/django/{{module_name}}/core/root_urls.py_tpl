@@ -3,7 +3,7 @@
 {% block content %}from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from {{ module_name }}.core.sitemap import SiteMap
+from {{ module_name }}.core.sitemap import CoreSiteMap
 
 admin.autodiscover()
 
@@ -17,8 +17,8 @@ urlpatterns = patterns('',
                         {'document_root': settings.MEDIA_ROOT}),
                        (r'^' + settings.STATIC_URL[1:] + '(?P<path>.*)$', 'django.views.static.serve',
                         {'document_root': settings.STATIC_ROOT}),
-                       (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': {'core': SiteMap}}),
-                       (r'^robots\.txt$', 'aviationsmilitaires.specials.views.robots'),
+                       (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': {'core': CoreSiteMap}}),
+                       (r'^robots\.txt$', '{{ module_name }}.core.views.robots'),
                        # main application
                        (r'^main_app/', include('{{ module_name }}.main_app.urls')),
                        # index
