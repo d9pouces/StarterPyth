@@ -1,11 +1,10 @@
-{{ file_encoding }}"""Core shell application.
+{% include 'header.py_inc' %}
+{% block docstring %}"""Core shell application.
 Parse arguments and logger, use translated strings.
-"""
-import logging
-import {% if pyversion <= 2.6 %}optparse{% else %}argparse{% endif %}
-import {{ module_name }}.log
-{% if translation %}from {{ module_name }}.translation import ugettext as _
-{% endif %}{% include 'header.py_inc' %}
+"""{% endblock %}
+{% block content %}
+import {% if use_py26 %}optparse{% else %}argparse{% endif %}
+
 __all__ = ['main']
 
 
@@ -18,7 +17,7 @@ def main():
       * :class:`int`: 0 in case of success, != 0 if something went wrong
 
     """
-    {% if pyversion <= 2.6 %}parser = optparse.OptionParser()
+    {% if use_py26 <= 2.6 %}parser = optparse.OptionParser()
     parser.add_option('-v', '--verbose', action='store_true', help={{ 'print more messages'|translate }}, default=False)
     parser.add_option('-d', '--debug', action='store_true', help={{'print debug messages'|translate }}, default=False)
     options, args = parser.parse_args()
@@ -26,25 +25,13 @@ def main():
     parser.add_argument('-v', '--verbose', action='store_true', help={{ 'print more messages'|translate }}, default=False)
     parser.add_argument('-d', '--debug', action='store_true', help={{ 'print debug messages'|translate }}, default=False)
     args = parser.parse_args(){% endif %}
-    log_config = {{ module_name }}.log.CONSOLE
-    if {% if pyversion <= 2.6 %}options{% else %}args{% endif %}.debug:
-        log_config['root']['level'] = 'DEBUG'
-    elif {% if pyversion <= 2.6 %}options{% else %}args{% endif %}.verbose:
-        log_config['root']['level'] = 'INFO'
-    {{ module_name }}.log.dictConfig(log_config)
-    logging.debug({{ 'Enter debug mode.'|translate }})
-    logging.debug({{ 'Start of main function.'|translate }})
     return_code = 0  # 0 = success, != 0 = error
-
     # complete this function
-{% if translation %}    # use _ to translate strings
-{% endif %}    logging.info({{ 'Here is the code'|translate }})
     print({{ 'Hello, world!'|translate }})
-
-    logging.debug({{ 'Bye.'|translate }})
     return return_code
 
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
 
+{% endblock %}

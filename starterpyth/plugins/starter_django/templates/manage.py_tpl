@@ -1,5 +1,0 @@
-#!/usr/bin/env python
-{{ file_encoding }}from {{ module_name }}.djangoproject.manage import main
-{% include 'header.py_inc' %}
-
-main()

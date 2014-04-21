@@ -1,8 +1,0 @@
-{{ file_encoding }}"""Define mappings from the URL requested by a user to a proper Python view."""
-from django.conf.urls import patterns, url
-{% include 'header.py_inc' %}
-
-urlpatterns = patterns(  # pylint: disable=C0103
-    '',
-    url(r'^index/$', '{{ module_name }}.views.index'),
-)

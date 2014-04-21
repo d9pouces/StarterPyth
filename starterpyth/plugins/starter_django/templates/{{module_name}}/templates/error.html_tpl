@@ -1,6 +1,0 @@
-{% raw %}{% extends "base.html" %}{% load staticfiles  %}{% load url from future %}{% load i18n %}
-{% block body %}
-<h2>{{ title }}</h2>
-<p>{{ error_msg }}</p>
-{% endblock %}
-{% endraw %}

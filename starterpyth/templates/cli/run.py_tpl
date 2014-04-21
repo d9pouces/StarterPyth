@@ -1,0 +1,5 @@
+{% include 'header.py_inc' %}
+{% block content %}
+from {{ module_name }}.cli import main
+main()
+{% endblock %}

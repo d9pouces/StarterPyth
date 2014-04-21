@@ -12,6 +12,10 @@ v1_api.register(PollResource())
 v1_api.register(ChoiceResource())
 {% endif %}
 admin.autodiscover()
+{% if use_tastypie and use_py3 %}
+# check https://github.com/concentricsky/django-tastypie-swagger/pull/37
+# for making tastypie_swagger compatible with Python 3
+{% endif %}
 urlpatterns = patterns('',
                        url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
                        (r'^grappelli/', include('grappelli.urls')),

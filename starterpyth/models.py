@@ -12,6 +12,19 @@ class PackageModel(Model):
     template_roots = [('starterpyth', 'templates/common'), ('starterpyth', 'templates/package')]
 
 
+class CliModel(Model):
+    name = _('Python binary')
+    template_roots = [('starterpyth', 'templates/common'), ('starterpyth', 'templates/package'),
+                      ('starterpyth', 'templates/cli')]
+
+    def get_extracontext(self):
+        self.global_context['entry_points'].setdefault('console_scripts', [])
+        module_name = self.global_context['module_name']
+        scripts = ['%s = %s.cli:main' % (module_name, module_name), ]
+        self.global_context['entry_points']['console_scripts'] += scripts
+        return {}
+
+
 class DjangoModel(Model):
     name = _('Django-based website')
     template_roots = [('starterpyth', 'templates/common'), ('starterpyth', 'templates/django')]
