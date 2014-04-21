@@ -23,11 +23,11 @@ def set_env():
             if not os.path.isfile(conf_path):
                 conf_path = ''
 
-    os.environ["DJANGO_SETTINGS_MODULE"] = "{{ module_name }}.core.settings"
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "{{ module_name }}.core.settings")
     parser = LaxOptionParser(usage="%prog subcommand [options] [args]", version=get_version(), option_list=[])
-    parser.add_option('--param', action='store', default=conf_path, help={{ 'configuration file'|text }})
+    parser.add_option('--conf_file', action='store', default=conf_path, help={{ 'configuration file'|text }})
     options, args = parser.parse_args(sys.argv)
-    os.environ.setdefault("{{ module_name|upper }}_SETTINGS", options.param)
+    os.environ.setdefault("{{ module_name|upper }}_SETTINGS", options.conf_file)
     sys.argv = args
     return args
 

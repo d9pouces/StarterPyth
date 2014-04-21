@@ -179,7 +179,6 @@ BASE_INSTALLED_APPS = option('BASE_INSTALLED_APPS', [
     'django.contrib.humanize',
     'django.contrib.sites',
     'django.contrib.sitemaps',
-    'grappelli.dashboard',
     'grappelli',
     'django.contrib.admin',
     'pipeline',
