@@ -93,10 +93,10 @@ class Model(object):
         """
         :param src_path: source path, relative to python module
         :param dst_path: absolute destination path
-        :param name: basename of the file or directory to be created
+        :param name: basename of the file or directory to be processed
         :return:
         """
-        if name in ['.svn', '.git', '.hg', 'CVS']:
+        if name in ['.svn', '.git', '.hg', 'CVS'] or name[-len(self.include_suffix):] == self.include_suffix:
             return False
         return True
 
@@ -158,8 +158,6 @@ class Model(object):
                     os.makedirs(dst_path)
                     display(_('Directory %(f)s created.') % {'f': dst_path}, color=GREEN)
             for filename in filenames:
-                if filename[-len(self.include_suffix):] == self.include_suffix:
-                    continue
                 src_path, dst_path = get_path(root, filename)
                 if not self.process_directory_or_file(src_path, dst_path, filename, False):
                     continue

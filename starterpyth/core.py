@@ -91,7 +91,7 @@ def main():
     base_form = BaseInfoForm(initial={'model': DjangoModel, 'overwrite': True, 'use_py26': True, 'use_six': True})
     base_context = base_form.read(interactive=options.nointeractive)
     model = base_context['model'](base_context=base_context)
-    model.run()
+    model.run(interactive=options.nointeractive)
 
 
 if __name__ == '__main__':

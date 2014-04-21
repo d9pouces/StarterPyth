@@ -182,11 +182,17 @@ BASE_INSTALLED_APPS = option('BASE_INSTALLED_APPS', [
     'grappelli',
     'django.contrib.admin',
     'pipeline',
-    'bootstrap3',
+{% if use_tastypie %}    'tastypie',
+    'tastypie_swagger',
+{% endif %}    'bootstrap3',
     '{{ module_name }}.core',
     '{{ module_name }}.main_app',
 ])
 INSTALLED_APPS = BASE_INSTALLED_APPS + option('INSTALLED_APPS', [])
+
+{% if use_tastypie %}
+TASTYPIE_SWAGGER_API_MODULE = '{{ module_name }}.core.root_urls.v1_api'
+{% endif %}
 
 BOOTSTRAP3 = option('BOOTSTRAP3', {
     'jquery_url': STATIC_URL + 'js/jquery.min.js',

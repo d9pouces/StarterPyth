@@ -4,13 +4,20 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from {{ module_name }}.core.sitemap import CoreSiteMap
+{% if use_tastypie %}from tastypie.api import Api
+from {{ module_name }}.main_app.api import PollResource, ChoiceResource
 
+v1_api = Api(api_name='v1')
+v1_api.register(PollResource())
+v1_api.register(ChoiceResource())
+{% endif %}
 admin.autodiscover()
-
 urlpatterns = patterns('',
                        url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
                        (r'^grappelli/', include('grappelli.urls')),
-                       url(r'^admin/', include(admin.site.urls)),
+{% if use_tastypie %}                       url(r'api/doc/', include('tastypie_swagger.urls', namespace='tastypie_swagger')),
+                       (r'^api/', include(v1_api.urls)),
+                       {% endif %}url(r'^admin/', include(admin.site.urls)),
                        (r'^jsi18n/$', 'django.views.i18n.javascript_catalog',
                         {'packages': ('{{ module_name }}', 'django.contrib.admin', ), }),
                        (r'^' + settings.MEDIA_URL[1:] + '(?P<path>.*)$', 'django.views.static.serve',
