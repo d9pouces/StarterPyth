@@ -1,0 +1,47 @@
+{% include 'header.py_inc' %}
+{% block docstring %}"""Setup file for the {{ project_name }} project.
+"""{% endblock %}
+
+{% block content %}import codecs
+import os.path
+import sys
+import ez_setup
+ez_setup.use_setuptools()
+from setuptools import setup, find_packages
+
+# get README content from README.rst file
+with codecs.open(os.path.join(os.path.dirname(__file__), 'README.rst'), encoding='utf-8') as fd:
+    long_description = fd.read()
+
+# get version value from VERSION file
+with codecs.open(os.path.join(os.path.dirname(__file__), 'VERSION'), encoding='utf-8') as fd:
+    version = fd.read().strip()
+{% if ext_modules %}ext_modules = {{  ext_modules|repr }}
+{% endif %}{% if cmdclass %}cmdclass = {{ cmdclass|repr }}
+{% endif %}{% if entry_points %}entry_points = {{ entry_points|repr }}
+{% endif %}{% for txt in extra_setup %}{{ txt|safe }}
+{% endfor %}
+setup(
+    name='{{ module_name }}',
+    version=version,
+    description='No description yet.',
+    long_description=long_description,
+    author={{ author|text }},
+    author_email={{ email|text }},
+    license={{ license|text }},
+    url={{ project_url|text }},
+{% if entry_points %}    entry_points=entry_points,
+{% endif %}    packages=find_packages(),
+    include_package_data=True,
+    zip_safe=False,
+    test_suite='{{ module_name }}.tests',
+{% if ext_modules %}    ext_modules=ext_modules,
+{% endif %}{% if cmdclass %}cmdclass=cmdclass,
+{% endif %}{% if use_2to3 %}    use_2to3=True,
+    convert_2to3_doctests=['src/your/module/README.txt'],
+    use_2to3_fixers=[],
+    use_2to3_exclude_fixers = [],
+{% endif %}    install_requires={{ install_requires|repr }},
+    setup_requires={{ setup_requires|repr }},
+    classifiers={{ classifiers|repr }},
+){% endblock %}

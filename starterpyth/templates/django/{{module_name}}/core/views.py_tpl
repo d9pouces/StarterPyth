@@ -1,0 +1,17 @@
+{% extends 'header.py_inc' %}
+{% block content %}
+from django.contrib.sites.models import get_current_site
+from django.contrib.syndication.views import add_domain
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+
+def robots(request):
+    current_site = get_current_site(request)
+    base_url = add_domain(current_site.domain, '/', request.is_secure())[:-1]
+    template_values = {'base_url': base_url}
+    return render_to_response('core/robots.txt', template_values, RequestContext(request), content_type='text/plain')
+
+
+def index(request):
+    return render_to_response('core/index.html', template_values, RequestContext(request))
+{% endblock %}

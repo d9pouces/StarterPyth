@@ -1,0 +1,6 @@
+Here your can put Django data files:
+  * SQLite database
+  * collected static files
+  * files uploaded by users
+
+Of course, you can change this location in {{ module_name }}.core.settings.

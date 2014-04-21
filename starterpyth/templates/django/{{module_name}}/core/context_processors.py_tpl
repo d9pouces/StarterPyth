@@ -1,0 +1,6 @@
+{% extends 'header.py_inc' %}
+
+{% block content %}
+def context_base(request):
+    return {}
+{% endblock %}

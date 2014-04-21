@@ -1,0 +1,13 @@
+{% extends 'header.py_inc' %}
+{% block docstring %}"""Define your middlewares here"""{% endblock %}
+{% block content %}
+
+class IEMiddleware(object):
+    """Add a HTTP header for Internet Explorer Compatibility.
+    Ensure that IE uses the last version of its display engine.
+    """
+    # noinspection PyUnusedLocal,PyMethodMayBeStatic
+    def process_template_response(self, request, response):
+        response['X-UA-Compatible'] = 'IE=edge,chrome=1'
+        return response
+{% endblock %}

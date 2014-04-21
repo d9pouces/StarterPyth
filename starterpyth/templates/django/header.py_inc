@@ -1,0 +1,9 @@
+{% if encoding %}#coding={{ encoding }}
+{% endif %}{% block docstring %}{% endblock %}
+{% if render_pass == 2 %}{% if counter_six_b %}from django.utils.six import b
+{% endif %}{% if counter_six_u %}from django.utils.six import u
+{% endif %}{% if counter_i18n %}from django.utils.translation import ugettext as _
+{% endif %}{% endif %}
+__author__ = {{ author|text }}
+
+{% block content %}{% endblock %}

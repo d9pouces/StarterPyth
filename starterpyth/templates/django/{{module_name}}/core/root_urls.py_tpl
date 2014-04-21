@@ -1,0 +1,26 @@
+{% extends 'header.py_inc' %}
+{% block docstring %}"""Define mappings from the URL requested by a user to a proper Python view."""{% endblock %}
+{% block content %}from django.conf import settings
+from django.conf.urls import patterns, include, url
+from django.contrib import admin
+from {{ module_name }}.core.sitemap import SiteMap
+
+admin.autodiscover()
+
+urlpatterns = patterns('',
+                       url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+                       (r'^grappelli/', include('grappelli.urls')),
+                       url(r'^admin/', include(admin.site.urls)),
+                       (r'^jsi18n/$', 'django.views.i18n.javascript_catalog',
+                        {'packages': ('{{ module_name }}', 'django.contrib.admin', ), }),
+                       (r'^' + settings.MEDIA_URL[1:] + '(?P<path>.*)$', 'django.views.static.serve',
+                        {'document_root': settings.MEDIA_ROOT}),
+                       (r'^' + settings.STATIC_URL[1:] + '(?P<path>.*)$', 'django.views.static.serve',
+                        {'document_root': settings.STATIC_ROOT}),
+                       (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': {'core': SiteMap}}),
+                       (r'^robots\.txt$', 'aviationsmilitaires.specials.views.robots'),
+                       # main application
+                       (r'^main_app/', include('{{ module_name }}.main_app.urls')),
+                       # index
+                       url(r'^$', '{{ module_name }}.core.views.index'),
+                       ){% endblock %}

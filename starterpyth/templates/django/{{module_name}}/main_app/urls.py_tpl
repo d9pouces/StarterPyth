@@ -1,0 +1,11 @@
+{% extends 'header.py_inc' %}
+
+{% block content %}
+from django.conf.urls import patterns
+
+urlpatterns = patterns(
+    '',
+    (r'^index\.html', '{{ module_name }}.main_app.views.index'),
+)
+
+{% endblock %}

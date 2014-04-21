@@ -1,25 +1,36 @@
 import traceback
 import sys
-from six import u, StringIO
+from six import u, b, StringIO, text_type, print_
 
 __author__ = 'd9pouces'
-__all__ = ['red', 'print_tb', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
+__all__ = ['print_tb', 'display', 'RED', 'GREEN', 'YELLOW', 'BLUE', 'MAGENTA', 'CYAN', 'WHITE']
 
 
-def __add_color(code):
-    def __wrapped(text, bold=False):
-        if bold:
-            return u("\033[1;{0}m{1}\033[0m").format(code, text)
-        return u("\033[{0}m{1}\033[0m").format(code, text)
-    return __wrapped
+RED = '31'
+GREEN = '32'
+YELLOW = '33'
+BLUE = '34'
+MAGENTA = '35'
+CYAN = '36'
+WHITE = '37'
 
-red = __add_color(u('31'))
-green = __add_color(u('32'))
-yellow = __add_color(u('33'))
-blue = __add_color(u('34'))
-magenta = __add_color(u('35'))
-cyan = __add_color(u('36'))
-white = __add_color(u('37'))
+
+__encode_stdout = not (hasattr(sys.stdout, 'encoding') and sys.stdout.encoding.lower() == 'utf-8')
+
+
+def display(text, color=None, bold=False, newline=True):
+    if not isinstance(text, text_type):
+        text = text.decode('utf-8')
+    if bold and color:
+        text = u("\033[1;{0}m{1}\033[0m").format(color, text)
+    text = u("\033[{0}m{1}\033[0m").format(color, text)
+    if newline:
+        text += u('\n')
+    end = u('')
+    if __encode_stdout:
+        text = text.encode('utf-8')
+        end = b('')
+    print_(text, end=end)
 
 
 def print_tb(error, msg=None):
@@ -29,12 +40,12 @@ def print_tb(error, msg=None):
     :param msg: message to prefix tracebacks with
     """
     if msg is not None:
-        print(red(msg))
+        display(msg, color=RED, bold=True)
     out_buf = StringIO()
     exc_traceback = sys.exc_info()[2]
     traceback.print_tb(exc_traceback, file=out_buf)
-    print(red('{0}: {1}'.format(error.__class__.__name__, error)))
-    print(yellow(out_buf.getvalue()))
+    display('{0}: {1}'.format(error.__class__.__name__, error), color=RED)
+    display(out_buf.getvalue(), color=YELLOW)
 
 
 if __name__ == '__main__':

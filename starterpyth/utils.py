@@ -24,7 +24,8 @@ def normalize_str(orig_str):
 
 def walk(module_name, dirname, topdown=True):
     """
-    Copy of :func:`os.walk`. Please refer to this doc.
+    Copy of :func:`os.walk`. Please refer to its doc. The only difference is that we walk in a package_resource
+    instead of a plain directory.
     :type module_name: basestring
     :param module_name: module to search in
     :type dirname: basestring

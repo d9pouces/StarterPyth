@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /admin/
+Sitemap: {{ base_url }}{% url 'django.contrib.sitemaps.views.sitemap' %}

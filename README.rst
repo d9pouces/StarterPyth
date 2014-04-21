@@ -55,3 +55,25 @@ Then you can call it through `starterpyth-bin`::
 
 
 More complete documentation can be found at https://starterpyth.readthedocs.org/en/latest/
+
+
+Starterpyth 2.0 :
+    doctest, unittest, nose
+    mock
+    pychecker, pylint
+
+    * CLI
+        * man page
+        CHANGES.txt
+
+    * Django
+        * intégration de bootstrap3
+        * intégration de tastypie
+        * intégration de tastypie swagger
+        * fichier de configuration
+    * démon
+
+
+    * template PyCharm [avec environnement virtuel, warning sur la version de Python]
+    * utilisation de six
+    * création de l'environnement virtuel associé
