@@ -25,7 +25,7 @@ class ChoiceResource(ModelResource):
         queryset = Choice.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'poll'
+        resource_name = 'poll_resource'
         authorization = DjangoAuthorization()
         filtering = {'choice_text': ALL, 'votes': ['exact', 'range', 'gt', 'gte', 'lt', 'lte'], }
 {% endblock %}

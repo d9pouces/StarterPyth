@@ -158,7 +158,7 @@ class PathInput(CharInput):
         if self.cwd:
             value = os.path.join(self.cwd, value)
         if not os.path.exists(value):
-            raise InvalidValue(_('%(l)i is not a valid path') % {'l': value})
+            raise InvalidValue(_('%(l)s is not a valid path') % {'l': value})
         return value
 
 
