@@ -8,6 +8,13 @@ from django.utils.importlib import import_module
 from {{ module_name }}.core import defaults
 
 conf_path = os.environ.get('{{ module_name|upper }}_SETTINGS')
+if not conf_path:
+    current_file_components = __file__.split(os.path.sep)
+    if 'lib' in current_file_components:
+        current_file_components = current_file_components[:current_file_components.index('lib')]
+        current_file_components += ['etc', '{{ module_name }}', 'settings.py']
+        conf_path = os.path.sep.join(current_file_components)
+
 if conf_path and os.path.isfile(conf_path):
     sys.path.append(os.path.dirname(conf_path))
     conf_module = os.path.basename(conf_path)[:-3]

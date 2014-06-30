@@ -1,4 +1,4 @@
-{% include 'header.py_inc' %}
+#coding=utf-8
 {% block docstring %}"""Setup file for the {{ project_name }} project.
 """{% endblock %}
 
@@ -26,10 +26,10 @@ setup(
     version=version,
     description='No description yet.',
     long_description=long_description,
-    author={{ author|text }},
-    author_email={{ email|text }},
-    license={{ license|text }},
-    url={{ project_url|text }},
+    author="""{{ author }}""",
+    author_email="""{{ email }}""",
+    license="""{{ license }}""",
+    url="""{{ project_url }}""",
 {% if entry_points %}    entry_points=entry_points,
 {% endif %}    packages=find_packages(),
     include_package_data=True,

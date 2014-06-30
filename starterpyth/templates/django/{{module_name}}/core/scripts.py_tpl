@@ -18,7 +18,7 @@ def set_env():
     if not os.path.isfile(conf_path):
         splitted_path = __file__.split(os.path.sep)
         if 'lib' in splitted_path:
-            splitted_path = splitted_path[:splitted_path.index('lib')] + ['etc', '{{ module_name }}_configuration.py']
+            splitted_path = splitted_path[:splitted_path.index('lib')] + ['etc', '{{ module_name }}', 'settings.py']
             conf_path = os.path.sep.join(splitted_path)
             if not os.path.isfile(conf_path):
                 conf_path = ''
