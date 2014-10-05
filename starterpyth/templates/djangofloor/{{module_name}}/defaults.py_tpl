@@ -1,0 +1,18 @@
+{% extends 'header.py_inc' %}
+
+{% block content %}
+FLOOR_INSTALLED_APPS = ['{{ module_name }}', {% if use_djangorestframework %}'rest_framework', {% endif %}]
+FLOOR_INDEX = '{{ module_name }}.views.index'
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = '{{ secret_key }}'
+
+{% if use_djangorestframework %}
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+{% endif %}
+{% endblock %}

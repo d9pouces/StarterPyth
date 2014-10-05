@@ -7,7 +7,7 @@ import sys
 import re
 
 from six import u
-from starterpyth.models import PackageModel, DjangoModel, CliModel
+from starterpyth.models import PackageModel, DjangoModel, CliModel, DjangofloorModel
 
 from starterpyth.translation import ugettext as _
 from starterpyth.cliforms import BaseForm, RegexpInput, BooleanInput, CharInput, ChoiceInput, PathInput
@@ -20,8 +20,8 @@ licenses = [('cecill_a', _('CeCILL-A')), ('cecill_b', _('CeCILL-B')), ('bsd_2_cl
             ('lgpl_2', _('LGPL v.2')), ('lgpl_3', _('LGPL v.3')), ('mit', _('MIT'))]
 
 
-available_models = [(PackageModel, PackageModel.name), (DjangoModel, DjangoModel.name),
-    (CliModel, CliModel.name)]
+available_models = [(PackageModel, PackageModel.name), (DjangoModel, DjangoModel.name), (CliModel, CliModel.name),
+                    (DjangofloorModel, DjangofloorModel.name), ]
 
 
 class BaseInfoForm(BaseForm):
@@ -89,7 +89,7 @@ def main():
     parser.add_option('--nointeractive', '-n', action='store_false', dest='nointeractive', default=True,
                       help=_('no interactive mode'))
     options, args = parser.parse_args(sys.argv[1:])
-    base_form = BaseInfoForm(initial={'model': CliModel, 'overwrite': True, 'use_py26': True, 'use_six': True})
+    base_form = BaseInfoForm(initial={'model': CliModel, 'overwrite': True, 'use_py26': True, 'use_six': False})
     base_context = base_form.read(interactive=options.nointeractive)
     model = base_context['model'](base_context=base_context)
     model.run(interactive=options.nointeractive)
