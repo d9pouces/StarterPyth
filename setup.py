@@ -35,6 +35,6 @@ setup(
     zip_safe=True,
     test_suite='starterpyth.tests',
     use_2to3=False,
-    install_requires=['setuptools>=0.7', ],
-    setup_requires=['setuptools>=0.7', 'jinja2', 'markupsafe', 'six', ],
+    install_requires=['setuptools>=0.7', 'jinja2', 'markupsafe', 'six', ],
+    setup_requires=['setuptools>=0.7', ],
 )
