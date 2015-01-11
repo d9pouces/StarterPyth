@@ -3,6 +3,16 @@
   <component name="issues">
     <option name="index">
       <map>
+        <entry key="/Dummy.txt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/.virtualenvs/spibol_server/lib/python3.4/site-packages/djangofloor-0.6-py3.4.egg/djangofloor/defaults.py">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/VERSION">
           <value>
             <set />
@@ -23,7 +33,62 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/starterpyth/templates/djangofloor/{{module_name}}/defaults.py_tpl">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/starterpyth/templates/djangofloor/{{module_name}}/root_urls.py_tpl">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/starterpyth/templates/djangofloor/{{module_name}}/templates/{{module_name}}/index.html">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../Python/Spilob/ArcheologCommon/archeolog_common/constants.py">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../Python/Spilob/archeologserver/archeolog_server/decorators.py">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../Python/Spilob/archeologserver/archeolog_server/defaults.py">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../Python/Spilob/archeologserver/archeolog_server/executions/api.py">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../Python/Spilob/archeologserver/archeolog_server/executions/models.py">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../Python/Spilob/archeologserver/archeolog_server/executions/serializers.py">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../Python/Spilob/archeologserver/archeolog_server/tests/test_decorator.py">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../Python/Spilob/archeologserver/archeolog_server/tests/test_decorators.py">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="/a.dummy">
           <value>
             <set />
           </value>

@@ -1,4 +1,4 @@
-{% if encoding %}#coding={{ encoding }}
+{% if encoding %}# coding={{ encoding }}
 {% endif %}{% block docstring %}
 {% endblock %}
 {% if render_pass == 2 %}{% if counter_six_b %}from six import b

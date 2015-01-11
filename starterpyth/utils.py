@@ -22,6 +22,11 @@ def normalize_str(orig_str):
     return unicodedata.normalize('NFKD', orig_str).encode('ASCII', 'ignore').decode('utf-8')
 
 
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+
+
 def walk(module_name, dirname, topdown=True):
     """
     Copy of :func:`os.walk`. Please refer to its doc. The only difference is that we walk in a package_resource
@@ -56,8 +61,3 @@ def walk(module_name, dirname, topdown=True):
                 for values in rec_walk(root + '/' + name):
                     yield values
     return rec_walk(dirname)
-
-
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()

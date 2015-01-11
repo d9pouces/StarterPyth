@@ -1,0 +1,4 @@
+from djangofloor.scripts import manage
+import os
+os.environ['DJANGOFLOOR_PROJECT_NAME'] = '{{ module_name }}'
+manage()

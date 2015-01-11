@@ -2,12 +2,17 @@
 
 {% block content %}
 FLOOR_INSTALLED_APPS = ['{{ module_name }}', {% if use_djangorestframework %}'rest_framework', {% endif %}]
-FLOOR_INDEX = '{{ module_name }}.views.index'
+# FLOOR_INDEX = '{{ module_name }}.views.index'
+FLOOR_URL_CONF = '{{ module_name }}.root_urls'
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '{{ secret_key }}'
 
 {% if use_djangorestframework %}
 REST_FRAMEWORK = {
+    # Use hyperlinked styles by default.
+    # Only used if the `serializer_class` attribute is not set on a view.
+    'DEFAULT_MODEL_SERIALIZER_CLASS': 'rest_framework.serializers.HyperlinkedModelSerializer',
+
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [

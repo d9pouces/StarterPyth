@@ -1,0 +1,5 @@
+import os
+os.environ['DJANGOFLOOR_PROJECT_NAME'] = '{{ module_name }}'
+from djangofloor.scripts import celery
+
+celery()

@@ -75,7 +75,6 @@ class DjangofloorModel(Model):
         if self.global_context['use_djangorestframework']:
             requires += ['djangorestframework', 'markdown', 'django-filter', 'pygments']
         self.global_context['install_requires'] += requires
-        self.global_context['setup_requires'] += requires
 
         self.global_context['secret_key'] = self.__get_random_string()
         return {}
