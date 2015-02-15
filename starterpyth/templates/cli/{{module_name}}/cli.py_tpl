@@ -1,23 +1,28 @@
-{% include 'header.py_inc' %}
-{% block docstring %}"""Core shell application.
+{% extends 'header.py_inc' %}
+
+
+{% block docstring %}{{ """Core shell application.
 Parse arguments and logger, use translated strings.
-"""{% endblock %}
-{% block content %}
-import {% if use_py26 %}optparse{% else %}argparse{% endif %}
+"""|docstring }}
+{% endblock %}
 
-__all__ = ['main']
 
+{% block headers %}{{ super() }}import {% if use_py26 %}optparse{% else %}argparse{% endif %}
+{% endblock %}
+
+
+{% block content %}__all__ = ['main']
 
 def main():
-    """Main function, intended for use as command line executable.
+    {{ """Main function, intended for use as command line executable.
 
     Args:
         None
     Returns:
       * :class:`int`: 0 in case of success, != 0 if something went wrong
 
-    """
-    {% if use_py26 <= 2.6 %}parser = optparse.OptionParser()
+    """|docstring }}
+    {% if use_py26 %}parser = optparse.OptionParser()
     parser.add_option('-v', '--verbose', action='store_true', help={{ 'print more messages'|translate }}, default=False)
     parser.add_option('-d', '--debug', action='store_true', help={{'print debug messages'|translate }}, default=False)
     options, args = parser.parse_args()

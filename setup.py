@@ -1,10 +1,7 @@
 import codecs
 import os.path
-import ez_setup
-ez_setup.use_setuptools()
-
 from setuptools import setup, find_packages
-
+from starterpyth import __version__ as version
 __author__ = 'd9pouces'
 
 
@@ -12,12 +9,6 @@ __author__ = 'd9pouces'
 readme = os.path.join(os.path.dirname(__file__), 'README.rst')
 fd = codecs.open(readme, 'r', encoding='utf-8')
 long_description = fd.read()
-fd.close()
-
-# get version value from VERSION file
-version_filename = os.path.join(os.path.dirname(__file__), 'VERSION')
-fd = open(version_filename, 'r')
-version = fd.read().strip()
 fd.close()
 
 setup(

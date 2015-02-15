@@ -181,6 +181,9 @@ class ChoiceInput(CharInput):
             raise InvalidValue(_('Please enter a number between 1 and %(max)d') % {'max': len(self.choices)})
         return self.choices[int(value) - 1][0]
 
+    def display(self, value):
+        return self.choices[int(value) - 1][1]
+
     def widget(self, initial=None):
         def l(i, x):
             if initial is not None and x[0] == initial:

@@ -26,9 +26,9 @@ def sample_function(first, second=4):
 {% if use_i18n %}
 
 def sample_translation():
-    """
+    {{ """
     Simply return a constant string, that should be translated.
-    """
+    """|docstring }}
     return _('This message should be translated')
 
 {% endif %}

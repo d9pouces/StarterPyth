@@ -1,1 +1,2 @@
 {% extends 'header.py_inc' %}
+{% block content %}__version__ = {{ version|raw_text }}{% endblock %}

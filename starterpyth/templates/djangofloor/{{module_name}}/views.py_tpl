@@ -1,9 +1,11 @@
-{% extends 'header.py_inc' %}
-{% block content %}
-from django.shortcuts import render_to_response
+{% extends 'django_header.py_inc' %}
+
+{% block headers %}{{ super() }}from django.shortcuts import render_to_response
 from django.template import RequestContext
+{% endblock %}
 
 
+{% block content %}
 def index(request):
     template_values = {}
     return render_to_response('{{ module_name }}/index.html', template_values, RequestContext(request))

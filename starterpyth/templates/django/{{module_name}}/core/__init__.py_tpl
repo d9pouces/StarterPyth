@@ -1,1 +1,1 @@
-{% extends 'header.py_inc' %}
+{% extends 'django_header.py_inc' %}

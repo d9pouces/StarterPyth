@@ -1,5 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: {{ encoding }} -*-
 import os
-os.environ['DJANGOFLOOR_PROJECT_NAME'] = '{{ module_name }}'
+os.environ['DJANGOFLOOR_PROJECT_NAME'] = {{ module_name|repr }}
 from djangofloor.scripts import celery
 
 celery()

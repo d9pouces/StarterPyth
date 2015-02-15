@@ -1,14 +1,17 @@
-# coding=utf-8
+{% extends 'django_header.py_inc' %}
 
-from django.conf.urls import patterns, include, url
+{% block headers %}{{ super() }}from django.conf.urls import patterns, include, url
 {% if use_djangorestframework %}from rest_framework import routers
-
-router = routers.DefaultRouter()
 {% endif %}
+{% endblock %}
+
+
+{% block content %}
+router = routers.DefaultRouter()
 
 urls = [
     ('^example$', '{{ module_name }}.views.index'),
     {% if use_djangorestframework %}url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
     {% endif %}
-]
+]{% endblock %}

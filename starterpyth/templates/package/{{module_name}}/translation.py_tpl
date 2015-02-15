@@ -1,4 +1,4 @@
-{% if encoding %}#coding={{ encoding }}
+{% if encoding %}# -*- coding: {{ encoding }} -*-
 {% endif %}import copy
 from errno import ENOENT
 import gettext as gettext_module
@@ -10,14 +10,14 @@ __all__ = ['translation', 'gettext', 'lgettext', 'ugettext', 'ngettext', 'lngett
 
 # Locate a .mo file using the gettext strategy
 def __find(domain, localedir='locale', languages=None, all_=False):
-    """
+    {{ """
     Return the name of a .mo file using the gettext strategy.
 
     :param domain: Gettext domain name (e.g. your module name)
     :param localedir: directory containing locales (give 'locale' if you have locale/fr_FR/LC_MESSAGES/domain.mo)
     :param languages: languages to find (if None: calculated with LANGUAGE, LC_ALL, LC_MESSAGES, LANG env. variables)
     :param all_: if True return a list of filenames corresponding to given languages, else return the first valid file.
-    """
+    """|docstring }}
     # Get some reasonable defaults for arguments that were not supplied
     if languages is None:
         languages = []

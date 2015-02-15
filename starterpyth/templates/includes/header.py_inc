@@ -1,0 +1,7 @@
+{% if encoding %}# -*- coding: {{ encoding }} -*-
+{% endif %}{% block docstring %}{% endblock %}{% block headers %}{% if render_pass == 2 %}{% if counter_six_b and counter_six_u %}from six import u, b
+{% elif counter_six_u %}from six import u
+{% elif counter_six_b %}from six import b
+{% endif %}{% if counter_i18n %}from {{ module_name }}.translation import ugettext as _
+{% endif %}{% endif %}{% endblock %}__author__ = {{ author|raw_text }}
+{% block content %}{% endblock %}

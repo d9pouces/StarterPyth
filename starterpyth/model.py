@@ -1,4 +1,4 @@
-#coding=utf-8
+# -*- coding=utf-8 -*-
 import datetime
 import os
 import shutil
@@ -19,7 +19,7 @@ __author__ = 'flanker'
 class Model(object):
     name = None
     template_roots = []
-    template_includes = [('starterpyth', 'common')]
+    template_includes = [('starterpyth', 'templates/includes')]
     include_suffix = '_inc'
     template_suffix = '_tpl'
 
@@ -191,15 +191,42 @@ class Model(object):
     def text(self, value):
         if self.global_context['use_six']:
             self.increment('counter_six_u')
-            return "u('%s')" % value
+            return "u(%s)" % self.raw_text(value)
         elif self.global_context['use_2to3']:
-            return "u'%s'" % value
+            return "u'%s'" % self.raw_text(value)
         elif self.global_context['use_py2'] and self.global_context['use_py3']:
             self.increment('counter_py23_u')
-            return "u('%s')" % value
+            return "u(%s)" % self.raw_text(value)
         elif self.global_context['use_py2']:
-            return "u'%s'" % value
-        return "'%s'" % value
+            return "u%s" % self.raw_text(value)
+        return "'%s'" % self.raw_text(value)
+
+    def raw_text(self, value):
+        if '\n' in value:
+            prefix = '"""'
+        elif "'" not in value:
+            prefix = "'"
+        elif '"' not in value:
+            prefix = '"'
+        else:
+            value = value.replace("'", "\\'")
+            prefix = "'"
+        if self.global_context['use_2to3']:
+            return 'u%s%s%s' % (prefix, value, prefix)
+        elif self.global_context['use_py30'] or self.global_context['use_py31'] or self.global_context['use_py32']:
+            return "%s%s%s" % (prefix, value, prefix)
+        elif self.global_context['use_py2']:
+            return "u%s%s%s" % (prefix, value, prefix)
+        return '%s%s%s' % (prefix, value, prefix)
+
+    def docstring(self, value):
+        if self.global_context['use_2to3']:
+            return 'u"""%s"""' % value
+        elif self.global_context['use_py30'] or self.global_context['use_py31'] or self.global_context['use_py32']:
+            return '"""%s"""' % value
+        elif self.global_context['use_py2']:
+            return 'u"""%s"""' % value
+        return '"""%s"""' % value
 
     def translate(self, value):
         if not self.global_context['use_i18n']:
@@ -221,7 +248,8 @@ class Model(object):
         return "b'%s'" % value
 
     def get_template_filters(self):
-        return {'text': self.text, 'binary': self.binary, 'repr': lambda x: repr(x), 'translate': self.translate}
+        return {'text': self.text, 'binary': self.binary, 'repr': lambda x: repr(x), 'translate': self.translate,
+                'docstring': self.docstring, 'raw_text': self.raw_text}
 
 
 if __name__ == '__main__':

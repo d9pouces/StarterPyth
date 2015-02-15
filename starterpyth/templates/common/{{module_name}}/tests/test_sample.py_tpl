@@ -6,10 +6,11 @@ A complete documentation can be found at :mod:`unittest`.
 
 """{% endblock %}
 
-{% block content %}import unittest
+{% block headers %}{{ super() }}import unittest
 from {{ module_name }}.sample import sample_function
+{% endblock %}
 
-__all__ = ['SampleTest']
+{% block content %}__all__ = ['SampleTest']
 
 
 class SampleTest(unittest.TestCase):

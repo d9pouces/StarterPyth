@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 import getpass
 from optparse import OptionParser
 import os.path
@@ -15,9 +15,9 @@ from starterpyth.cliforms import BaseForm, RegexpInput, BooleanInput, CharInput,
 
 __author__ = 'd9pouces'
 
-licenses = [('cecill_a', _('CeCILL-A')), ('cecill_b', _('CeCILL-B')), ('bsd_2_clauses', _('BSD 2 clauses')),
-            ('apache_2', _('Apache 2')), ('cecill_c', _('CeCILL-C')), ('gpl_2', _('GPL v.2')), ('gpl_3', _('GPL v.3')),
-            ('lgpl_2', _('LGPL v.2')), ('lgpl_3', _('LGPL v.3')), ('mit', _('MIT'))]
+licenses = [('CeCILL-A', _('CeCILL-A')), ('CeCILL-B', _('CeCILL-B')), ('BSD-2-clauses', _('BSD 2 clauses')),
+            ('Apache-2', _('Apache 2')), ('CeCILL-C', _('CeCILL-C')), ('GPL-2', _('GPL v.2')), ('GPL-3', _('GPL v.3')),
+            ('LGPL-2', _('LGPL v.2')), ('LGPL-', _('LGPL v.3')), ('MIT', _('MIT'))]
 
 
 available_models = [(PackageModel, PackageModel.name), (DjangoModel, DjangoModel.name), (CliModel, CliModel.name),
@@ -64,7 +64,7 @@ class BaseInfoForm(BaseForm):
                            show=lambda **kwargs: kwargs['use_py2'] and kwargs['use_py3'])
     use_2to3 = BooleanInput(initial=False, label=_('Use 2to3 for Python 3 compatibility'),
                             show=lambda **kwargs: kwargs['use_py2'] and kwargs['use_py3'] and not kwargs['use_six'])
-    license = ChoiceInput(licenses, label=_('License'), initial='cecill_b')
+    license = ChoiceInput(licenses, label=_('License'), initial='CeCILL-B')
     version = CharInput(label=_('Version'), initial='0.1')
     model = ChoiceInput(available_models, label=_('Code template'))
     use_i18n = BooleanInput(initial=True, label=_('Use translated strings'))

@@ -1,7 +1,9 @@
-{% extends 'header.py_inc' %}
+{% extends 'django_header.py_inc' %}
+
+{% block headers %}{{ super() }}from django.db import models
+{% endblock %}
 
 {% block content %}
-from django.db import models
 
 class Poll(models.Model):
     question = models.CharField(max_length=200)

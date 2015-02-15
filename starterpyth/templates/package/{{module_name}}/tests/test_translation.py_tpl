@@ -1,17 +1,18 @@
 {% extends 'header.py_inc' %}
 
-{% block docstring %}"""Sample test module corresponding to the :mod:`{{ module_name }}.translation` module.
+{% block docstring %}{{ """Sample test module corresponding to the :mod:`{{ module_name }}.translation` module.
 
 A complete documentation can be found at :mod:`unittest`.
+"""|docstring }}{% endblock %}
 
-"""{% endblock %}
 
-{% block content %}
-import sys
+{% block headers %}{{ super() }}import sys
 import unittest
 from {{ module_name }}.translation import translation
+{% endblock %}
 
-__all__ = ['TranslationTest']
+
+{% block content %}__all__ = ['TranslationTest']
 
 
 class TranslationTest(unittest.TestCase):

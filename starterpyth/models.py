@@ -1,4 +1,4 @@
-#coding=utf-8
+# -*- coding: utf-8 -*-
 import random
 from starterpyth.cliforms import BaseForm, BooleanInput
 from starterpyth.model import Model

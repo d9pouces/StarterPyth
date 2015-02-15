@@ -1,5 +1,6 @@
-{% include 'header.py_inc' %}
-{% block content %}
-from {{ module_name }}.cli import main
-main()
+{% extends 'header.py_inc' %}
+{% block headers %}{{ super() }}from {{ module_name }}.cli import main
+{% endblock %}
+
+{% block content %}main()
 {% endblock %}

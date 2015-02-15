@@ -1,4 +1,4 @@
-#coding=utf-8
+# -*- coding: utf-8 -*-
 {% block docstring %}"""Setup file for the {{ project_name }} project.
 """{% endblock %}
 
@@ -6,14 +6,11 @@
 import os.path
 import sys
 from setuptools import setup, find_packages
-
-# get README content from README.rst file
-with codecs.open(os.path.join(os.path.dirname(__file__), 'README.rst'), encoding='utf-8') as fd:
+from {{ module_name }} import __version__ as version
+# get README content from README.md file
+with codecs.open(os.path.join(os.path.dirname(__file__), 'README.md'), encoding='utf-8') as fd:
     long_description = fd.read()
 
-# get version value from VERSION file
-with codecs.open(os.path.join(os.path.dirname(__file__), 'VERSION'), encoding='utf-8') as fd:
-    version = fd.read().strip()
 {% if ext_modules %}ext_modules = {{  ext_modules|repr }}
 {% endif %}{% if cmdclass %}cmdclass = {{ cmdclass|repr }}
 {% endif %}{% if entry_points %}entry_points = {{ entry_points|repr }}
@@ -24,10 +21,10 @@ setup(
     version=version,
     description='No description yet.',
     long_description=long_description,
-    author="""{{ author }}""",
-    author_email="""{{ email }}""",
-    license="""{{ license }}""",
-    url="""{{ project_url }}""",
+    author={{ author|raw_text }},
+    author_email={{ email|raw_text }},
+    license={{ license|raw_text }},
+    url={{ project_url|raw_text }},
 {% if entry_points %}    entry_points=entry_points,
 {% endif %}    packages=find_packages(),
     include_package_data=True,
@@ -36,7 +33,6 @@ setup(
 {% if ext_modules %}    ext_modules=ext_modules,
 {% endif %}{% if cmdclass %}cmdclass=cmdclass,
 {% endif %}{% if use_2to3 %}    use_2to3=True,
-    convert_2to3_doctests=['src/your/module/README.txt'],
     use_2to3_fixers=[],
     use_2to3_exclude_fixers = [],
 {% endif %}    install_requires={{ install_requires|repr }},
