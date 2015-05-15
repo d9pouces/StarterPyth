@@ -1,4 +1,5 @@
 # coding=utf-8
+from __future__ import unicode_literals, print_function
 import getpass
 from optparse import OptionParser
 import os.path
@@ -6,12 +7,9 @@ import imp
 import sys
 import re
 
-from six import u
 from starterpyth.models import PackageModel, DjangoModel, CliModel, DjangofloorModel
-
 from starterpyth.translation import ugettext as _
 from starterpyth.cliforms import BaseForm, RegexpInput, BooleanInput, CharInput, ChoiceInput, PathInput
-
 
 __author__ = 'd9pouces'
 
@@ -24,28 +22,29 @@ available_models = [(PackageModel, PackageModel.name), (DjangoModel, DjangoModel
                     (DjangofloorModel, DjangofloorModel.name), ]
 
 
+def init__use_py2(**kwargs):
+    return kwargs['use_py26'] or kwargs['use_py27']
+
+
+def init__use_py3(**kwargs):
+    for k, v in kwargs.items():
+        if k.startswith('use_py3') and v:
+            return True
+    return False
+
+
+def init__overwrite(**kwargs):
+    return os.path.exists(kwargs['project_root'])
+
+
 class BaseInfoForm(BaseForm):
-    @staticmethod
-    def __use_py2(**kwargs):
-        return kwargs['use_py26'] or kwargs['use_py27']
-
-    @staticmethod
-    def __use_py3(**kwargs):
-        for k, v in kwargs.items():
-            if k.startswith('use_py3') and v:
-                return True
-        return False
-
-    @staticmethod
-    def __overwrite(**kwargs):
-        return os.path.exists(kwargs['project_root'])
 
     project_name = RegexpInput(re.compile(r'[a-zA-Z_\-]\w*'), label=_('Project name'), initial='Project')
     module_name = RegexpInput(re.compile(r'[a-z][\-_a-z0-9]*'), label=_('Python module name'),
                               initial=lambda project_name: project_name.lower())
     root = PathInput(label=_('Destination directory'), initial='.')
     project_root = CharInput(initial=lambda **kwargs: os.path.join(kwargs['root'], kwargs['project_name']), show=False)
-    overwrite = BooleanInput(initial=not __overwrite.__func__, show=__overwrite.__func__,
+    overwrite = BooleanInput(initial=lambda **kwargs: not init__overwrite(**kwargs), show=init__overwrite,
                              label=_('Overwrite destination'))
     author = CharInput(label=_('Author name'), initial=getpass.getuser())
     company = CharInput(label=_('Company'), initial=_('19pouces.net'))
@@ -58,8 +57,8 @@ class BaseInfoForm(BaseForm):
     use_py33 = BooleanInput(initial=True, label=_('Use Python 3.3'))
     use_py34 = BooleanInput(initial=True, label=_('Use Python 3.4'))
     use_py35 = BooleanInput(initial=True, label=_('Use Python 3.5'))
-    use_py2 = BooleanInput(initial=__use_py2.__func__, show=False)
-    use_py3 = BooleanInput(initial=__use_py3.__func__, show=False)
+    use_py2 = BooleanInput(initial=init__use_py2, show=False)
+    use_py3 = BooleanInput(initial=init__use_py3, show=False)
     use_six = BooleanInput(initial=False, label=_('Use six for Python 3 compatibility'),
                            show=lambda **kwargs: kwargs['use_py2'] and kwargs['use_py3'])
     use_2to3 = BooleanInput(initial=False, label=_('Use 2to3 for Python 3 compatibility'),
@@ -71,7 +70,7 @@ class BaseInfoForm(BaseForm):
 
 
 def load_module(modulename):
-    parents = modulename.split(u('.'))
+    parents = modulename.split('.')
     path = sys.path
     module = None
     for module_name in parents:

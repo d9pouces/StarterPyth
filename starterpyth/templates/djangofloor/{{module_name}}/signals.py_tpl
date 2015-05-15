@@ -1,0 +1,21 @@
+{% extends 'django_header.py_inc' %}
+
+{% block headers %}{{ super() }}from djangofloor.decorators import connect, SerializedForm
+{% if use_websockets %}from djangofloor.tasks import call, SESSION, BROADCAST, USER
+{% endif %}
+from django.template import RequestContext
+{% endblock %}
+
+
+{% block content %}
+{% if use_websockets %}
+@connect(path='demo.test_websocket')
+def test_websocket(request):
+    call('df.messages.info', request, SESSION, html='This message has been sent through websockets.')
+{% else %}
+@connect(path='{{ module_name }}.test_signal')
+def test_signal(request):
+    return [{ {{ 'signal'|raw_text }}: {{ 'df.messages.warning'|raw_text }}, {{ 'options'|raw_text }}: {'html': {{ 'This is a server-side message'|raw_text }}, }, }]
+
+{% endif %}
+{% endblock %}

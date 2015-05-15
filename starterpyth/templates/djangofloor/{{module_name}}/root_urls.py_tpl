@@ -7,10 +7,10 @@
 
 
 {% block content %}
-router = routers.DefaultRouter()
-
+{% if use_djangorestframework %}router = routers.DefaultRouter()
+{% endif %}
 urls = [
-    ('^example$', '{{ module_name }}.views.index'),
+    ('^index$', '{{ module_name }}.views.index'),
     {% if use_djangorestframework %}url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
     {% endif %}

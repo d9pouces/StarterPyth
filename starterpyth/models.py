@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 import random
 from starterpyth.cliforms import BaseForm, BooleanInput
 from starterpyth.model import Model
@@ -9,13 +10,24 @@ __author__ = 'flanker'
 
 class PackageModel(Model):
     name = _('Python package')
-    template_roots = [('starterpyth', 'templates/common'), ('starterpyth', 'templates/package')]
+
+    @property
+    def template_roots(self):
+        result = [('starterpyth', 'templates/common'), ('starterpyth', 'templates/package/package'), ]
+        if self.global_context.get('use_i18n'):
+            result += [('starterpyth', 'templates/package'), ('starterpyth', 'templates/package/translation'), ]
+        return result
 
 
 class CliModel(Model):
     name = _('Python binary')
-    template_roots = [('starterpyth', 'templates/common'), ('starterpyth', 'templates/package'),
-                      ('starterpyth', 'templates/cli')]
+
+    @property
+    def template_roots(self):
+        result = [('starterpyth', 'templates/common'), ('starterpyth', 'templates/package/package'), ('starterpyth', 'templates/cli'), ]
+        if self.global_context.get('use_i18n'):
+            result += [('starterpyth', 'templates/package'), ('starterpyth', 'templates/package/translation'), ]
+        return result
 
     def get_extracontext(self):
         self.global_context['entry_points'].setdefault('console_scripts', [])
@@ -58,22 +70,35 @@ class DjangoModel(Model):
         return ''.join([random.choice(allowed_chars) for i in range(length)])
 
 
+def usewebsockets(**kwargs):
+    for k in range(6):
+        if kwargs['use_py3%d' % k]:
+            return False
+    return True
+
+
 class DjangofloorModel(Model):
     name = _('Djangofloor-based website')
     template_roots = [('starterpyth', 'templates/common'), ('starterpyth', 'templates/djangofloor')]
 
     class ExtraForm(BaseForm):
         use_djangorestframework = BooleanInput(label=_('Use Django REST framework'), initial=True)
+        use_websockets = BooleanInput(label=_('Use Websockets'), initial=usewebsockets, show=usewebsockets)
+        use_redis = BooleanInput(label=_('Use Redis database'), initial=True, show=lambda **kwargs: not kwargs['use_websockets'])
 
     def get_extracontext(self):
         requires = ['djangofloor', ]
         self.global_context['entry_points'].setdefault('console_scripts', [])
         module_name = self.global_context['module_name']
-        scripts = ['%s-manage = djangofloor.scripts:manage' % (module_name, ),
-                   '%s-gunicorn = djangofloor.scripts:gunicorn' % (module_name, )]
+        scripts = ['%s-manage = djangofloor.scripts:manage' % module_name,
+                   '%s-celery = djangofloor.scripts:celery' % module_name,
+                   '%s-uswgi = djangofloor.scripts:uswgi' % module_name,
+                   '%s-gunicorn = djangofloor.scripts:gunicorn' % module_name, ]
         self.global_context['entry_points']['console_scripts'] += scripts
+        if self.global_context['use_websockets']:
+            requires += ['django-websocket-redis', 'gevent', 'uwsgi', ]
         if self.global_context['use_djangorestframework']:
-            requires += ['djangorestframework', 'markdown', 'django-filter', 'pygments']
+            requires += ['djangorestframework', 'markdown', 'django-filter', 'pygments', ]
         self.global_context['install_requires'] += requires
 
         self.global_context['secret_key'] = self.__get_random_string()

@@ -201,8 +201,9 @@ class ChoiceInput(CharInput):
 
 class BaseForm(object):
 
-    def __init__(self, initial=None):
+    def __init__(self, initial=None, extra_env=None):
         super(BaseForm, self).__init__()
+        self.extra_env = {} if extra_env is None else extra_env
         self.initial = {} if initial is None else initial
 
     def read(self, interactive=True):
@@ -212,15 +213,18 @@ class BaseForm(object):
                 fields.append((key, field))
         fields.sort(key=lambda f_: f_[1].order)
         values = {}
+        extra_env = {}
+        extra_env.update(self.extra_env)
         for key, field in fields:
             kwargs = {}
             show = field.show
             init_value = self.initial.get(key, field.initial)
+            extra_env.update(values)
             if hasattr(init_value, '__call__') and not isinstance(init_value, type):
-                init_value = init_value(**values)
+                init_value = init_value(**extra_env)
             if show is not None:
                 if hasattr(show, '__call__'):
-                    show = show(**values)
+                    show = show(**extra_env)
                 if not show:
                     values[key] = init_value
                     continue

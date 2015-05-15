@@ -1,9 +1,45 @@
 {% extends 'header.py_inc' %}
 
 {% block content %}
+__author__ = 'flanker'
+
+FLOOR_URL_CONF = '{{ module_name }}.root_urls.urls'
+FLOOR_PROJECT_NAME = '{{ project_name }}'
+FLOOR_INSTALLED_APPS = ['demo', ]
+
+########################################################################################################################
+# sessions
+########################################################################################################################
+{% if use_redis %}SESSION_ENGINE = 'redis_sessions.session'
+{% endif %}SESSION_REDIS_PREFIX = 'session'
+SESSION_REDIS_HOST = '{REDIS_HOST}'
+SESSION_REDIS_PORT = '{REDIS_PORT}'
+SESSION_REDIS_DB = 10
+
+
+########################################################################################################################
+# caching
+########################################################################################################################
+# CACHES = {
+#     'default': {'BACKEND': 'django_redis.cache.RedisCache', 'LOCATION': 'redis://{REDIS_HOST}:{REDIS_PORT}/11',
+#                 'OPTIONS': {'CLIENT_CLASS': 'django_redis.client.DefaultClient', 'PARSER_CLASS': 'redis.connection.HiredisParser', }, },
+#     }
+
+########################################################################################################################
+# django-redis-websocket
+########################################################################################################################
+{% if use_websockets %}
+WSGI_APPLICATION = 'ws4redis.django_runserver.application'
+USE_WS4REDIS = True
+{% endif %}
+########################################################################################################################
+# celery
+########################################################################################################################
+{% if use_redis %}USE_CELERY = True
+{% endif %}
 FLOOR_INSTALLED_APPS = ['{{ module_name }}', {% if use_djangorestframework %}'rest_framework', {% endif %}]
-# FLOOR_INDEX = '{{ module_name }}.views.index'
-FLOOR_URL_CONF = '{{ module_name }}.root_urls'
+FLOOR_INDEX = '{{ module_name }}.views.index'
+FLOOR_URL_CONF = '{{ module_name }}.root_urls.urls'
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '{{ secret_key }}'
 

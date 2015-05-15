@@ -35,8 +35,4 @@ def main():
     print({{ 'Hello, world!'|translate }})
     return return_code
 
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
-
 {% endblock %}

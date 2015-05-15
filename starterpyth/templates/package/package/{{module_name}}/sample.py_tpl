@@ -31,7 +31,4 @@ def sample_translation():
     """|docstring }}
     return _('This message should be translated')
 
-{% endif %}
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod(){% endblock %}
+{% endif %}{% endblock %}

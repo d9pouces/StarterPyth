@@ -38,7 +38,6 @@ class Model(object):
                 * use_py26, use_py27, use_py30, use_py31, use_py32, use_py33, use_py34, use_py35
                 * use_six, use_2to3: use six or 2to3 for Python 2&3 compatibility
         """
-
         self.global_context = base_context
         self.file_context = None
 
@@ -84,7 +83,7 @@ class Model(object):
         return {}
 
     def get_extraform(self, interactive=True):
-        form = self.ExtraForm()
+        form = self.ExtraForm(extra_env=self.global_context)
         values = form.read(interactive=interactive)
         return values
 
@@ -189,17 +188,7 @@ class Model(object):
         self.file_context[key] = self.file_context.get(key, 0) + 1
 
     def text(self, value):
-        if self.global_context['use_six']:
-            self.increment('counter_six_u')
-            return "u(%s)" % self.raw_text(value)
-        elif self.global_context['use_2to3']:
-            return "u'%s'" % self.raw_text(value)
-        elif self.global_context['use_py2'] and self.global_context['use_py3']:
-            self.increment('counter_py23_u')
-            return "u(%s)" % self.raw_text(value)
-        elif self.global_context['use_py2']:
-            return "u%s" % self.raw_text(value)
-        return "'%s'" % self.raw_text(value)
+        return self.raw_text(value)
 
     def raw_text(self, value):
         if '\n' in value:
@@ -211,41 +200,21 @@ class Model(object):
         else:
             value = value.replace("'", "\\'")
             prefix = "'"
-        if self.global_context['use_2to3']:
-            return 'u%s%s%s' % (prefix, value, prefix)
-        elif self.global_context['use_py30'] or self.global_context['use_py31'] or self.global_context['use_py32']:
-            return "%s%s%s" % (prefix, value, prefix)
-        elif self.global_context['use_py2']:
-            return "u%s%s%s" % (prefix, value, prefix)
+        self.increment('counter_unicode_literals')
         return '%s%s%s' % (prefix, value, prefix)
 
     def docstring(self, value):
-        if self.global_context['use_2to3']:
-            return 'u"""%s"""' % value
-        elif self.global_context['use_py30'] or self.global_context['use_py31'] or self.global_context['use_py32']:
-            return '"""%s"""' % value
-        elif self.global_context['use_py2']:
-            return 'u"""%s"""' % value
+        self.increment('counter_unicode_literals')
         return '"""%s"""' % value
 
     def translate(self, value):
         if not self.global_context['use_i18n']:
             return self.text(value)
         self.increment('counter_i18n')
-        return "_('%s')" % value
+        return "_(%s)" % self.text(value)
 
     def binary(self, value):
-        if self.global_context['use_six']:
-            self.increment('counter_six_b')
-            return "b('%s')" % value
-        elif self.global_context['use_2to3']:
-            return "'%s'" % value
-        elif self.global_context['use_py2'] and self.global_context['use_py3']:
-            self.increment('counter_py23_b')
-            return "b('%s')" % value
-        elif self.global_context['use_py2']:
-            return "'%s'" % value
-        return "b'%s'" % value
+        return 'b' + self.raw_text(value)
 
     def get_template_filters(self):
         return {'text': self.text, 'binary': self.binary, 'repr': lambda x: repr(x), 'translate': self.translate,

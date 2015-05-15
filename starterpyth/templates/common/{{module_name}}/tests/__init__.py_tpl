@@ -1,5 +1,5 @@
 {% extends 'header.py_inc' %}
-{% block docstring %}{{ """
+{% block docstring %}"""
 Package gathering all unitary tests for {{ module_name }}.
 Module names must start with `test_` to be taken into account.
 
@@ -7,7 +7,8 @@ You should consider to install :mod:`Distribute` to run all tests with::
 
     $ python setup.py test
 
-"""|docstring }}{% endblock %}
+"""
+{% endblock %}
 {% block content %}import unittest
 
 if __name__ == '__main__':

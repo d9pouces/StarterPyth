@@ -60,20 +60,19 @@ More complete documentation can be found at https://starterpyth.readthedocs.org/
 Starterpyth 2.0 :
     doctest, unittest, nose
     mock
-    pychecker, pylint
+    pychecker, pylint, pyflakes
+    * CHANGES.txt
 
     * CLI
         * man page
-        CHANGES.txt
 
     * Django
-        * intégration de bootstrap3
-        * intégration de tastypie
-        * intégration de tastypie swagger
-        * fichier de configuration
-    * démon
+        * passer à DjangoFloor 0.9
+        * configuration sentry
 
+    * démon -> fichiers de conf pour launchd / systemd
 
-    * template PyCharm [avec environnement virtuel, warning sur la version de Python]
     * utilisation de six
     * création de l'environnement virtuel associé
+    * template PyCharm [avec environnement virtuel, warning sur la version de Python]
+    * intégration avec tox, github, travis, readthedocs
