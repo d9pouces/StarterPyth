@@ -86,6 +86,7 @@ class BaseInfoForm(BaseForm):
     create_venv33 = BooleanInput(initial=lambda **kwargs: create_venv('33', kwargs), label=_('Create a virtual environment for Python 3.3'), show=lambda **kwargs: create_venv('33', kwargs))
     create_venv34 = BooleanInput(initial=lambda **kwargs: create_venv('34', kwargs), label=_('Create a virtual environment for Python 3.4'), show=lambda **kwargs: create_venv('34', kwargs))
     create_venv35 = BooleanInput(initial=lambda **kwargs: create_venv('35', kwargs), label=_('Create a virtual environment for Python 3.5'), show=lambda **kwargs: create_venv('35', kwargs))
+    create_pycharm = BooleanInput(initial=True, label=_('Add PyCharm profile'), show=True)
 
 
 def load_module(modulename):

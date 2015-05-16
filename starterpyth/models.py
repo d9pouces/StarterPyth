@@ -24,7 +24,8 @@ class CliModel(Model):
 
     @property
     def template_roots(self):
-        result = [('starterpyth', 'templates/common'), ('starterpyth', 'templates/package/package'), ('starterpyth', 'templates/cli'), ]
+        result = super(CliModel, self).template_roots
+        result += [('starterpyth', 'templates/common'), ('starterpyth', 'templates/package/package'), ('starterpyth', 'templates/cli'), ]
         if self.global_context.get('use_i18n'):
             result += [('starterpyth', 'templates/package'), ('starterpyth', 'templates/package/translation'), ]
         return result
@@ -39,7 +40,12 @@ class CliModel(Model):
 
 class DjangoModel(Model):
     name = _('Django-based website')
-    template_roots = [('starterpyth', 'templates/common'), ('starterpyth', 'templates/django')]
+
+    @property
+    def template_roots(self):
+        result = super(DjangoModel, self).template_roots
+        result += [('starterpyth', 'templates/common'), ('starterpyth', 'templates/django')]
+        return result
 
     class ExtraForm(BaseForm):
         use_tastypie = BooleanInput(label=_('Use tastypie'), initial=True)
@@ -79,7 +85,12 @@ def usewebsockets(**kwargs):
 
 class DjangofloorModel(Model):
     name = _('Djangofloor-based website')
-    template_roots = [('starterpyth', 'templates/common'), ('starterpyth', 'templates/djangofloor')]
+
+    @property
+    def template_roots(self):
+        result = super(DjangofloorModel, self).template_roots
+        result += [('starterpyth', 'templates/common'), ('starterpyth', 'templates/djangofloor')]
+        return result
 
     class ExtraForm(BaseForm):
         use_djangorestframework = BooleanInput(label=_('Use Django REST framework'), initial=True)

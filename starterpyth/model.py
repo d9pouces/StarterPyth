@@ -19,7 +19,6 @@ __author__ = 'flanker'
 
 class Model(object):
     name = None
-    template_roots = []
     template_includes = [('starterpyth', 'templates/includes')]
     include_suffix = '_inc'
     template_suffix = '_tpl'
@@ -42,6 +41,13 @@ class Model(object):
         self.global_context = base_context
         self.file_context = None
 
+    @property
+    def template_roots(self):
+        result = []
+        if self.global_context['create_pycharm']:
+            result += [('starterpyth', 'templates/extra/idea'), ]
+        return result
+
     def run(self, interactive=True):
         project_root = self.global_context['project_root']
         if os.path.exists(project_root):
@@ -61,17 +67,34 @@ class Model(object):
         extra_context = self.get_extracontext()
         self.global_context.update(extra_context)
         filters = self.get_template_filters()
+
+        self.global_context['used_python_versions'] = []
+        virtualenv_path = None
+        virtualenv_version = None
+        for k in ('26', '27', '30', '31', '32', '33', '34', '35'):
+            v = '%s.%s' % (k[0], k[1])
+            if self.global_context['use_py%s' % k]:
+                self.global_context['used_python_versions'].append(v)
+            if self.global_context['create_venv%s' % k]:
+                if self.global_context['virtualenv_present']:
+                    virtualenv_path = ('~/.virtualenvs/%s%s' % (self.global_context['module_name'], k))
+                    python_path = binary_path('python%s' % v)
+                    subprocess.check_call(['virtualenv', os.path.expanduser(virtualenv_path), '-p', python_path])
+                    cmd_list = [os.path.join(os.path.expanduser(virtualenv_path), 'bin', 'python'), '--version']
+                    p = subprocess.Popen(cmd_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    content = p.communicate()
+                    if content[0]:  # Python 3 prints version on stdout
+                        virtualenv_version = content[0].decode('utf-8').strip()
+                    else:  # Python 2 prints version on stderr
+                        virtualenv_version = content[1].decode('utf-8').strip()
+
+        self.global_context['virtualenv'] = (virtualenv_path, virtualenv_version)
+
         for modname, dirname in self.template_roots:
             display('dirname %s' % dirname, color=CYAN)
             env = self.get_environment(modname, dirname, filters)
             self.write_files(modname, dirname, env)
-        for k in ('26', '27', '30', '31', '32', '33', '34', '35'):
-            v = '%s.%s' % (k[0], k[1])
-            if self.global_context['create_venv%s' % k]:
-                dest_path = os.path.expanduser('~/.virtualenvs/%s%s' % (self.global_context['module_name'], k))
-                if self.global_context['virtualenv_present']:
-                    python_path = binary_path('python%s' % v)
-                    subprocess.check_call(['virtualenv', dest_path, '-p', python_path])
+
 
     # noinspection PyMethodMayBeStatic
     def get_context(self):
