@@ -10,6 +10,7 @@ import re
 from starterpyth.models import PackageModel, DjangoModel, CliModel, DjangofloorModel
 from starterpyth.translation import ugettext as _
 from starterpyth.cliforms import BaseForm, RegexpInput, BooleanInput, CharInput, ChoiceInput, PathInput
+from starterpyth.utils import binary_path
 
 __author__ = 'd9pouces'
 
@@ -20,10 +21,6 @@ licenses = [('CeCILL-A', _('CeCILL-A')), ('CeCILL-B', _('CeCILL-B')), ('BSD-2-cl
 
 available_models = [(PackageModel, PackageModel.name), (DjangoModel, DjangoModel.name), (CliModel, CliModel.name),
                     (DjangofloorModel, DjangofloorModel.name), ]
-
-
-def init__use_py2(**kwargs):
-    return kwargs['use_py26'] or kwargs['use_py27']
 
 
 def init__use_py3(**kwargs):
@@ -37,10 +34,14 @@ def init__overwrite(**kwargs):
     return os.path.exists(kwargs['project_root'])
 
 
+def create_venv(x, kwargs):
+    return kwargs['use_py%s' % x] and kwargs['py%s_present' % x] and kwargs['virtualenv_present']
+
+
 class BaseInfoForm(BaseForm):
 
     project_name = RegexpInput(re.compile(r'[a-zA-Z_\-]\w*'), label=_('Project name'), initial='Project')
-    module_name = RegexpInput(re.compile(r'[a-z][\-_a-z0-9]*'), label=_('Python module name'),
+    module_name = RegexpInput(re.compile(r'[a-z][_a-z0-9]*'), label=_('Python module name'),
                               initial=lambda project_name: project_name.lower())
     root = PathInput(label=_('Destination directory'), initial='.')
     project_root = CharInput(initial=lambda **kwargs: os.path.join(kwargs['root'], kwargs['project_name']), show=False)
@@ -49,6 +50,16 @@ class BaseInfoForm(BaseForm):
     author = CharInput(label=_('Author name'), initial=getpass.getuser())
     company = CharInput(label=_('Company'), initial=_('19pouces.net'))
     email = CharInput(label=_('E-mail'), initial=lambda **kwargs: _('%(author)s@%(company)s') % kwargs)
+    py26_present = BooleanInput(initial=lambda **kwargs: bool(binary_path('python2.6')), label=_('Python 2.6 exists'), show=False)
+    py27_present = BooleanInput(initial=lambda **kwargs: bool(binary_path('python2.7')), label=_('Python 2.7 exists'), show=False)
+    py30_present = BooleanInput(initial=lambda **kwargs: bool(binary_path('python3.0')), label=_('Python 3.0 exists'), show=False)
+    py31_present = BooleanInput(initial=lambda **kwargs: bool(binary_path('python3.1')), label=_('Python 3.1 exists'), show=False)
+    py32_present = BooleanInput(initial=lambda **kwargs: bool(binary_path('python3.2')), label=_('Python 3.2 exists'), show=False)
+    py33_present = BooleanInput(initial=lambda **kwargs: bool(binary_path('python3.3')), label=_('Python 3.3 exists'), show=False)
+    py34_present = BooleanInput(initial=lambda **kwargs: bool(binary_path('python3.4')), label=_('Python 3.4 exists'), show=False)
+    py35_present = BooleanInput(initial=lambda **kwargs: bool(binary_path('python3.5')), label=_('Python 3.5 exists'), show=False)
+    pyvenv_present = BooleanInput(initial=lambda **kwargs: bool(binary_path('pyvenv')), label=_('pyvenv exists'), show=False)
+    virtualenv_present = BooleanInput(initial=lambda **kwargs: bool(binary_path('virtualenv')), label=_('virtualenv exists'), show=False)
     use_py26 = BooleanInput(initial=False, label=_('Use Python 2.6'))
     use_py27 = BooleanInput(initial=lambda **kwargs: kwargs['use_py26'], label=_('Use Python 2.7'))
     use_py30 = BooleanInput(initial=False, label=_('Use Python 3.0'))
@@ -57,7 +68,7 @@ class BaseInfoForm(BaseForm):
     use_py33 = BooleanInput(initial=True, label=_('Use Python 3.3'))
     use_py34 = BooleanInput(initial=True, label=_('Use Python 3.4'))
     use_py35 = BooleanInput(initial=True, label=_('Use Python 3.5'))
-    use_py2 = BooleanInput(initial=init__use_py2, show=False)
+    use_py2 = BooleanInput(initial=lambda **kwargs: kwargs['use_py26'] or kwargs['use_py27'], show=False)
     use_py3 = BooleanInput(initial=init__use_py3, show=False)
     use_six = BooleanInput(initial=False, label=_('Use six for Python 3 compatibility'),
                            show=lambda **kwargs: kwargs['use_py2'] and kwargs['use_py3'])
@@ -67,6 +78,14 @@ class BaseInfoForm(BaseForm):
     version = CharInput(label=_('Version'), initial='0.1')
     model = ChoiceInput(available_models, label=_('Code template'))
     use_i18n = BooleanInput(initial=True, label=_('Use translated strings'))
+    create_venv26 = BooleanInput(initial=lambda **kwargs: create_venv('26', kwargs), label=_('Create a virtual environment for Python 2.6'), show=lambda **kwargs: create_venv('26', kwargs))
+    create_venv27 = BooleanInput(initial=lambda **kwargs: create_venv('27', kwargs), label=_('Create a virtual environment for Python 2.7'), show=lambda **kwargs: create_venv('27', kwargs))
+    create_venv30 = BooleanInput(initial=lambda **kwargs: create_venv('30', kwargs), label=_('Create a virtual environment for Python 3.0'), show=lambda **kwargs: create_venv('30', kwargs))
+    create_venv31 = BooleanInput(initial=lambda **kwargs: create_venv('31', kwargs), label=_('Create a virtual environment for Python 3.1'), show=lambda **kwargs: create_venv('31', kwargs))
+    create_venv32 = BooleanInput(initial=lambda **kwargs: create_venv('32', kwargs), label=_('Create a virtual environment for Python 3.2'), show=lambda **kwargs: create_venv('32', kwargs))
+    create_venv33 = BooleanInput(initial=lambda **kwargs: create_venv('33', kwargs), label=_('Create a virtual environment for Python 3.3'), show=lambda **kwargs: create_venv('33', kwargs))
+    create_venv34 = BooleanInput(initial=lambda **kwargs: create_venv('34', kwargs), label=_('Create a virtual environment for Python 3.4'), show=lambda **kwargs: create_venv('34', kwargs))
+    create_venv35 = BooleanInput(initial=lambda **kwargs: create_venv('35', kwargs), label=_('Create a virtual environment for Python 3.5'), show=lambda **kwargs: create_venv('35', kwargs))
 
 
 def load_module(modulename):

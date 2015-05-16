@@ -2,13 +2,14 @@
 import datetime
 import os
 import shutil
+import subprocess
 
 from jinja2 import ChoiceLoader
 import pkg_resources
 from six import u
 
 from starterpyth.cliforms import BaseForm
-import starterpyth.utils
+from starterpyth.utils import binary_path, walk
 from starterpyth.log import display, GREEN, CYAN, RED
 from starterpyth.translation import ugettext as _
 
@@ -64,6 +65,13 @@ class Model(object):
             display('dirname %s' % dirname, color=CYAN)
             env = self.get_environment(modname, dirname, filters)
             self.write_files(modname, dirname, env)
+        for k in ('26', '27', '30', '31', '32', '33', '34', '35'):
+            v = '%s.%s' % (k[0], k[1])
+            if self.global_context['create_venv%s' % k]:
+                dest_path = os.path.expanduser('~/.virtualenvs/%s%s' % (self.global_context['module_name'], k))
+                if self.global_context['virtualenv_present']:
+                    python_path = binary_path('python%s' % v)
+                    subprocess.check_call(['virtualenv', dest_path, '-p', python_path])
 
     # noinspection PyMethodMayBeStatic
     def get_context(self):
@@ -148,7 +156,7 @@ class Model(object):
             return src_path_, os.path.join(project_root, dst_path_)
 
         # walk through all files (raw and templates) in modname/dirname and write them to destination
-        for root, dirnames, filenames in starterpyth.utils.walk(modname, dirname):
+        for root, dirnames, filenames in walk(modname, dirname):
             for dirname in dirnames:
                 src_path, dst_path = get_path(root, dirname)
                 if not self.process_directory_or_file(src_path, dst_path, dirname, True):

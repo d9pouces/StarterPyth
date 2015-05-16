@@ -3,6 +3,7 @@ several utility functions:
   * unicode function to be compatible with both Python 2 & 3
   * copy of the :func:`os.walk` function, adapted to pkg_resources
 """
+import subprocess
 import unicodedata
 
 import pkg_resources
@@ -25,6 +26,13 @@ def normalize_str(orig_str):
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
+
+
+def binary_path(binary):
+    p = subprocess.Popen(['which', binary], stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+    stdout, __ = p.communicate()
+    x = stdout.decode('utf-8').strip().splitlines()
+    return x[0] if x else None
 
 
 def walk(module_name, dirname, topdown=True):
