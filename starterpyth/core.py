@@ -40,7 +40,7 @@ def create_venv(x, kwargs):
 
 class BaseInfoForm(BaseForm):
 
-    project_name = RegexpInput(re.compile(r'[a-zA-Z_\-]\w*'), label=_('Project name'), initial='Project')
+    project_name = RegexpInput(re.compile(r'[a-zA-Z_\-]\w*'), label=_('Project name'), initial='DemoProject')
     module_name = RegexpInput(re.compile(r'[a-z][_a-z0-9]*'), label=_('Python module name'),
                               initial=lambda project_name: project_name.lower())
     root = PathInput(label=_('Destination directory'), initial='.')
@@ -86,7 +86,6 @@ class BaseInfoForm(BaseForm):
     create_venv33 = BooleanInput(initial=lambda **kwargs: create_venv('33', kwargs), label=_('Create a virtual environment for Python 3.3'), show=lambda **kwargs: create_venv('33', kwargs))
     create_venv34 = BooleanInput(initial=lambda **kwargs: create_venv('34', kwargs), label=_('Create a virtual environment for Python 3.4'), show=lambda **kwargs: create_venv('34', kwargs))
     create_venv35 = BooleanInput(initial=lambda **kwargs: create_venv('35', kwargs), label=_('Create a virtual environment for Python 3.5'), show=lambda **kwargs: create_venv('35', kwargs))
-    create_pycharm = BooleanInput(initial=True, label=_('Add PyCharm profile'), show=True)
 
 
 def load_module(modulename):
@@ -112,9 +111,3 @@ def main():
     base_context = base_form.read(interactive=options.nointeractive)
     model = base_context['model'](base_context=base_context)
     model.run(interactive=options.nointeractive)
-
-
-if __name__ == '__main__':
-    import doctest
-
-    doctest.testmod()

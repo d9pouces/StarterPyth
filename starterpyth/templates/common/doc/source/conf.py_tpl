@@ -18,11 +18,7 @@ import sys
 import os.path
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-
-version_filename = os.path.join(os.path.dirname(__file__), '..', '..', 'VERSION')
-fd = open(version_filename, 'r')
-version_orig = fd.read()
-fd.close()
+from {{ module_name }} import __version__ as version_orig
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.

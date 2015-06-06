@@ -1,9 +1,10 @@
 # -*- coding=utf-8 -*-
 import datetime
+import json
 import os
 import shutil
 import subprocess
-
+import xml.etree.ElementTree as ET
 from jinja2 import ChoiceLoader
 import pkg_resources
 from six import u
@@ -44,8 +45,6 @@ class Model(object):
     @property
     def template_roots(self):
         result = []
-        if self.global_context['create_pycharm']:
-            result += [('starterpyth', 'templates/extra/idea'), ]
         return result
 
     def run(self, interactive=True):
@@ -68,13 +67,18 @@ class Model(object):
         self.global_context.update(extra_context)
         filters = self.get_template_filters()
 
-        self.global_context['used_python_versions'] = []
+        self.set_virtualenvs()
+
+        for modname, dirname in self.template_roots:
+            display('dirname %s' % dirname, color=CYAN)
+            env = self.get_environment(modname, dirname, filters)
+            self.write_files(modname, dirname, env)
+
+    def set_virtualenvs(self):
         virtualenv_path = None
         virtualenv_version = None
         for k in ('26', '27', '30', '31', '32', '33', '34', '35'):
             v = '%s.%s' % (k[0], k[1])
-            if self.global_context['use_py%s' % k]:
-                self.global_context['used_python_versions'].append(v)
             if self.global_context['create_venv%s' % k]:
                 if self.global_context['virtualenv_present']:
                     virtualenv_path = ('~/.virtualenvs/%s%s' % (self.global_context['module_name'], k))
@@ -84,17 +88,12 @@ class Model(object):
                     p = subprocess.Popen(cmd_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                     content = p.communicate()
                     if content[0]:  # Python 3 prints version on stdout
+                        # noinspection PyUnresolvedReferences
                         virtualenv_version = content[0].decode('utf-8').strip()
                     else:  # Python 2 prints version on stderr
+                        # noinspection PyUnresolvedReferences
                         virtualenv_version = content[1].decode('utf-8').strip()
-
         self.global_context['virtualenv'] = (virtualenv_path, virtualenv_version)
-
-        for modname, dirname in self.template_roots:
-            display('dirname %s' % dirname, color=CYAN)
-            env = self.get_environment(modname, dirname, filters)
-            self.write_files(modname, dirname, env)
-
 
     # noinspection PyMethodMayBeStatic
     def get_context(self):
@@ -107,6 +106,12 @@ class Model(object):
                                                    'data/licenses/%s.txt' % self.global_context['license'])
         values['license_content'] = license_fd.read().decode('utf-8')
         values['copyright'] = u('%d, %s') % (datetime.date.today().year, self.global_context['author'])
+        self.global_context['used_python_versions'] = []
+        for k in ('26', '27', '30', '31', '32', '33', '34', '35'):
+            v = '%s.%s' % (k[0], k[1])
+            if self.global_context['use_py%s' % k]:
+                self.global_context['used_python_versions'].append(v)
+        values['tox_used_python_versions'] = [('py' + x[0] + x[-1]) for x in self.global_context['used_python_versions']]
         return values
 
     # noinspection PyMethodMayBeStatic
