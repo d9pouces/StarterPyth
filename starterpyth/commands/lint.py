@@ -1,7 +1,8 @@
 """
 Define a basic pylint call.
 """
-from starterpyth.log import red
+from starterpyth.log import RED
+from starterpyth.log import display
 
 __author__ = 'd9pouces'
 
@@ -27,6 +28,6 @@ class Lint(Command):
 
     def run(self):
         if pylint is None:
-            print(red(_('package pylint is required.')))
+            display(_('package pylint is required.'), color=RED)
             return 1
         pylint.lint.Run((self.distribution.get_name(), ), exit=False)

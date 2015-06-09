@@ -1,4 +1,5 @@
-from starterpyth.log import green, yellow, red
+from starterpyth.log import GREEN, YELLOW, RED
+from starterpyth.log import display
 
 __author__ = 'd9pouces'
 import os
@@ -9,7 +10,7 @@ import subprocess
 from distutils.core import Command
 
 try:
-    #noinspection PyPackageRequirements
+    # noinspection PyPackageRequirements
     import sphinx
 except ImportError:
     sphinx = None
@@ -87,11 +88,11 @@ class GenDoc(Command):
 
     def run(self):
         if sphinx is None:
-            print(red(_('package sphinx is required.')))
+            display(_('package sphinx is required.'), color=RED)
             return 1
         if self.clean and os.path.isdir(self.build_dir):
             msg = _('removing %(dir)s') % {'dir': self.build_dir}
-            print(green(msg))
+            display(msg, color=GREEN)
             shutil.rmtree(self.build_dir)
         sphinx_opts = shlex.split(self.ALLSPHINXOPTS % (self.build_dir, os.getenv('SPHINXOPTS') or '', self.doc_dir))
         count = 0
@@ -104,10 +105,10 @@ class GenDoc(Command):
             result = sphinx.main(options)
             if result == 0:
                 msg = txt % self.build_dir
-                print(green(msg))
+                display(msg, color=GREEN)
                 if orig_fmt == 'latexpdf':
                     subprocess.check_call('make -C %s/latex all-pdf' % self.build_dir, shell=True)
                     msg = "pdflatex finished; the PDF files are in %s/latex." % self.build_dir
-                    print(green(msg))
+                    display(msg, color=GREEN)
         if not count:
-            print(yellow(_("please select at least one output format (e.g. gen_doc --html)")))
+            display(_("please select at least one output format (e.g. gen_doc --html)"), color=YELLOW)

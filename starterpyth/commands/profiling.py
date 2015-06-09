@@ -1,5 +1,6 @@
 from six import u, BytesIO
-from starterpyth.log import red, green
+from starterpyth.log import RED, GREEN
+from starterpyth.log import display
 
 __author__ = 'd9pouces'
 
@@ -10,7 +11,7 @@ import token
 import tokenize
 
 try:
-    #noinspection PyPep8Naming
+    # noinspection PyPep8Naming
     import cProfile as profile
 except ImportError:
     import profile
@@ -48,15 +49,15 @@ class Profiling(Command):
                 # noinspection PyUnresolvedReferences
                 import pstats
             except ImportError:
-                print(red('Module pstats not found.'))
+                display('Module pstats not found.', color=RED)
                 return
             if not os.path.isfile(self.input):
-                print(red(u('File %s not found' % self.input)))
+                display(u('File %s not found' % self.input), color=RED)
                 return
             stats = pstats.Stats(self.input)
             stats.print_stats()
         elif not self.call:
-            print(red('Please provide a function to profile with --call \'module.function\''))
+            display('Please provide a function to profile with --call \'module.function\'', color=RED)
             return
         else:
             if '(' not in self.call:
@@ -79,9 +80,9 @@ class Profiling(Command):
             if simple_function_call:
                 module_name = self.call.partition('(')[0].rpartition('.')[0]
                 if module_name:
-                    print(green('Load module %s' % module_name))
+                    display('Load module %s' % module_name, color=GREEN)
                     self.call = 'import %s ; %s' % (module_name, self.call)
-            print(green("running profiling on %(call)s" % {'call': self.call}))
+            display("running profiling on %(call)s" % {'call': self.call}, color=GREEN)
             if self.debug:
                 pdb.run(self.call)
             else:

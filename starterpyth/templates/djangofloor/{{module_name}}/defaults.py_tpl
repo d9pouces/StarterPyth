@@ -1,11 +1,6 @@
 {% extends 'header.py_inc' %}
 
 {% block content %}
-__author__ = 'flanker'
-
-FLOOR_URL_CONF = '{{ module_name }}.root_urls.urls'
-FLOOR_PROJECT_NAME = '{{ project_name }}'
-FLOOR_INSTALLED_APPS = ['demo', ]
 
 ########################################################################################################################
 # sessions
@@ -40,6 +35,8 @@ USE_WS4REDIS = True
 FLOOR_INSTALLED_APPS = ['{{ module_name }}', {% if use_djangorestframework %}'rest_framework', {% endif %}]
 FLOOR_INDEX = '{{ module_name }}.views.index'
 FLOOR_URL_CONF = '{{ module_name }}.root_urls.urls'
+FLOOR_PROJECT_NAME = '{{ project_name }}'
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '{{ secret_key }}'
 

@@ -3,8 +3,10 @@ import datetime
 from distutils.core import Command
 import os
 import subprocess
+
 from six import u
-from starterpyth.log import red, green, yellow
+
+from starterpyth.log import RED, display, YELLOW, GREEN
 
 try:
     from jinja2 import Environment, PackageLoader
@@ -38,7 +40,7 @@ class MakeMessages(Command):
 
     def run(self):
         if Environment is None:
-            print(red(_('package jinja2 is required.')))
+            display(_('package jinja2 is required.'), color=RED)
             return 1
         module_names = find_packages()
         dst_rel_path = 'locale' if self.dest is None else self.dest
@@ -95,10 +97,10 @@ class MakeMessages(Command):
                         po_fd.close()
                         filenames.append(os.path.relpath(filename, root_path))
                         msg = _('%(filename)s added.') % {'filename': filename}
-                        print(green(msg))
+                        display(msg, color=GREEN)
                     except UnicodeDecodeError:
                         msg = _('Encoding of %(filename)s is not UTF-8.') % {'filename': filename}
-                        print(green(msg))
+                        display(msg, color=GREEN)
             cmd = ['xgettext', '--language=Python', '--keyword=_', u('--output=%s') % pot_filename,
                    '--from-code=UTF-8', '--add-comments=Translators', ] + filenames
             subprocess.check_call(cmd, stdout=subprocess.PIPE)
@@ -109,6 +111,6 @@ class MakeMessages(Command):
                        u('--output=%s') % po_filename, ]
             subprocess.check_call(cmd, stderr=subprocess.PIPE)
             msg = _('Please translate strings in %(filename)s') % {'filename': po_filename}
-            print(yellow(msg))
+            display(msg, color=YELLOW)
             msg = _('Then run setup.py compilemessages -l %(lang)s') % {'lang': self.language}
-            print(yellow(msg))
+            display(msg, color=YELLOW)

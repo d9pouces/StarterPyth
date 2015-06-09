@@ -1,5 +1,7 @@
 from six import u
-from starterpyth.log import green, yellow
+
+from starterpyth.log import YELLOW, GREEN
+from starterpyth.log import display
 
 __author__ = 'd9pouces'
 
@@ -17,8 +19,8 @@ def find_dependencies(module_name):
     stdout, stderr = p.communicate()
     found_dependencies = set()
     missing_dependencies = set()
-    warning_re = re.compile('^WARNING\\s*:\\s*Line [0-9]+:.*')
-    missing_re = re.compile('^WARNING\\s*:  \\s*(.*)$')
+    warning_re = re.compile(r'^WARNING\s*:\s*Line [0-9]+:.*')
+    missing_re = re.compile(r'^WARNING\s*:  \s*(.*)$')
     for line in u(stderr).splitlines():
         if warning_re.match(line):
             continue
@@ -66,18 +68,18 @@ class Dependencies(Command):
         install_requires = set(self.distribution.install_requires)
         module_name = self.distribution.get_name()
         msg = 'Looking for dependencies of %(module_name)s...' % {'module_name': module_name}
-        print(green(msg))
+        display(msg, color=GREEN)
         found_dependencies, missing_dependencies = find_dependencies(module_name)
         if found_dependencies:
-            print(green('Found dependencies: ' + ', '.join(found_dependencies)))
+            display('Found dependencies: ' + ', '.join(found_dependencies), color=GREEN)
             marked_dependencies = filter(lambda x: x not in install_requires, found_dependencies)
             if marked_dependencies:
-                print(yellow('You should add the following dependencies to your stdeb.cfg and setup.py.:'))
-                print(yellow(', '.join(marked_dependencies)))
+                display('You should add the following dependencies to your stdeb.cfg and setup.py.:', color=YELLOW)
+                display(', '.join(marked_dependencies), color=YELLOW)
             else:
-                print(green('All of them are correctly set in your setup.py.'))
+                display('All of them are correctly set in your setup.py.', color=GREEN)
         else:
-            print(green('No dependencies'))
+            display('No dependencies', color=GREEN)
         if len(missing_dependencies) > 0:
-            print(yellow('Missing dependencies: ' + ', '.join(missing_dependencies)))
-            print(green('They may be false positive dependencies.'))
+            display('Missing dependencies: ' + ', '.join(missing_dependencies), color=YELLOW)
+            display('They may be false positive dependencies.', color=GREEN)
