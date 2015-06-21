@@ -5,7 +5,7 @@
 ########################################################################################################################
 # sessions
 ########################################################################################################################
-{% if use_redis %}SESSION_ENGINE = 'redis_sessions.session'
+{% if use_redis %}# SESSION_ENGINE = 'redis_sessions.session'
 {% endif %}SESSION_REDIS_PREFIX = 'session'
 SESSION_REDIS_HOST = '{REDIS_HOST}'
 SESSION_REDIS_PORT = '{REDIS_PORT}'
