@@ -7,11 +7,14 @@ A complete documentation can be found at :mod:`unittest`.
 """{% endblock %}
 
 {% block headers %}{{ super() }}
+
 import unittest
 from {{ module_name }}.sample import sample_function
+
 {% endblock %}
 
-{% block content %}__all__ = ['SampleTest']
+{% block content %}
+__all__ = ['SampleTest']
 
 
 class SampleTest(unittest.TestCase):
@@ -27,5 +30,9 @@ class SampleTest(unittest.TestCase):
         """Test the sample_function with a single argument."""
         self.assertEqual(sample_function(4), 8)
 
+{% endblock %}
+
+{% block footer %}
 if __name__ == '__main__':
-    unittest.main(){% endblock %}
+    unittest.main()
+{% endblock %}

@@ -2,6 +2,7 @@ import codecs
 import os.path
 from setuptools import setup, find_packages
 from starterpyth import __version__ as version
+
 __author__ = 'd9pouces'
 
 
@@ -11,14 +12,15 @@ fd = codecs.open(readme, 'r', encoding='utf-8')
 long_description = fd.read()
 fd.close()
 
-SETUP_COMMANDS = [('CompileMessages', 'compilemessages', ),
-                  ('Dependencies', 'dependencies', ),
-                  ('DocTest', 'doc_test', ),
-                  ('GenDoc', 'gen_doc', ),
-                  ('GenDocApi', 'gen_doc_api', ),
-                  ('Lint', 'lint'),
-                  ('MakeMessages', 'makemessages', ),
-                  ('Profiling', 'profiling'),
+SETUP_COMMANDS = [
+    ('CompileMessages', 'compilemessages',),
+    ('Dependencies', 'dependencies',),
+    ('DocTest', 'doc_test',),
+    ('GenDoc', 'gen_doc',),
+    ('GenDocApi', 'gen_doc_api',),
+    ('Lint', 'lint'),
+    ('MakeMessages', 'makemessages',),
+    ('Profiling', 'profiling'),
 ]
 
 setup(

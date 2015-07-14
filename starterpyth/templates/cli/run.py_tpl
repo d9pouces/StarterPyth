@@ -1,6 +1,9 @@
 {% extends 'header.py_inc' %}
-{% block headers %}{{ super() }}from {{ module_name }}.cli import main
+{% block headers %}{{ super() }}
+from {{ module_name }}.cli import main
 {% endblock %}
 
 {% block content %}main()
+{% endblock %}
+{% block footer %}
 {% endblock %}

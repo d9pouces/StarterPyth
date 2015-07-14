@@ -4,6 +4,8 @@
 {% endif %}{% endif %}{% endblock %}__author__ = {{ author|raw_text }}
 {% block content %}{% endblock %}
 
+{% block footer %}
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
+{% endblock %}

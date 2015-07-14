@@ -7,11 +7,13 @@ Parse arguments and logger, use translated strings.
 {% endblock %}
 
 
-{% block headers %}{{ super() }}import {% if use_py26 %}optparse{% else %}argparse{% endif %}
+{% block headers %}{{ super() }}
+import {% if use_py26 %}optparse{% else %}argparse{% endif %}
 {% endblock %}
 
 
-{% block content %}__all__ = ['main']
+{% block content %}
+__all__ = ['main']
 
 def main():
     {{ """Main function, intended for use as command line executable.
