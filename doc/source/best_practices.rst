@@ -9,10 +9,8 @@ First of all, the general organization of your project should be like the follow
 
 
     MyProjectName/
-    |-- README, README.rst, or README.txt
+    |-- README, README.md, README.rst, or README.txt
     |-- LICENSE
-    |-- VERSION
-    |-- ez_setup.py
     |-- setup.py
     |-- MyPythonPackage/
     |   |-- __init__.py
