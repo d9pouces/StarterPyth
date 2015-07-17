@@ -27,7 +27,7 @@ class MakeMessages(Command):
     ]
 
     def __init__(self, dist=None):
-        super(MakeMessages, self).__init__(dist=dist)
+        Command.__init__(self, dist=dist)
         self.language = 'fr_FR'
         self.dest = None
 

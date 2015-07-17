@@ -93,11 +93,13 @@ def load_module(modulename):
     path = sys.path
     module = None
     abs_module_name = ''
+    cwd = os.getcwd()
     for module_name in parents:
         (file_, pathname, description) = imp.find_module(module_name, path)
         module = imp.load_module(abs_module_name + module_name, file_, pathname, description)
         path = [os.path.dirname(module.__file__)]
         abs_module_name += module_name + '.'
+    os.chdir(cwd)
     return module
 
 

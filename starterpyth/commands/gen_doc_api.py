@@ -4,9 +4,11 @@ Generates a documentation index for your API by scanning all submodules of your
 project and creates a basic `module.rst` file for each of them. Also generates
 an global index referencing all these submodules.
 
-Example::
+Example:
 
-    $ python setup.py gen_doc_api --overwrite
+.. code-block: python
+
+    python setup.py gen_doc_api --overwrite
     writing doc/source/api/index.rst
     writing doc/source/api/starterpyth.rst
     writing doc/source/api/starterpyth/command.rst
@@ -58,6 +60,7 @@ class GenDocApi(Command):
 
     def __init__(self, *args, **kwargs):
         Command.__init__(self, *args, **kwargs)
+
         self.api_dir = os.path.join('doc', 'source', 'api')
         self.overwrite = 0
         self.pre_rm = 0
@@ -113,12 +116,14 @@ class GenDocApi(Command):
                 try:
                     load_module(submodule_name)
                     module_names.append(submodule_name)
-                except ImportError:
-                    msg = 'Unable to import %s.' % submodule_name
+                except ImportError as e:
+                    msg = 'Unable to import %s [%s].' % (submodule_name, e)
                     logging.warning(msg)
         template = env.get_template('index.rst_tpl')
+        all_module_names = [mod_name.replace('.', '/') for mod_name in module_names]
+        all_module_names.sort()
         write_template(template, os.path.join(self.api_dir, 'index.rst'),
-                       {'module_paths': [mod_name.replace('.', '/') for mod_name in module_names]})
+                       {'module_paths': all_module_names})
         template = env.get_template('module.rst_tpl')
         for mod_name in module_names:
             path_components = mod_name.split('.')

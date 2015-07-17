@@ -26,7 +26,7 @@ SETUP_COMMANDS = [
 setup(
     name='starterpyth',
     version=version,
-    description='Generate good skeletons of Python applications.',
+    description='Generate skeletons for new Python applications.',
     long_description=long_description,
     author='d9pouces',
     author_email='d9pouces@19pouces.net',

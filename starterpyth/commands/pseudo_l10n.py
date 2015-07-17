@@ -32,12 +32,12 @@ class PseudoL10N(Command):
     """Compile message files for i18n"""
     description = '''Compile message files for i18n'''
     user_options = [
-        ('langage=', 'l', "target language (default: xx_XX)"),
+        ('language=', 'l', "target language (default: xx_XX)"),
         ('dest=', 'd', "output dir"),
     ]
 
     def __init__(self, dist=None):
-        super(PseudoL10N, self).__init__(dist=dist)
+        Command.__init__(self, dist=dist)
         self.language = 'xx_XX'
         self.dest = None
 

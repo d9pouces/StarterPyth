@@ -28,7 +28,7 @@ class Profiling(Command):
     ]
 
     def __init__(self, dist=None):
-        super(Profiling, self).__init__(dist=dist)
+        Command.__init__(self, dist=dist)
         self.output = None
         self.input = None
         self.call = None
