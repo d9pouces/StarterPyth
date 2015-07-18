@@ -1,10 +1,22 @@
+# -*- coding=utf-8 -*-
+"""Compute dependencies of your code
+---------------------------------
+
+Use the snake food tool to compute external packages.
+
+
+Usage:
+
+.. code-block:: bash
+
+  pip install snakefood
+  python setup.py compilemessages -l fr_FR
+
+
+"""
+from __future__ import unicode_literals
+from starterpyth.log import YELLOW, GREEN, display
 from six import u
-
-from starterpyth.log import YELLOW, GREEN
-from starterpyth.log import display
-
-__author__ = 'd9pouces'
-
 import abc
 from distutils.core import Command
 import imp
@@ -12,6 +24,7 @@ import json
 import os.path
 import re
 import subprocess
+__author__ = 'Matthieu Gallet'
 
 
 def find_dependencies(module_name):

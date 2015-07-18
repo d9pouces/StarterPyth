@@ -1,7 +1,7 @@
 from six import u
 from starterpyth.fields import BooleanInput
 
-__author__ = 'd9pouces'
+__author__ = 'Matthieu Gallet'
 
 from starterpyth.core import Plugin
 from starterpyth.translation import ugettext as _

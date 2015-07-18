@@ -1,10 +1,24 @@
+# -*- coding: utf-8 -*-
+"""Generate message files for i18n
+------------------------------
+
+Create .po files with all string, with the following tools: `xgettext`, `msgmerge`, `msginit` and `msgfmt`.
+
+Usage:
+
+.. code-block:: bash
+
+  python setup.py makemessages -l fr_FR
+
+Then follow the instructions ;)
+Do not forget to add these files to your version control system!
+"""
+from __future__ import unicode_literals
 import codecs
 import datetime
 from distutils.core import Command
 import os
 import subprocess
-
-from six import u
 
 from starterpyth.log import RED, display, YELLOW, GREEN
 
@@ -14,13 +28,12 @@ except ImportError:
     Environment, PackageLoader = None, None
 from setuptools import find_packages
 from starterpyth.core import load_module
-
 from starterpyth.translation import gettext as _
 
 
 class MakeMessages(Command):
     """Generate message files for i18n"""
-    description = '''Generate message files for i18n'''
+    description = 'Generate message files for i18n'
     user_options = [
         ('language=', 'l', "target language (default: fr_FR)"),
         ('dest=', 'd', "output dir, relative to the top-level package folder (default: locale)"),
@@ -78,7 +91,7 @@ class MakeMessages(Command):
         for tl_name, module_names in all_modules.items():
             dst_abs_path = os.path.join(top_levels_modules[tl_name], dst_rel_path)
             root_path = os.path.dirname(top_levels_modules[tl_name])
-            print(root_path)
+            display(root_path)
             pot_filename = os.path.join(dst_abs_path, '%s.pot' % tl_name)
             po_filename = os.path.join(dst_abs_path, self.language, 'LC_MESSAGES', '%s.po' % tl_name)
             # build the list of files to examine, for each top-level module
@@ -101,14 +114,14 @@ class MakeMessages(Command):
                     except UnicodeDecodeError:
                         msg = _('Encoding of %(filename)s is not UTF-8.') % {'filename': filename}
                         display(msg, color=GREEN)
-            cmd = ['xgettext', '--language=Python', '--keyword=_', u('--output=%s') % pot_filename,
+            cmd = ['xgettext', '--language=Python', '--keyword=_', '--output=%s' % pot_filename,
                    '--from-code=UTF-8', '--add-comments=Translators', ] + filenames
             subprocess.check_call(cmd, stdout=subprocess.PIPE)
             if os.path.isfile(po_filename):
                 cmd = ['msgmerge', '--update', '--backup=off', po_filename, pot_filename, ]
             else:
-                cmd = ['msginit', '--no-translator', '-l', self.language, u('--input=%s') % pot_filename,
-                       u('--output=%s') % po_filename, ]
+                cmd = ['msginit', '--no-translator', '-l', self.language, '--input=%s' % pot_filename,
+                       '--output=%s' % po_filename, ]
             subprocess.check_call(cmd, stderr=subprocess.PIPE)
             msg = _('Please translate strings in %(filename)s') % {'filename': po_filename}
             display(msg, color=YELLOW)

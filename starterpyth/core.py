@@ -12,7 +12,7 @@ from starterpyth.translation import ugettext as _
 from starterpyth.cliforms import BaseForm, RegexpInput, BooleanInput, CharInput, ChoiceInput, PathInput
 from starterpyth.utils import binary_path
 
-__author__ = 'd9pouces'
+__author__ = 'Matthieu Gallet'
 
 licenses = [('CeCILL-A', _('CeCILL-A')), ('CeCILL-B', _('CeCILL-B')), ('BSD-2-clauses', _('BSD 2 clauses')),
             ('Apache-2', _('Apache 2')), ('CeCILL-C', _('CeCILL-C')), ('GPL-2', _('GPL v.2')), ('GPL-3', _('GPL v.3')),

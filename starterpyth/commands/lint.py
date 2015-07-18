@@ -1,10 +1,21 @@
-"""
+# -*- coding: utf-8 -*-
+"""Evaluate the quality of your code
+---------------------------------
+
 Define a basic pylint call.
+
+Usage:
+
+.. code-block:: bash
+
+  pip install pylint
+  python setup.py lint
+
 """
 from starterpyth.log import RED
 from starterpyth.log import display
 
-__author__ = 'd9pouces'
+__author__ = 'Matthieu Gallet'
 
 from distutils.core import Command
 try:

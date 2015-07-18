@@ -1,7 +1,7 @@
 #coding=utf-8
 from starterpyth.utils import py3k_unicode
 
-__author__ = 'd9pouces'
+__author__ = 'Matthieu Gallet'
 
 import unittest
 from starterpyth.commands.pseudo_l10n import translate_string

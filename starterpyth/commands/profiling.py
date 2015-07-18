@@ -2,7 +2,7 @@ from six import u, BytesIO
 from starterpyth.log import RED, GREEN
 from starterpyth.log import display
 
-__author__ = 'd9pouces'
+__author__ = 'Matthieu Gallet'
 
 from distutils.core import Command
 import os.path

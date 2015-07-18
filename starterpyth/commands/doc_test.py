@@ -1,10 +1,18 @@
+# -*- coding: utf-8 -*-
+"""Run all doctest in the module
+-----------------------------
+
+.. code-block:: bash
+
+  python setup.py doc_test
+
+"""
 import os
 from setuptools import find_packages
-from starterpyth.log import display
-from starterpyth.log import GREEN, YELLOW
+from starterpyth.log import display, GREEN, YELLOW
 from starterpyth.core import load_module
 
-__author__ = 'd9pouces'
+__author__ = 'Matthieu Gallet'
 from distutils.core import Command
 import doctest
 

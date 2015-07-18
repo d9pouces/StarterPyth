@@ -1,7 +1,7 @@
 from starterpyth.log import GREEN, YELLOW, RED
 from starterpyth.log import display
 
-__author__ = 'd9pouces'
+__author__ = 'Matthieu Gallet'
 import os
 import shlex
 import shutil

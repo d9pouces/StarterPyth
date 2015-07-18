@@ -7,7 +7,7 @@ You should consider to install :mod:`Distribute` to run all tests with::
     $ python setup.py test
 
 """
-__author__ = 'd9pouces'
+__author__ = 'Matthieu Gallet'
 __all__ = []  # 'load_tests']
 
 # import os.path

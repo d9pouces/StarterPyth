@@ -9,7 +9,7 @@ import unicodedata
 import pkg_resources
 
 
-__author__ = 'd9pouces'
+__author__ = 'Matthieu Gallet'
 
 __all__ = ['normalize_str', 'walk']
 

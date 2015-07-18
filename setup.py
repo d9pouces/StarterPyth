@@ -3,7 +3,7 @@ import os.path
 from setuptools import setup, find_packages
 from starterpyth import __version__ as version
 
-__author__ = 'd9pouces'
+__author__ = 'Matthieu Gallet'
 
 
 # get README content from README.rst file
@@ -22,14 +22,15 @@ SETUP_COMMANDS = [
     ('MakeMessages', 'makemessages',),
     ('Profiling', 'profiling'),
 ]
+extra_requires = {'all': ['sfood', 'pylint', 'pstats', ], }
 
 setup(
     name='starterpyth',
     version=version,
     description='Generate skeletons for new Python applications.',
     long_description=long_description,
-    author='d9pouces',
-    author_email='d9pouces@19pouces.net',
+    author='Matthieu Gallet',
+    author_email='Matthieu Gallet@19pouces.net',
     license='Cecill-B',
     url='http://www.19pouces.net/projects.html',
     entry_points={'console_scripts': ['starterpyth-bin = starterpyth.core:main', ],
@@ -38,6 +39,7 @@ setup(
                   },
     packages=find_packages(),
     include_package_data=True,
+    extra_requires=extra_requires,
     zip_safe=True,
     test_suite='starterpyth.tests',
     use_2to3=False,

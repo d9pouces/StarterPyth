@@ -9,7 +9,7 @@
 #
 # All configuration values have a default; values that are commented out
 # serve to show the default.
-__author__ = 'd9pouces'
+__author__ = 'Matthieu Gallet'
 
 import sys
 import os.path
@@ -46,7 +46,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'StarterPyth'
-copyright = '2013, d9pouces@19pouces.net'
+# noinspection PyShadowingBuiltins
+copyright = '2013, Matthieu Gallet@19pouces.net'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -184,7 +185,7 @@ htmlhelp_basename = 'StarterPythdoc'
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
     ('index', 'StarterPyth.tex', 'StarterPyth Documentation',
-     'd9pouces@19pouces.net', 'manual'),
+     'Matthieu Gallet@19pouces.net', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -216,7 +217,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'starterpyth', 'StarterPyth Documentation', ['d9pouces'], 1)
+    ('index', 'starterpyth', 'StarterPyth Documentation', ['Matthieu Gallet'], 1)
 ]
 
 
@@ -224,9 +225,9 @@ man_pages = [
 
 # Bibliographic Dublin Core info.
 epub_title = 'StarterPyth'
-epub_author = 'd9pouces'
-epub_publisher = 'd9pouces'
-epub_copyright = '2013, d9pouces'
+epub_author = 'Matthieu Gallet'
+epub_publisher = 'Matthieu Gallet'
+epub_copyright = '2015, Matthieu Gallet'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.

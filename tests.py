@@ -9,7 +9,7 @@ import sys
 from six import u
 from starterpyth.log import red, green, cyan, magenta
 
-__author__ = 'd9pouces'
+__author__ = 'Matthieu Gallet'
 
 os.environ['DJANGO_SETTINGS_MODULE'] = "test.djangoproject.settings"
 
@@ -19,7 +19,7 @@ STDIN_PREFIXES = [u('''{0}
 test
 {1}9pouces.net
 {1}9pouces
-d9pouces@19pouces.net
+Matthieu Gallet@19pouces.net
 cecill b''').format(TEST_DIRECTORY, u('∂'))]
 
 PY_VERSIONS = {

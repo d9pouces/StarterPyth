@@ -11,7 +11,7 @@ from starterpyth import defaults
 from starterpyth.fields import RegexpInput, CharInput, ChoiceInput, BooleanInput
 from starterpyth.utils import normalize_str
 
-__author__ = 'd9pouces'
+__author__ = 'Matthieu Gallet'
 
 from starterpyth.core import Plugin
 from starterpyth.translation import ugettext as _

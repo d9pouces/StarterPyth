@@ -2,7 +2,7 @@ import traceback
 import sys
 from six import u, b, StringIO, text_type, print_
 
-__author__ = 'd9pouces'
+__author__ = 'Matthieu Gallet'
 __all__ = ['print_tb', 'display', 'RED', 'GREEN', 'YELLOW', 'BLUE', 'MAGENTA', 'CYAN', 'WHITE']
 
 

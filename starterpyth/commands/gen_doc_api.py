@@ -37,7 +37,7 @@ import logging
 from setuptools import find_packages
 from starterpyth.core import load_module
 
-__author__ = 'd9pouces'
+__author__ = 'Matthieu Gallet'
 import codecs
 from distutils.core import Command
 import os

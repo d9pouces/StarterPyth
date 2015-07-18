@@ -1,8 +1,22 @@
+# -*- coding=utf-8 -*-
+"""Compile translated files
+------------------------
+
+Create .mo files from .po files, with the following tools: `xgettext`, `msgmerge`, `msginit` and `msgfmt`..
+
+Usage:
+
+.. code-block:: bash
+
+  python setup.py compilemessages -l fr_FR
+
+Do not forget to add these files to your version control system!
+"""
 from setuptools import find_packages
 from starterpyth.log import display, GREEN
 from starterpyth.core import load_module
 
-__author__ = 'd9pouces'
+__author__ = 'Matthieu Gallet'
 
 from distutils.core import Command
 import os

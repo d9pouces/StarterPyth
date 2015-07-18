@@ -4,7 +4,7 @@ from six import u
 from starterpyth.core import load_module
 from starterpyth.log import yellow, red, green
 
-__author__ = 'd9pouces'
+__author__ = 'Matthieu Gallet'
 
 from distutils.core import Command
 import os
