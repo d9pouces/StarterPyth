@@ -8,6 +8,7 @@ import xml.etree.ElementTree as ET
 from jinja2 import ChoiceLoader
 import pkg_resources
 from six import u
+from doc.source.conf import version
 
 from starterpyth.cliforms import BaseForm
 from starterpyth.utils import binary_path, walk
@@ -107,11 +108,39 @@ class Model(object):
         values['license_content'] = license_fd.read().decode('utf-8')
         values['copyright'] = u('%d, %s') % (datetime.date.today().year, self.global_context['author'])
         self.global_context['used_python_versions'] = []
+        values['classifiers'] += ['Development Status :: 3 - Alpha',
+                                  'Operating System :: MacOS :: MacOS X',
+                                  'Operating System :: Microsoft :: Windows',
+                                  'Operating System :: POSIX :: BSD',
+                                  'Operating System :: POSIX :: Linux',
+                                  'Operating System :: Unix',
+                                  ]
+        lic = {'CeCILL-A': 'License :: OSI Approved :: CEA CNRS Inria Logiciel Libre License, version 2.1 (CeCILL-2.1)',
+               'CeCILL-B': 'License :: OSI Approved :: CEA CNRS Inria Logiciel Libre License, version 2.1 (CeCILL-2.1)',
+               'BSD-2-clauses': 'License :: OSI Approved :: BSD License',
+               'Apache-2': 'License :: OSI Approved :: Apache Software License',
+               'CeCILL-C': 'License :: OSI Approved :: CEA CNRS Inria Logiciel Libre License, version 2.1 (CeCILL-2.1)',
+               'GPL-2': 'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
+               'GPL-3': 'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+               'LGPL-2': 'License :: OSI Approved :: GNU Lesser General Public License v2 (LGPLv2)',
+               'LGPL-3': 'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
+               'MIT': 'License :: OSI Approved :: MIT License',
+               'APSL': 'License :: OSI Approved :: Apple Public Source License',
+               'PSFL': 'License :: OSI Approved :: Python Software Foundation License',
+               }
+        values['classifiers'] += [lic[self.global_context['']]]
+
         for k in ('26', '27', '30', '31', '32', '33', '34', '35'):
             v = '%s.%s' % (k[0], k[1])
             if self.global_context['use_py%s' % k]:
+                values['classifiers'] += ['Programming Language :: Python :: %s' % v]
                 self.global_context['used_python_versions'].append(v)
-        values['tox_used_python_versions'] = [('py' + x[0] + x[-1]) for x in self.global_context['used_python_versions']]
+        if not self.global_context['use_py2']:
+            values['classifiers'] += ['Programming Language :: Python :: 3 :: Only']
+        elif not self.global_context['use_py3']:
+            values['classifiers'] += ['Programming Language :: Python :: 2 :: Only']
+        values['tox_used_python_versions'] = [('py' + x[0] + x[-1]) for x in
+                                              self.global_context['used_python_versions']]
         return values
 
     # noinspection PyMethodMayBeStatic
@@ -145,6 +174,7 @@ class Model(object):
         :return:
         """
         from jinja2 import Environment, PackageLoader
+
         loaders = [PackageLoader(modname, dirname)]
         for modname, dirname in self.template_includes:
             loaders.append(PackageLoader(modname, dirname))
@@ -163,6 +193,7 @@ class Model(object):
         :return:
         """
         from jinja2 import Template
+
         project_root = self.global_context['project_root']
         # creation of the project directory if needed
         if not os.path.isdir(project_root):

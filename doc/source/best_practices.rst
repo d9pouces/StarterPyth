@@ -58,6 +58,22 @@ The current best solution is to use `setuptools >= 1.0 <https://pypi.python.org/
 Other solutions (including `distribute`, `distutils2`, `distlib`) are abandoned, the basic `distutils` lacks some features,
 and `bento <http://cournape.github.io/Bento/>`_ is not mature yet.
 
+To use the `pypi` index:
+
+  .. code-block:: bash
+  cat << EOF > ~/.pypirc
+  [distutils]
+  index-servers =
+    pypi
+
+  [pypi]
+  repository=https://pypi.python.org/pypi
+  username=your_username
+  password=your_password
+  EOF
+  python setup.py register
+  python setup.py sdist upload
+
 Code quality
 ^^^^^^^^^^^^
 

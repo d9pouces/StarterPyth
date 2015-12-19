@@ -54,3 +54,5 @@ REST_FRAMEWORK = {
 }
 {% endif %}
 {% endblock %}
+
+DEBUG = True
