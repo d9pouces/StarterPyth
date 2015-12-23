@@ -128,7 +128,7 @@ class Model(object):
                'APSL': 'License :: OSI Approved :: Apple Public Source License',
                'PSFL': 'License :: OSI Approved :: Python Software Foundation License',
                }
-        values['classifiers'] += [lic[self.global_context['']]]
+        values['classifiers'] += [lic[self.global_context['license']]]
 
         for k in ('26', '27', '30', '31', '32', '33', '34', '35'):
             v = '%s.%s' % (k[0], k[1])
