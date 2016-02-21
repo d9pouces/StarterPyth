@@ -1,0 +1,8 @@
+{% extends 'header.py_inc' %}
+
+{% block headers %}{{ super() }}from djangofloor.iniconf import OptionParser, bool_setting, INI_MAPPING as DEFAULTS
+{% endblock %}
+
+{% block content %}
+INI_MAPPING = DEFAULTS + []
+{% endblock %}
