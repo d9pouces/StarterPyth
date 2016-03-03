@@ -1,14 +1,12 @@
 # -*- coding=utf-8 -*-
 import datetime
-import json
 import os
 import shutil
 import subprocess
-import xml.etree.ElementTree as ET
+
 from jinja2 import ChoiceLoader
 import pkg_resources
 from six import u
-from doc.source.conf import version
 
 from starterpyth.cliforms import BaseForm
 from starterpyth.utils import binary_path, walk
