@@ -56,6 +56,7 @@ class GenDocApi(Command):
 
     user_options = [('api-dir=', 'a', "documentation root"),
                     ('overwrite', 'o', "overwrite existing files"),
+                    ('modules-to-exclude=', 'm', "exclude these modules (dotted paths separated by commas)"),
                     ('pre-rm', 'p', "remove existing files"), ]
 
     def __init__(self, *args, **kwargs):
@@ -64,11 +65,13 @@ class GenDocApi(Command):
         self.api_dir = os.path.join('doc', 'source', 'api')
         self.overwrite = 0
         self.pre_rm = 0
+        self.modules_to_exclude = ''
 
     def initialize_options(self):
         self.api_dir = os.path.join('doc', 'source', 'api')
         self.overwrite = 0
         self.pre_rm = 0
+        self.modules_to_exclude = ''
 
     def finalize_options(self):
         pass
@@ -103,7 +106,11 @@ class GenDocApi(Command):
             logging.info('removing %s' % self.api_dir)
             shutil.rmtree(self.api_dir)
         module_names = []
+        excluded_module_names = set([x.strip() for x in self.modules_to_exclude.split(',') if x.strip()])
+
         for module_name in src_module_names:
+            if module_name in excluded_module_names:
+                continue
             module = load_module(module_name)
             logging.warning('Processing %s.' % module_name)
             module_names.append(module_name)
@@ -113,6 +120,8 @@ class GenDocApi(Command):
                 if ext not in ('pyx', 'py', 'so') or filename == '__init__.py':
                     continue
                 submodule_name = '%s.%s' % (module_name, basename)
+                if submodule_name in excluded_module_names:
+                    continue
                 try:
                     load_module(submodule_name)
                     module_names.append(submodule_name)
