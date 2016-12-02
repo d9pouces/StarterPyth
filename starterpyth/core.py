@@ -122,7 +122,11 @@ def load_module(modulename):
     cwd = os.getcwd()
     for module_name in parents:
         (file_, pathname, description) = imp.find_module(module_name, path)
-        module = imp.load_module(abs_module_name + module_name, file_, pathname, description)
+        name_to_import = abs_module_name + module_name
+        if name_to_import in sys.modules:
+            module = sys.modules[name_to_import]
+        else:
+            module = imp.load_module(name_to_import, file_, pathname, description)
         path = [os.path.dirname(module.__file__)]
         abs_module_name += module_name + '.'
     os.chdir(cwd)
