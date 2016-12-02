@@ -33,31 +33,33 @@ Example:
     writing doc/source/api/starterpyth/utils.rst
 
 """
+import codecs
+import fnmatch
 import logging
+import os
+import shutil
 from setuptools import find_packages
 from starterpyth.core import load_module
 
-__author__ = 'Matthieu Gallet'
-import codecs
 from distutils.core import Command
-import os
-import shutil
 
 try:
     from jinja2 import Environment, PackageLoader
 except ImportError:
     Environment, PackageLoader = None, None
 from starterpyth.translation import gettext as _
+__author__ = 'Matthieu Gallet'
 
 
 class GenDocApi(Command):
     """Generate simple API index for Sphinx documentation """
     description = 'Generate simple API index for Sphinx documentation'
 
-    user_options = [('api-dir=', 'a', "documentation root"),
-                    ('overwrite', 'o', "overwrite existing files"),
-                    ('modules-to-exclude=', 'm', "exclude these modules (dotted paths separated by commas)"),
-                    ('pre-rm', 'p', "remove existing files"), ]
+    user_options = [('api-dir=', 'a', 'documentation root'),
+                    ('overwrite', 'o', 'overwrite existing files'),
+                    ('modules-to-exclude=', 'm',
+                     'exclude these modules (dotted paths separated by commas. * and ? are supported)'),
+                    ('pre-rm', 'p', 'remove existing files'), ]
 
     def __init__(self, *args, **kwargs):
         Command.__init__(self, *args, **kwargs)
@@ -109,7 +111,7 @@ class GenDocApi(Command):
         excluded_module_names = set([x.strip() for x in self.modules_to_exclude.split(',') if x.strip()])
 
         for module_name in src_module_names:
-            if module_name in excluded_module_names:
+            if any(fnmatch.fnmatch(module_name, x) for x in excluded_module_names):
                 continue
             module = load_module(module_name)
             logging.warning('Processing %s.' % module_name)
@@ -120,7 +122,7 @@ class GenDocApi(Command):
                 if ext not in ('pyx', 'py', 'so') or filename == '__init__.py':
                     continue
                 submodule_name = '%s.%s' % (module_name, basename)
-                if submodule_name in excluded_module_names:
+                if any(fnmatch.fnmatch(submodule_name, x) for x in excluded_module_names):
                     continue
                 try:
                     load_module(submodule_name)
