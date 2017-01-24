@@ -111,22 +111,20 @@ class GenDocApi(Command):
         excluded_module_names = set([x.strip() for x in self.modules_to_exclude.split(',') if x.strip()])
 
         for module_name in src_module_names:
-            if any(fnmatch.fnmatch(module_name, x) for x in excluded_module_names):
-                continue
             module = load_module(module_name)
             logging.warning('Processing %s.' % module_name)
-            module_names.append(module_name)
+            if not any(fnmatch.fnmatch(module_name, x) for x in excluded_module_names):
+                module_names.append(module_name)
             module_root = os.path.dirname(module.__file__)
             for filename in os.listdir(module_root):
                 basename, sep, ext = filename.rpartition('.')
                 if ext not in ('pyx', 'py', 'so') or filename == '__init__.py':
                     continue
                 submodule_name = '%s.%s' % (module_name, basename)
-                if any(fnmatch.fnmatch(submodule_name, x) for x in excluded_module_names):
-                    continue
                 try:
                     load_module(submodule_name)
-                    module_names.append(submodule_name)
+                    if not any(fnmatch.fnmatch(submodule_name, x) for x in excluded_module_names):
+                        module_names.append(submodule_name)
                 except ImportError as e:
                     msg = 'Unable to import %s [%s].' % (submodule_name, e)
                     logging.warning(msg)

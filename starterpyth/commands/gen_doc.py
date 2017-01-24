@@ -1,11 +1,11 @@
 from starterpyth.log import GREEN, YELLOW, RED
 from starterpyth.log import display
 
-__author__ = 'Matthieu Gallet'
 import os
 import shlex
 import shutil
 import subprocess
+from starterpyth.translation import gettext as _
 
 from distutils.core import Command
 
@@ -15,11 +15,11 @@ try:
 except ImportError:
     sphinx = None
 
-from starterpyth.translation import gettext as _
+__author__ = 'Matthieu Gallet'
 
 
 class GenDoc(Command):
-    ALLSPHINXOPTS = '-d %s/doctrees -D latex_paper_size=a4 %s %s'
+    ALLSPHINXOPTS = '-d %s/doctrees %s %s'
 
     description = 'Compile project documentation'
 
