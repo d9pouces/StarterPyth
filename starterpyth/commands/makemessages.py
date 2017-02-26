@@ -37,16 +37,19 @@ class MakeMessages(Command):
     user_options = [
         ('language=', 'l', "target language (default: fr_FR)"),
         ('dest=', 'd', "output dir, relative to the top-level package folder (default: locale)"),
+        ('domain=', 'D', "i18n domain (default to the corresponding module name)"),
     ]
 
     def __init__(self, dist=None):
         Command.__init__(self, dist=dist)
         self.language = 'fr_FR'
         self.dest = None
+        self.domain = None
 
     def initialize_options(self):
         self.language = 'fr_FR'
         self.dest = None
+        self.domain = None
 
     def finalize_options(self):
         pass
@@ -78,8 +81,9 @@ class MakeMessages(Command):
         }
         for tl_name in top_levels_modules.keys():
             dst_abs_path = os.path.join(top_levels_modules[tl_name], dst_rel_path)
-            pot_filename = os.path.join(dst_abs_path, '%s.pot' % tl_name)
-            po_filename = os.path.join(dst_abs_path, self.language, 'LC_MESSAGES', '%s.po' % tl_name)
+            domain = self.domain or tl_name
+            pot_filename = os.path.join(dst_abs_path, '%s.pot' % domain)
+            po_filename = os.path.join(dst_abs_path, self.language, 'LC_MESSAGES', '%s.po' % domain)
             if not os.path.isdir(os.path.dirname(po_filename)):
                 os.makedirs(os.path.dirname(po_filename))
             for filename in (pot_filename, po_filename):
@@ -92,8 +96,9 @@ class MakeMessages(Command):
             dst_abs_path = os.path.join(top_levels_modules[tl_name], dst_rel_path)
             root_path = os.path.dirname(top_levels_modules[tl_name])
             display(root_path)
-            pot_filename = os.path.join(dst_abs_path, '%s.pot' % tl_name)
-            po_filename = os.path.join(dst_abs_path, self.language, 'LC_MESSAGES', '%s.po' % tl_name)
+            domain = self.domain or tl_name
+            pot_filename = os.path.join(dst_abs_path, '%s.pot' % domain)
+            po_filename = os.path.join(dst_abs_path, self.language, 'LC_MESSAGES', '%s.po' % domain)
             # build the list of files to examine, for each top-level module
             filenames = []
             for module_name in module_names:

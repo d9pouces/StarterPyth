@@ -31,16 +31,19 @@ class CompileMessages(Command):
     user_options = [
         ('language=', 'l', "target language (default: fr_FR)"),
         ('dest=', 'd', "output dir"),
+        ('domain=', 'D', "i18n domain (default to the corresponding module name)"),
     ]
 
     def __init__(self, dist=None):
         Command.__init__(self, dist=dist)
         self.language = 'fr_FR'
         self.dest = None
+        self.domain = None
 
     def initialize_options(self):
         self.language = 'fr_FR'
         self.dest = None
+        self.domain = None
 
     def finalize_options(self):
         pass
@@ -57,8 +60,9 @@ class CompileMessages(Command):
                 top_levels_modules[tl] = locale_dir
 
         for module_name, locale_dir in top_levels_modules.items():
-            mo_file = os.path.join(locale_dir, self.language, 'LC_MESSAGES', '%s.mo' % module_name)
-            po_file = os.path.join(locale_dir, self.language, 'LC_MESSAGES', '%s.po' % module_name)
+            domain = self.domain or module_name
+            mo_file = os.path.join(locale_dir, self.language, 'LC_MESSAGES', '%s.mo' % domain)
+            po_file = os.path.join(locale_dir, self.language, 'LC_MESSAGES', '%s.po' % domain)
             if not os.path.isdir(os.path.dirname(mo_file)):
                 os.makedirs(os.path.dirname(mo_file))
             if os.path.isfile(po_file):
