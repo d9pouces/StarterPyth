@@ -66,6 +66,10 @@ class BaseInfoForm(BaseForm):
                                 show=False)
     py35_present = BooleanInput(initial=lambda **kwargs: bool(binary_path('python3.5')), label=_('Python 3.5 exists'),
                                 show=False)
+    py36_present = BooleanInput(initial=lambda **kwargs: bool(binary_path('python3.6')), label=_('Python 3.6 exists'),
+                                show=False)
+    py37_present = BooleanInput(initial=lambda **kwargs: bool(binary_path('python3.7')), label=_('Python 3.7 exists'),
+                                show=False)
     pyvenv_present = BooleanInput(initial=lambda **kwargs: bool(binary_path('pyvenv')), label=_('pyvenv exists'),
                                   show=False)
     virtualenv_present = BooleanInput(initial=lambda **kwargs: bool(binary_path('virtualenv')),
@@ -78,6 +82,8 @@ class BaseInfoForm(BaseForm):
     use_py33 = BooleanInput(initial=True, label=_('Use Python 3.3'))
     use_py34 = BooleanInput(initial=True, label=_('Use Python 3.4'))
     use_py35 = BooleanInput(initial=True, label=_('Use Python 3.5'))
+    use_py36 = BooleanInput(initial=True, label=_('Use Python 3.6'))
+    use_py37 = BooleanInput(initial=True, label=_('Use Python 3.7'))
     use_py2 = BooleanInput(initial=lambda **kwargs: kwargs['use_py26'] or kwargs['use_py27'], show=False)
     use_py3 = BooleanInput(initial=init__use_py3, show=False)
     use_six = BooleanInput(initial=False, label=_('Use six for Python 3 compatibility'),
@@ -112,6 +118,12 @@ class BaseInfoForm(BaseForm):
     create_venv35 = BooleanInput(initial=lambda **kwargs: create_venv('35', kwargs),
                                  label=_('Create a virtual environment for Python 3.5'),
                                  show=lambda **kwargs: create_venv('35', kwargs))
+    create_venv36 = BooleanInput(initial=lambda **kwargs: create_venv('36', kwargs),
+                                 label=_('Create a virtual environment for Python 3.6'),
+                                 show=lambda **kwargs: create_venv('36', kwargs))
+    create_venv37 = BooleanInput(initial=lambda **kwargs: create_venv('37', kwargs),
+                                 label=_('Create a virtual environment for Python 3.7'),
+                                 show=lambda **kwargs: create_venv('37', kwargs))
 
 
 def load_module(modulename):

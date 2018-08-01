@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# -*- coding: {{ encoding }} -*-
-from djangofloor.scripts import manage
-import os
-os.environ['DJANGOFLOOR_PROJECT_NAME'] = {{ module_name|repr }}
-manage()
+from djangofloor.scripts import control, set_env
+
+set_env(command_name="{{ module_name|repr }}-ctl")
+if __name__ == "__main__":
+    control()

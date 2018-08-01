@@ -30,7 +30,7 @@ setup(
     description='Generate skeletons for new Python applications.',
     long_description=long_description,
     author='Matthieu Gallet',
-    author_email='Matthieu Gallet@19pouces.net',
+    author_email='github@19pouces.net',
     license='Cecill-B',
     url='http://www.19pouces.net/projects.html',
     entry_points={'console_scripts': ['starterpyth-bin = starterpyth.core:main', ],
